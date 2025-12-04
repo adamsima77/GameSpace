@@ -1,0 +1,122 @@
+//Reset All
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  line-height: 1.5;
+  font-family: sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+#app{
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+ul,
+ol {
+  list-style: none;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+}
+
+
+//Mixins
+@mixin flex-between($align: center, $direction: row, $space_around:space-around) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $space_around;
+  align-items: $align;
+}
+
+@mixin flex-direction-center($align:center,$direction:row,$con:none){
+    display: flex;
+    flex-direction: $direction;
+    justify-content: $con;
+    align-items: $align;
+}
+@mixin socials-style($gap: 15px){
+    display: flex;
+    gap: $gap;
+
+}
+
+@mixin push-transition($opacity: 0.8, $translate: -2px){
+          opacity: $opacity;
+          transform: translateY($translate);
+}
+
+@mixin hover-transition($color:none,$background:none,$opacity:1){
+    color: $color;
+    background-color: $background;
+    opacity: $opacity;
+}
+
+
+//Variables
+//Other
+$none: none;
+$row: row;
+//Paddings
+$padding_10: 10px;
+$padding_20: 20px;
+$padding_15: 15px;
+$padding_30: 30px;
+//Colors
+$grey: #000000be;
+$white: white;
+$blue: rgb(77, 77, 255) ;
+$box_sh_nav: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+$box_sh_title: rgba(17, 12, 46, 0.15) 0px 48px 100px 0px;
+$box_sh_icons: rgba(255, 255, 255, 0.1) 0px 1px 1px 0px inset, rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px;
+
+//Sizing
+$link-size: 17px;
+$title_font_size: 26px;
+$icons_size: 17px;
+$arrow_size: 2rem;
+//Scaling
+$full_width: 100%;
+
+//Transitions
+$ease_in_out_background: background-color 0.5s ease-in-out;
+$ease_in_out_opacity: opacity 0.5s ease-in-out;
+
+//Global font
+p,a{
+  font-family: 'Roboto', sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, span {
+  font-family: 'Montserrat', sans-serif;
+}

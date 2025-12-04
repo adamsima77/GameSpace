@@ -1,85 +1,63 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
-</script>
-
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/about">About</RouterLink>
-      </nav>
-    </div>
-  </header>
-
-  <RouterView />
+    <Navbar></Navbar>
+    <SubNav></SubNav>
+    <main>
+  <Slideshow 
+  :slideshow="[
+    {
+      photo: 'https://store-images.s-microsoft.com/image/apps.34838.63407868131364914.bcaa868c-407e-42c2-baeb-48a3c9f29b54.1463028d-79fa-46e5-9fc2-63203992a4dc?q=90&w=480&h=270',
+      desc: 'First'
+    },
+     {
+      photo: 'https://store-images.s-microsoft.com/image/apps.32577.14254372351363255.ac3906d1-13b6-4af0-a00a-e10c8a92007b.f74e6e13-69bd-49f0-a873-2f8346a30ead?q=90&w=480&h=270',
+      desc: 'Second'
+    },
+     {
+      photo: 'https://store-images.s-microsoft.com/image/apps.34497.14322280443288156.36e7f1cd-07a6-4e2a-a35d-485380706ab1.e8f404c0-ee13-41c4-962d-b4d73f73f3cf?q=90&w=480&h=270',
+      desc: 'Third'
+    }
+  ]"
+/>
+  
+    </main>
+    <Footer></Footer>
 </template>
 
-<style scoped>
-header {
-  line-height: 1.5;
-  max-height: 100vh;
-}
+<script>
+ import Navbar from './components/Navbar.vue';
+import SubNav from './components/SubNav.vue';
+import Footer from './components/Footer.vue';
+import Slideshow from './components/Slideshow.vue';
+export default{
+ 
+  data(){
+   return{
 
-.logo {
-  display: block;
-  margin: 0 auto 2rem;
-}
+   }
+  },
+  components:{
+       Navbar,
+       SubNav,
+       Footer,
+       Slideshow
+  },
+  methods:{
 
-nav {
-  width: 100%;
-  font-size: 12px;
-  text-align: center;
-  margin-top: 2rem;
-}
+  },
+  computed:{
 
-nav a.router-link-exact-active {
-  color: var(--color-text);
-}
-
-nav a.router-link-exact-active:hover {
-  background-color: transparent;
-}
-
-nav a {
-  display: inline-block;
-  padding: 0 1rem;
-  border-left: 1px solid var(--color-border);
-}
-
-nav a:first-of-type {
-  border: 0;
-}
-
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
-
-    padding: 1rem 0;
-    margin-top: 1rem;
   }
 }
+</script>
+
+<style lang="scss">
+$main-color: #42b983;
+
+main{
+   @include flex-direction-center($align:center,$direction:column,$con:center);
+   place-self: center;
+   max-width: 90%;
+   margin-top: 200px;
+}
+
 </style>
