@@ -69,34 +69,38 @@
   place-self: center;
   @include flex-direction-center($align: center, $direction: column, $con: center);
   width: 100%;
-  max-width: 1300px;
+  
 
   .images {
     position: relative;
     width: 100%;
     overflow: hidden;
     @include flex-direction-center($align: center, $direction: column, $con: center);
+      height: 800px;
 
+    a{
+      display: block;
+    width: 100%;
+    height: 100%;
     img {
       display: block;
-      width: 100%;
-      height: auto;
-      object-fit: cover;
+      width: 100%;  
+      height: 100%;    
+      object-fit: cover; 
       border-radius: 10px;
-      max-height: 1050px;
-      min-width: 1000px;
       transition: opacity 0.5s ease-in-out;
 
        &:hover{
          @include hover-transition($opacity:0.8);
        }
     }
+  }
 
     .controls {
       position: absolute;
       top: 50%;
-      left: 14px;
-      right: 14px;
+      left: 0px;
+      right: 0px;
       display: flex;
       justify-content: space-between;
       transform: translateY(-50%);

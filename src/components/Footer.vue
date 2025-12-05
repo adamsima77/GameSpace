@@ -2,6 +2,13 @@
 <footer>
     <div class = "aligment">
          <p>© {{ new Date().getFullYear() }} —  Created by Adam Šima</p>
+         <div class = "links">
+             <ul>
+                 <RouterLink to = ""><li>Kontakt</li></RouterLink> 
+                 <hr>
+                 <RouterLink to = ""><li>O nás</li></RouterLink> 
+             </ul>
+         </div>
          <div class = "socials">
              <a href=""><i class = "fab fa-facebook facebook"></i></a>
              <a href="" ><i class = "fab fa-instagram instagram"></i></a>
@@ -13,6 +20,8 @@
 </template>
 
 <script>
+import { RouterLink } from 'vue-router';
+
 
 </script>
 
@@ -31,6 +40,19 @@ footer {
     width: $full_width;
     padding: $padding_30;
 
+    .links{
+
+      ul{
+         display: flex;
+         gap: 20px;
+      a{
+        li{
+            padding: 5px
+        }
+      }
+      }
+    }
+
     .socials {
       @include socials-style();
       display: flex;
@@ -39,10 +61,10 @@ footer {
         text-decoration: none;
 
         i {
-          font-size: 18px;
+          font-size: 1.3rem;
           color: white;
-          width: 38px;
-          height: 38px;
+          width: 45px;
+          height: 45px;
           border-radius: 50%;
           display: flex;
           align-items: center;

@@ -107,7 +107,7 @@ export default {
     background-color: rgb(255, 255, 255);
     box-shadow: $box_sh_nav;
     color: black;
-    top: 65px;
+    top: 55px;
     a{
       border-right: 1px solid black;
     }
