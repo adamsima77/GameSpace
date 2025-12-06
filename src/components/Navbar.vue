@@ -1,6 +1,6 @@
 <template>
   <nav :class="{ scrolled: isScrolled, hidden: isHidden }">
-    <RouterLink to=""><span class="title"><span>Game</span>Space</span></RouterLink>
+    <RouterLink to="/"><span class="title"><span>Game</span>Space</span></RouterLink>
     <transition name="slide">
     <input type="text" v-if="showSearch" class = "search" 
     placeholder="Hľadajte...">

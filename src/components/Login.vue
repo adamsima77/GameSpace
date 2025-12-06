@@ -67,7 +67,7 @@
        .inputs{
 
         p{
-
+            margin-top: 10px;
           span{
                 color: $blue;
                     cursor: pointer;

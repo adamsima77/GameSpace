@@ -1,13 +1,12 @@
 <template>
   <div class="subnav" :class="{ scrolled: isScrolled, hidden: isHidden }">
-    <ul>
-      <RouterLink to=""><li>aasadasd</li></RouterLink>
-      <RouterLink to=""><li>aaasdasds</li></RouterLink>
-      <RouterLink to=""><li>dasdaasdas</li></RouterLink>
-      <RouterLink to=""><li>asdasdas</li></RouterLink>
-      <RouterLink to=""><li>asdasds</li></RouterLink>
-      <RouterLink to=""><li>fasfasfs</li></RouterLink>
-      <RouterLink to=""><li><i class="fas fa-shopping-cart"></i>Košík</li></RouterLink>
+    <ul class="links">
+      <li class = "category"v-for="(value,index) in categories" :key="index">
+       {{ value.name }}
+      </li>
+      <RouterLink to="" class = "cart">
+        <li><i class="fas fa-shopping-cart"></i>Košík</li>
+      </RouterLink>
     </ul>
   </div>
 </template>
@@ -19,6 +18,14 @@ export default {
       isScrolled: false,
       isHidden: false,
       lastScroll: 0,
+      categories: [
+  { "name": "Electronics" },
+  { "name": "Clothing" },
+  { "name": "Books" },
+  { "name": "Home & Kitchen" },
+  { "name": "Sports & Outdoors" },
+  { "name": "Toys & Games" }
+]
     };
   },
   methods: {
@@ -47,75 +54,66 @@ export default {
 <style scoped lang="scss">
 .subnav {
   position: fixed;
-  top: 0;
-  width: $full_width;
-  z-index: 1000;
   top: 80px;
-  background-color: $grey;
+  width: 100%;
+  z-index: 1000;
   background-color: white;
+  border-top: 2px solid $blue;
+  border-bottom: 2px solid $blue;
   transition: all 0.3s ease-in-out;
-  @include flex-between(center, row);
-  border-top: 3px solid $blue;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  ul {
+  ul.links {
     display: flex;
     width: 100%;
-    margin: 0;
-    padding: 0;
     list-style: none;
-    a{
-      border-right: 2px solid $blue;
-      border-bottom: 2px solid $blue;
-    }
+    padding: 0;
+    margin: 0;
 
-    li {
+    .category,
+    a {
       flex: 1;
-      padding: $padding_15;
       display: flex;
       justify-content: center;
       align-items: center;
-      font-size: $link-size;
-      border-right: 2px solid white;
-      transition: $ease_in_out_background;
+      padding: 15px;
+      cursor: pointer;
+      border-right: 2px solid $blue;
+      transition: all 0.2s ease;
 
-      i {
-        margin-right: 8px;
+      &:hover {
+        background-color: lighten($blue, 42%);
+        color: $blue;
+        box-shadow: inset 0 -3px 0 $blue;
       }
-
 
       &:last-child {
         border-right: none;
       }
     }
 
-    li:hover {
-      @include hover-transition(white, $blue);
-    }
-
-    a {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100%;
-      height: 100%;
-      text-decoration: none;
-      color: inherit;
+    .cart li {
+      border-right: none;
+      i{
+        margin-right: 5px;
+      }
     }
   }
+
 
   &.scrolled {
-    background-color: rgb(255, 255, 255);
-    box-shadow: $box_sh_nav;
-    color: black;
     top: 55px;
-    a{
-      border-right: 1px solid black;
-    }
+    background: white;
+    box-shadow: $box_sh_nav;
   }
+
 
   &.hidden {
     transform: translateY(-100%);
-    top: 57px;
   }
 }
+
+
 </style>

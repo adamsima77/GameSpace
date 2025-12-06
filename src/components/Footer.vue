@@ -4,16 +4,16 @@
          <p>© {{ new Date().getFullYear() }} —  Created by Adam Šima</p>
          <div class = "links">
              <ul>
-                 <RouterLink to = ""><li>Kontakt</li></RouterLink> 
+                 <RouterLink to = "/kontakt"><li>Kontakt</li></RouterLink> 
                  <hr>
-                 <RouterLink to = ""><li>O nás</li></RouterLink> 
+                 <RouterLink to = "/about"><li>O nás</li></RouterLink> 
              </ul>
          </div>
          <div class = "socials">
-             <a href=""><i class = "fab fa-facebook facebook"></i></a>
-             <a href="" ><i class = "fab fa-instagram instagram"></i></a>
-             <a href="" ><i class = "fab fa-youtube youtube"></i></a>
-             <a href="" ><i class = "fab fa-linkedin linkedin"></i></a>
+             <a href="https://www.facebook.com/?locale=sk_SK"><i class = "fab fa-facebook facebook"></i></a>
+             <a href="https://www.instagram.com/" ><i class = "fab fa-instagram instagram"></i></a>
+             <a href="https://www.youtube.com/" ><i class = "fab fa-youtube youtube"></i></a>
+             <a href="https://www.linkedin.com/" ><i class = "fab fa-linkedin linkedin"></i></a>
          </div>
     </div>
 </footer>

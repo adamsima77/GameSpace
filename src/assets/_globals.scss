@@ -113,6 +113,21 @@ table {
     opacity: $opacity;
 }
 
+@mixin text_box($background:$blue,$color:white,$padding:3rem,$radius:10px,$line_height:1.75,$shadow: 0 8px 18px rgba(0, 0, 0, 0.25)){
+  background-color: $background;
+  color: $color;
+  padding: $padding;
+  border-radius: $radius;
+  line-height: $line_height;
+  box-shadow: $shadow;
+}
+
+@mixin text_box_heading($top:1.4rem,$bottom:0.7rem,$color:white){
+  margin-top: $top;
+  margin-bottom: $bottom;
+  color: $color;
+}
+
 
 //Variables
 //Other

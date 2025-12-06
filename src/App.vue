@@ -3,6 +3,7 @@
     <Navbar @open-login="showLogin = true"></Navbar>
     <SubNav></SubNav>
     <main>
+        <BreadCrumbs v-if = "showBreadcrumbs"></BreadCrumbs>
         <router-view></router-view>
     </main>
     <Footer></Footer>
@@ -15,31 +16,44 @@ import Navbar from './components/Navbar.vue';
 import SubNav from './components/SubNav.vue';
 import Footer from './components/Footer.vue';
 import Login from './components/Login.vue'
+import BreadCrumbs from './components/BreadCrumbs.vue';
 export default{
  
   data(){
    return{
-       showLogin: false
+       showLogin: false,
+       showBreadcrumbs: true,
+       route : ''
    }
   },
   components:{
        Navbar,
        SubNav,
        Footer,    
-       Login
+       Login,
+       BreadCrumbs
   },
   methods:{
-     
+       
   },
   computed:{
 
+  },
+  created(){
+        this.route = this.$route.path;
+        this.showBreadcrumbs = this.route !== '/';
+  },
+
+  watch:{
+     '$route.path'(newPath){
+           this.route = newPath;
+           this.showBreadcrumbs = this.route !== '/';
+     }
   }
 }
 </script>
 
 <style lang="scss">
-$main-color: #42b983;
-
 main{
    @include flex-direction-center($align:center,$direction:column,$con:center);
    place-self: center;
