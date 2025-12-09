@@ -3,7 +3,7 @@
         <div class = "box" v-for = "(value,index) in item" :key = "index" @click = "toggle(index)" :class="{ active: activeIndex === index }">
         <button>{{ value.title }}<i :class = "carret"></i></button>
         <div class = "description" @click.stop>
-            <p>{{ value.desc }}</p>
+            <p>{{ value.description }}</p>
         </div>
         </div>
 

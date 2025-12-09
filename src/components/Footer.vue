@@ -10,10 +10,8 @@
              </ul>
          </div>
          <div class = "socials">
-             <a href="https://www.facebook.com/?locale=sk_SK"><i class = "fab fa-facebook facebook"></i></a>
-             <a href="https://www.instagram.com/" ><i class = "fab fa-instagram instagram"></i></a>
-             <a href="https://www.youtube.com/" ><i class = "fab fa-youtube youtube"></i></a>
-             <a href="https://www.linkedin.com/" ><i class = "fab fa-linkedin linkedin"></i></a>
+             <a :href="icon.link" v-for = "(icon,index) in socials" :key = "index" :style = "{backgroundColor: icon.background_color}">
+              <i :class="icon.icon_name" :style="{ color: icon.color }"></i></a>
          </div>
     </div>
 </footer>
@@ -21,8 +19,37 @@
 
 <script>
 import { RouterLink } from 'vue-router';
+   export default{
+      data(){
+         return{
+             socials: []
+         }
+      },
 
+      methods:{
+       async fetchFooterIcons(){
+        try{
+           const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/footer_socials.php");
+           if(response.status !== 200){
+                   return;
+           }
+           this.socials = response.data;
+          } catch(error){
+               if(error.response){
 
+               } else if(error.request){
+
+               } else {
+
+               }
+          }
+       } 
+      },
+       mounted(){
+            this.fetchFooterIcons()
+       }
+   }
+ 
 </script>
 
 <style scoped lang="scss">
@@ -59,10 +86,11 @@ footer {
 
       a {
         text-decoration: none;
+        border-radius: 50%;
+        transition: all 0.2s ease-in-out;
 
         i {
           font-size: 1.3rem;
-          color: white;
           width: 45px;
           height: 45px;
           border-radius: 50%;
@@ -72,23 +100,7 @@ footer {
           transition: 0.3s;
         }
 
-        .facebook {
-          background: #1877F2;
-        }
-
-        .instagram {
-          background: #E1306C;
-        }
-
-        .youtube {
-          background: #FF0000;
-        }
-
-        .linkedin {
-          background: #0A66C2;
-        }
-
-        i:hover {
+        &:hover {
           @include push-transition();
         }
       }

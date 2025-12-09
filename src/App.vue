@@ -34,7 +34,7 @@ export default{
        BreadCrumbs
   },
   methods:{
-       
+      
   },
   computed:{
 
@@ -42,6 +42,9 @@ export default{
   created(){
         this.route = this.$route.path;
         this.showBreadcrumbs = this.route !== '/';
+  },
+
+  mounted(){
   },
 
   watch:{

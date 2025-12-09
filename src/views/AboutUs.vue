@@ -107,7 +107,7 @@
 
   </div>
   <h1>Najčastejšie otázky</h1>
-  <Accordion :item = "[{title:'Nazov........',desc:'asdasdasdasdadasdasds'},{title:'ffffffffff',desc:'fasfasfsafasfs'}]"></Accordion>
+  <Accordion :item = "faq"></Accordion>
   </div>
 </template>
 
@@ -115,10 +115,34 @@
 import Accordion from '../components/Accordion.vue';
 
     export default{
-
+       data(){
+        return{
+            faq: []
+        }
+       },
 
         components:{
               Accordion
+        },
+        methods:{
+            async fetchFAQ(){
+            try{
+            const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/accordion.php")
+            this.faq = response.data;
+            } catch(error){
+                   if (error.response) {
+                   
+                   } else if (error.request) {
+                      
+                   } else {
+                      
+                   }
+            }
+          
+        }
+        },
+        mounted(){
+            this.fetchFAQ();
         }
     }
     

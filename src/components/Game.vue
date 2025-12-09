@@ -1,8 +1,8 @@
 <template>
 <div class = "game_boxes">
     <div class = "img_date">
-        <RouterLink to = ""><img :src="game.img" :alt="game.alt"></RouterLink>
-        <p>{{ game.alt }}</p>
+        <RouterLink to = ""><img :src="game.image" :alt="game.alt"></RouterLink>
+        <p>{{ game.state }}</p>
     </div>
 </div>
 

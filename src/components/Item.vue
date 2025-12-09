@@ -1,9 +1,9 @@
 <template>
     <div class = "box">
-        <RouterLink to = ""><img :src="item.img" :alt="item.alt"></RouterLink>
+        <RouterLink to = ""><img :src="item.image" :alt="item.alt"></RouterLink>
         <div class = "title_desc">
-        <RouterLink to = ""><h2>{{ item.title }}</h2></RouterLink>
-        <p>{{ item.desc }}</p>
+        <RouterLink to = ""><h2>{{ item.name }}</h2></RouterLink>
+        <p>{{ item.description }}</p>
         </div>
                  <hr class = "item_hr"> 
         <div class = "price_available">

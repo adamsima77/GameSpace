@@ -12,20 +12,15 @@
 </template>
 
 <script>
+
 export default {
   data() {
     return {
       isScrolled: false,
       isHidden: false,
       lastScroll: 0,
-      categories: [
-  { "name": "Electronics" },
-  { "name": "Clothing" },
-  { "name": "Books" },
-  { "name": "Home & Kitchen" },
-  { "name": "Sports & Outdoors" },
-  { "name": "Toys & Games" }
-]
+      categories: [],
+      showMegaMenu: true
     };
   },
   methods: {
@@ -41,13 +36,29 @@ export default {
 
       this.lastScroll = currentScroll;
     },
+      async fetchCategories(){
+          try{
+               const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetch_main_categories.php");
+               this.categories = response.data;
+
+          } catch(error){
+                    if(error.response){
+
+               } else if(error.request){
+
+               } else {
+
+               }
+          }
+      }
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
+    this.fetchCategories();
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
-  },
+  }
 };
 </script>
 
