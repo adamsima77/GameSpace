@@ -1,41 +1,34 @@
 <template>
-    <div class = "box">
-        <RouterLink to = ""><img :src="item.image" :alt="item.alt"></RouterLink>
-        <div class = "title_desc">
-        <RouterLink to = ""><h2>{{ item.name }}</h2></RouterLink>
-        <p>{{ item.description }}</p>
-        </div>
-                 <hr class = "item_hr"> 
-        <div class = "price_available">
-  
-        <p :class = "defineAvailability(item.available)">{{ item.available }}</p>
-        <p class = "price">{{ item.price }}€</p>
-        </div>
-
+  <div class="box">
+    <RouterLink :to="{ name: parentRouteName, params: { slug: item.slug } }">
+      <img :src="item.image" :alt="item.alt" />
+    </RouterLink>
+    <div class="title_desc">
+      <RouterLink :to="{ name: parentRouteName, params: { slug: item.slug } }">
+        <h2>{{ item.name }}</h2>
+      </RouterLink>
+      <p>{{ item.description }}</p>
     </div>
+    <hr class="item_hr" />
+    <div class="price_available">
+      <p :class="defineAvailability(item.available)">{{ item.available }}</p>
+      <p class="price">{{ item.price }}€</p>
+    </div>
+  </div>
 </template>
 
 <script>
-    export default{
-        props:['item'],
-        data(){
-            return{
-                
-            }
-        },
-        methods:{
-            defineAvailability(value){
-                if(value === "Na sklade"){
-                    return "available";
-                } else{
-                    return "not_available";
-                }
-            }
-        },
-        computed:{
-           
-        }
+export default {
+  props: {
+    item: { type: Object, required: true },
+    parentRouteName: { type: String, required: true }
+  },
+  methods: {
+    defineAvailability(value) {
+      return value === "Na sklade" ? "available" : "not_available";
     }
+  }
+};
 </script>
 
 

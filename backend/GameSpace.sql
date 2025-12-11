@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: Út 09.Dec 2025, 09:06
+-- Čas generovania: Št 11.Dec 2025, 11:15
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -68,23 +68,24 @@ CREATE TABLE `address` (
 CREATE TABLE `category` (
   `idCategory` int(11) NOT NULL,
   `name` varchar(150) NOT NULL,
-  `parent_id` int(11) DEFAULT NULL
+  `parent_id` int(11) DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Sťahujem dáta pre tabuľku `category`
 --
 
-INSERT INTO `category` (`idCategory`, `name`, `parent_id`) VALUES
-(1, 'Hry', NULL),
-(2, 'Notebooky a PC', NULL),
-(3, 'Príslušenstvo', NULL),
-(4, 'Konzoly', NULL),
-(5, 'Doplnky', NULL),
-(6, 'PC Hry', 1),
-(7, 'Xbox Hry', 1),
-(8, 'Nintendo Hry', 1),
-(9, 'Playstation Hry', 1);
+INSERT INTO `category` (`idCategory`, `name`, `parent_id`, `slug`) VALUES
+(1, 'Hry', NULL, 'hry'),
+(2, 'Notebooky a PC', NULL, 'notebooky-a-pc'),
+(3, 'Príslušenstvo', NULL, 'príslušenstvo'),
+(4, 'Konzoly', NULL, 'konzoly'),
+(5, 'Doplnky', NULL, 'doplnky'),
+(6, 'PC Hry', 1, 'pc-hry'),
+(7, 'Xbox Hry', 1, 'xbox-hry'),
+(8, 'Nintendo Hry', 1, 'nintendo-hry'),
+(9, 'Playstation Hry', 1, 'playstation-hry');
 
 -- --------------------------------------------------------
 
@@ -128,19 +129,39 @@ CREATE TABLE `items` (
   `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `available` varchar(255) DEFAULT NULL,
   `alt` varchar(255) DEFAULT NULL,
-  `release_date` date DEFAULT NULL
+  `release_date` date DEFAULT NULL,
+  `slug` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Sťahujem dáta pre tabuľku `items`
 --
 
-INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `created_at`, `last_update`, `available`, `alt`, `release_date`) VALUES
-(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2025-12-09 07:48:58', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03'),
-(2, 'Minecraft', 26.95, 'Sandbox game about placing blocks and going on adventures.', 'http://localhost/GameSpace/img/user/minecraft.jpg', '2025-12-09 07:16:09', '2025-12-09 07:48:58', 'Na sklade', 'Minecraft cover', '2011-11-18'),
-(3, 'Cyberpunk 2077', 49.99, 'Futuristic open-world RPG in a dystopian city.', 'http://localhost/GameSpace/img/user/cyberpunk2077.jpg', '2025-12-09 07:16:09', '2025-12-09 07:48:58', 'Na sklade', 'Cyberpunk 2077 cover', '2020-12-10'),
-(4, 'God of War', 39.99, 'Action-adventure game following Kratos and his son.', 'http://localhost/GameSpace/img/user/god_of_war.jpg', '2025-12-09 07:16:09', '2025-12-09 07:48:58', 'Na sklade', 'God of War cover', '2018-04-20'),
-(5, 'Among Us', 4.99, 'Multiplayer social deduction game set on a spaceship.', 'http://localhost/GameSpace/img/user/among_us.jpg', '2025-12-09 07:16:09', '2025-12-09 07:48:58', 'Na sklade', 'Among Us cover', '2018-06-15');
+INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `created_at`, `last_update`, `available`, `alt`, `release_date`, `slug`) VALUES
+(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2025-12-09 13:22:23', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild'),
+(2, 'Minecraft', 26.95, 'Sandbox game about placing blocks and going on adventures.', 'http://localhost/GameSpace/img/user/minecraft.jpg', '2025-12-09 07:16:09', '2025-12-09 13:22:23', 'Na sklade', 'Minecraft cover', '2011-11-18', 'minecraft'),
+(3, 'Cyberpunk 2077', 49.99, 'Futuristic open-world RPG in a dystopian city.', 'http://localhost/GameSpace/img/user/cyberpunk2077.jpg', '2025-12-09 07:16:09', '2025-12-09 13:22:23', 'Na sklade', 'Cyberpunk 2077 cover', '2020-12-10', 'cyberpunk-2077'),
+(4, 'God of War', 39.99, 'Action-adventure game following Kratos and his son.', 'http://localhost/GameSpace/img/user/god_of_war.jpg', '2025-12-09 07:16:09', '2025-12-10 18:28:52', 'Nie je na sklade', 'God of War cover', '2018-04-20', 'god-of-war'),
+(5, 'Among Us', 4.99, 'Multiplayer social deduction game set on a spaceship.', 'http://localhost/GameSpace/img/user/among_us.jpg', '2025-12-09 07:16:09', '2025-12-09 13:22:23', 'Na sklade', 'Among Us cover', '2018-06-15', 'among-us'),
+(6, 'UltraBook Pro 14\"', 1299.99, 'Lightweight 14-inch ultrabook with 16GB RAM and 512GB SSD.', 'ultrabook_pro_14.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'UltraBook Pro 14\" laptop', '2025-01-15', 'ultrabook-pro-14'),
+(7, 'Gaming Beast 17\"', 2199, 'High-end gaming laptop with RTX 4080 and 32GB RAM.', 'gaming_beast_17.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'Gaming Beast 17\" laptop', '2025-02-10', 'gaming-beast-17'),
+(8, 'OfficeMate 15\"', 899.5, 'Reliable notebook for office tasks with 16GB RAM and 256GB SSD.', 'officemate_15.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'OfficeMate 15\" laptop', '2025-03-05', 'officemate-15'),
+(9, 'CompactBook 13\"', 749.99, 'Ultra-portable 13-inch notebook with long battery life.', 'compactbook_13.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'CompactBook 13\" laptop', '2025-01-22', 'compactbook-13'),
+(10, 'PowerStation 15\"', 1599.99, 'Powerful 15-inch PC laptop with 32GB RAM and 1TB SSD.', 'powerstation_15.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'PowerStation 15\" laptop', '2025-04-01', 'powerstation-15'),
+(11, 'Notebook X1', 1199, 'Slim notebook with touchscreen and 16GB RAM.', 'notebook_x1.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'Notebook X1 touchscreen laptop', '2025-02-28', 'notebook-x1'),
+(12, 'Gaming Mini 15\"', 1999.99, 'Compact gaming notebook with RTX 4070 and 16GB RAM.', 'gaming_mini_15.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'Gaming Mini 15\" laptop', '2025-03-12', 'gaming-mini-15'),
+(13, 'EcoBook 14\"', 679.5, 'Eco-friendly notebook with energy-efficient processor.', 'ecobook_14.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'EcoBook 14\" laptop', '2025-04-05', 'ecobook-14'),
+(14, 'ProStation 16\"', 1899.99, 'Professional workstation laptop with 64GB RAM.', 'prostation_16.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'ProStation 16\" laptop', '2025-01-30', 'prostation-16'),
+(15, 'TravelBook 13\"', 799.99, 'Light and portable notebook ideal for travel.', 'travelbook_13.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'TravelBook 13\" laptop', '2025-02-20', 'travelbook-13'),
+(16, 'Gaming Mouse X200', 49.99, 'High-precision gaming mouse with RGB lighting.', 'gaming_mouse_x200.jpg', '2025-12-11 09:33:33', '2025-12-11 09:33:33', 'Na sklade', 'Gaming Mouse X200', '2025-05-10', 'gaming-mouse-x200'),
+(17, 'Mechanical Keyboard K75', 89.99, 'Mechanical keyboard with customizable RGB keys.', 'mechanical_keyboard_k75.jpg', '2025-12-11 09:33:33', '2025-12-11 09:33:33', 'Na sklade', 'Mechanical Keyboard K75', '2025-06-01', 'mechanical-keyboard-k75'),
+(18, 'Wireless Headset H7', 79.99, 'Wireless headset with surround sound.', 'wireless_headset_h7.jpg', '2025-12-11 09:33:33', '2025-12-11 09:33:33', 'Na sklade', 'Wireless Headset H7', '2025-07-15', 'wireless-headset-h7'),
+(19, 'PlayStation 5', 499.99, 'Next-gen PlayStation console with ultra-fast SSD and 4K gaming.', 'playstation_5.jpg', '2025-12-11 09:35:48', '2025-12-11 09:35:48', 'Na sklade', 'PlayStation 5 console', '2020-11-12', 'playstation-5'),
+(20, 'Xbox Series X', 499.99, 'Powerful next-gen Xbox console with ray tracing and 4K gaming.', 'xbox_series_x.jpg', '2025-12-11 09:35:48', '2025-12-11 09:35:48', 'Na sklade', 'Xbox Series X console', '2020-11-10', 'xbox-series-x'),
+(21, 'Nintendo Switch OLED', 349.99, 'Portable Nintendo Switch console with OLED display and enhanced audio.', 'nintendo_switch_oled.jpg', '2025-12-11 09:35:48', '2025-12-11 09:35:48', 'Na sklade', 'Nintendo Switch OLED', '2021-10-08', 'nintendo-switch-oled'),
+(22, 'Xbox Game Pass Ultimate', 12.99, 'Monthly subscription giving access to over 100 games on Xbox and PC.', 'xbox_game_pass.jpg', '2025-12-11 09:36:32', '2025-12-11 09:36:32', 'Na sklade', 'Xbox Game Pass Ultimate', '2021-06-01', 'xbox-game-pass-ultimate'),
+(23, 'PlayStation Plus Premium', 14.99, 'Monthly subscription with access to classic games and cloud streaming.', 'ps_plus_premium.jpg', '2025-12-11 09:36:32', '2025-12-11 09:36:32', 'Na sklade', 'PlayStation Plus Premium', '2021-07-15', 'playstation-plus-premium'),
+(24, 'Steam Gift Card 50€', 50, 'Gift card redeemable on Steam for games and content.', 'steam_gift_card_50.jpg', '2025-12-11 09:36:32', '2025-12-11 09:36:32', 'Na sklade', 'Steam Gift Card 50€', '2022-01-10', 'steam-gift-card-50');
 
 -- --------------------------------------------------------
 
@@ -152,6 +173,36 @@ CREATE TABLE `items_has_category` (
   `Items_idItems` int(11) NOT NULL,
   `Category_idCategory` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `items_has_category`
+--
+
+INSERT INTO `items_has_category` (`Items_idItems`, `Category_idCategory`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 2),
+(7, 2),
+(8, 2),
+(9, 2),
+(10, 2),
+(11, 2),
+(12, 2),
+(13, 2),
+(14, 2),
+(15, 2),
+(16, 3),
+(17, 3),
+(18, 3),
+(19, 4),
+(20, 4),
+(21, 4),
+(22, 5),
+(23, 5),
+(24, 5);
 
 -- --------------------------------------------------------
 
@@ -321,6 +372,7 @@ ALTER TABLE `address`
 --
 ALTER TABLE `category`
   ADD PRIMARY KEY (`idCategory`),
+  ADD UNIQUE KEY `slug` (`slug`),
   ADD KEY `fk_category_parent` (`parent_id`);
 
 --
@@ -333,7 +385,8 @@ ALTER TABLE `footer`
 -- Indexy pre tabuľku `items`
 --
 ALTER TABLE `items`
-  ADD PRIMARY KEY (`idItems`);
+  ADD PRIMARY KEY (`idItems`),
+  ADD UNIQUE KEY `slug` (`slug`);
 
 --
 -- Indexy pre tabuľku `items_has_category`
@@ -438,7 +491,7 @@ ALTER TABLE `footer`
 -- AUTO_INCREMENT pre tabuľku `items`
 --
 ALTER TABLE `items`
-  MODIFY `idItems` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idItems` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT pre tabuľku `most_anticipated`

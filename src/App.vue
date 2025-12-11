@@ -1,9 +1,11 @@
 <template>
     <div :class="{ blurred: showLogin }" class="page-wrapper">
+      <div class = "header">
     <Navbar @open-login="showLogin = true"></Navbar>
     <SubNav></SubNav>
+    </div>
     <main>
-        <BreadCrumbs v-if = "showBreadcrumbs"></BreadCrumbs>
+        <BreadCrumbs v-if = "showBreadcrumbs" :key="$route.fullPath"></BreadCrumbs>
         <router-view></router-view>
     </main>
     <Footer></Footer>
@@ -57,6 +59,16 @@ export default{
 </script>
 
 <style lang="scss">
+
+  .page_wrapper{
+    .header{
+      
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+
+    }
+  }
 main{
    @include flex-direction-center($align:center,$direction:column,$con:center);
    place-self: center;
@@ -69,5 +81,7 @@ main{
   opacity: 0.3;
   pointer-events: none; 
 }
+
+
 
 </style>

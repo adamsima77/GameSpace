@@ -1,7 +1,7 @@
 <template>
    <div class="ItemDetail">
    
-    <ItemDetail :item = "{}"></ItemDetail>
+    <ItemDetail></ItemDetail>
     <div class="hr_wrapp">
       <hr>
       <div class="wrapper">
@@ -13,15 +13,18 @@
         <div class="tab desc_tab" v-if = "showDescription">
           <h3>Popis produktu</h3>
           <p>
-            {{ someJson.desc }}
+            {{ }}
           </p>
         </div>
+        <!--
         <div class="tab reviews_tab" v-else-if="!showDescription">
           <h3>Recenzie</h3>
           <p v-for = "(review,index) in reviews" :key = "index">{{ review.comment }}</p>
         </div>
+        -->
       </div>
     </div>
+    
     <h1>Odporúčané produkty</h1>
     <div class = "recommended_products">
       
@@ -31,9 +34,9 @@
 
 
 <script>
-   import ItemDetail from '../components/ItemDetail.vue';
+   import ItemDetail from '../../components/ItemDetail.vue';
    export default{
-    props:['item','reviews'],
+    props:['item'],
      data(){
         return{
             showDescription:true
@@ -41,7 +44,8 @@
      },
      components:{
         ItemDetail
-     }
+     },
+  
    }
 </script>
 

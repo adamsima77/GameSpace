@@ -1,7 +1,7 @@
 <template>
     <div class = "breadCrumbs">
         <RouterLink to = "/"><span><i class = "fas fa-home"></i> /</span></RouterLink>
-        <RouterLink v-if = "routerPath != ''" v-for = "(value,index) in names" :to = "getPath(index)"><span>{{ names[index] }}</span></RouterLink>
+        <RouterLink v-if = "routerPath != ''" v-for = "(value,index) in names" :to = "getPath(index)"><span>{{ decodeURIComponent(names[index]) }}</span></RouterLink>
     </div>
 </template>
 
@@ -11,7 +11,8 @@
         data(){
             return{
                    routerPath: '',
-                   names: []
+                   names: [],
+                   raw: []
             }
         },
         
@@ -22,6 +23,7 @@
         methods:{
              updateBreadcrumbs(path) {
                   this.routerPath = path;
+                  this.raw = path.split('/')
                   this.names = path.split('/');
 
                   this.namesBetterFormat();
@@ -33,7 +35,7 @@
                     let name = this.names[i];
 
                     const words = name.split("-");
-                    for(let j = 0; j < i; j++){
+                    for(let j = 0; j < words.length; j++){
                          if(j == 0){
                             words[j] = words[j].charAt(0).toUpperCase() + words[j].slice(1);
                          }
@@ -44,7 +46,7 @@
             },
 
        getPath(index){
-           return this.names.slice(0,index + 1).join("/");
+           return this.raw.slice(0,index + 1).join("/");
        }
         },
         watch:{

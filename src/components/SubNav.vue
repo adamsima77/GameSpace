@@ -1,9 +1,11 @@
 <template>
-  <div class="subnav" :class="{ scrolled: isScrolled, hidden: isHidden }">
+  <div class="subnav" :class="{ scrolled: isScrolled, notScrolled: !isScrolled}">
     <ul class="links">
-      <li class = "category"v-for="(value,index) in categories" :key="index">
-       {{ value.name }}
-      </li>
+       <RouterLink :to = "{name: 'games'}"><li class = "category">Hry</li></RouterLink>
+       <RouterLink :to = "{name: 'laptops-and-PCs'}"><li class = "category">Notebooky a PC</li></RouterLink>
+       <RouterLink :to = "{name: 'accessories'}"><li class = "category">Príslušenstvo</li></RouterLink>
+       <RouterLink :to = "{name: 'consoles'}"><li class = "category">Konzoly</li></RouterLink>
+       <RouterLink :to = "{name: 'extras'}"><li class = "category">Doplnky</li></RouterLink>
       <RouterLink to="" class = "cart">
         <li><i class="fas fa-shopping-cart"></i>Košík</li>
       </RouterLink>
@@ -17,7 +19,6 @@ export default {
   data() {
     return {
       isScrolled: false,
-      isHidden: false,
       lastScroll: 0,
       categories: [],
       showMegaMenu: true
@@ -26,14 +27,12 @@ export default {
   methods: {
     handleScroll() {
       const currentScroll = window.scrollY;
-      this.isScrolled = currentScroll > 50;
-
-      if (currentScroll > this.lastScroll && currentScroll > 100) {
-        this.isHidden = true;
-      } else {
-        this.isHidden = false;
+      const direction = currentScroll - this.lastScroll;
+      if(direction > 0 && currentScroll > 50){
+           this.isScrolled = true;
+      } else if(direction < 0){
+             this.isScrolled = false;
       }
-
       this.lastScroll = currentScroll;
     },
       async fetchCategories(){
@@ -83,8 +82,7 @@ export default {
     padding: 0;
     margin: 0;
 
-    .category,
-    a {
+     a {
       flex: 1;
       display: flex;
       justify-content: center;
@@ -93,7 +91,7 @@ export default {
       cursor: pointer;
       border-right: 2px solid $blue;
       transition: all 0.2s ease;
-
+   
       &:hover {
         background-color: lighten($blue, 42%);
         color: $blue;
@@ -115,14 +113,13 @@ export default {
 
 
   &.scrolled {
-    top: 55px;
+    top: 0;
     background: white;
     box-shadow: $box_sh_nav;
   }
 
-
-  &.hidden {
-    transform: translateY(-100%);
+  &.notScrolled{
+    top: 90px;
   }
 }
 

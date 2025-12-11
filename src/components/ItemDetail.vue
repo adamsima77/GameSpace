@@ -1,21 +1,41 @@
- <template>
+<template>
     <div class="img_desc">
-      <img :src="item.img" :alt="item.alt">
+      <img :src="item.image" :alt="item.alt">
       <div class="desc">
-        <h1>{{ item.title }}</h1>
-        <p>{{ item.desc }}</p>  
+        <h1>{{ item.name }}</h1>
+        <p>{{ item.description }}</p>  
         <div class="price_available">  
-          <p>{{ item.available }}</p>
-          <p>{{item.price}}</p>
+          <p :class = "{available: item.available === 'Na sklade', not_available: item.available === 'Nie je na sklade'}">{{ item.available }}</p>
+          <p class = "price">{{item.price}}€</p>
         </div>
-        <button><i class="fas fa-shopping-cart"></i>Do Košíka</button>
+        <button v-if = "item.available === 'Na sklade'"><i class="fas fa-shopping-cart"></i>Do Košíka</button>
       </div>
     </div>
-    </template>
+</template>
 
 <script>
  export default{
-    props:['item']
+    data(){
+      return{
+         item: {}
+      }
+    },
+        methods:{
+             async fetchDetail(){
+                  try{
+                       const slug = this.$route.params.slug;
+                       const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/singleItem.php",{
+                           params: { slug }
+                       });
+                       this.item = response.data;
+                  } catch(error){
+
+                  }
+             }  
+        },
+        mounted(){
+          this.fetchDetail();
+        }
  }
 </script>
 
@@ -26,9 +46,7 @@
     gap: 30px;
 
     img {
-      @include image();
-      border-radius: 12px;
-      max-width: 45%;
+      @include image($height:500px, $width:500px);
     }
 
     .desc {
@@ -59,17 +77,23 @@
         padding: 15px;
         border-radius: 12px;
         border: 1px solid #c7dbff;
+        font-weight: 700;
 
         .price {
-          font-size: 22px;
+          font-size: 1.1rem;
           font-weight: 700;
           color: #0053d6;
         }
 
         .available {
-          font-size: 16px;
+          font-size: 1.1rem;
           font-weight: 600;
           color: #0c7a12;
+        }
+
+        .not_available{
+          color: red;
+          font-weight: 600;
         }
       }
 
