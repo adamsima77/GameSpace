@@ -26,10 +26,6 @@ export default{
     created(){
         this.searchStore = useSearchStore();
     },
-
-    mounted(){
-        this.searchStore.fetchSearch();
-    }
 }
 
 </script>

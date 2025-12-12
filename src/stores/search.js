@@ -1,10 +1,10 @@
 import { defineStore } from 'pinia'
+import axios from 'axios'
 
 export const useSearchStore = defineStore('search', {
-
   state: () => ({
-       search_value: '',
-       searchResult: []
+    search_value: '',
+    searchResult: []
   }),
 
   getters: {
@@ -13,19 +13,24 @@ export const useSearchStore = defineStore('search', {
   },
 
   actions: {
-      setSearch(value){
-          this.search_value = value;
-      },
+    setSearch(value) {
+      this.search_value = value;
+    },
 
-      async fetchSearch(){ 
-            try{
-                const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/search_items.php",{
-                     params: {value: this.search_value}
-                });
-                this.searchResult = response.data;
+    async fetchSearch() { 
+      try {
+        const response = await axios.get(
+          "http://localhost/GameSpace/endpoints/fetch/search_items.php",
+          {
+            params: { value: this.search_value }
+          }
+        );
 
-            } catch(error){
-       }
+        this.searchResult = response.data;
+
+      } catch (error) {
+        console.error("Fetch search failed:", error);
       }
-  },
-})
+    }
+  }
+});

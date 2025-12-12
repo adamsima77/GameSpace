@@ -5,7 +5,7 @@ header("Access-Control-Allow-Methods: GET, POST, OPTIONS");
 header("Access-Control-Allow-Headers: Content-Type");
 require $_SERVER['DOCUMENT_ROOT'] . '/GameSpace/classes/Item.php';
 $items = new Item();
-$data = $items->fetchLaptopsPcs();
+$data = $items->fetchLaptopsPcs($_GET['limit'], $_GET['offset']);
 
 echo json_encode($data);
 ?>

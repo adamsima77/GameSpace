@@ -64,13 +64,15 @@ class Item extends Database{
                 return [];
         }
     }
-    public function fetchGames(){
+    public function fetchGames($limit, $offset){
         try{
             $game_category = 1;
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE Category_idCategory = ?";
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE Category_idCategory = ? LIMIT ? OFFSET ?";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$game_category);
+            $stmt->bindParam(2, $limit, PDO::PARAM_INT);
+            $stmt->bindParam(3, $offset, PDO::PARAM_INT);
             $stmt->execute();
             $rs = $stmt->fetchAll();
             $conn = null;
@@ -81,13 +83,15 @@ class Item extends Database{
         }
     }
 
-    public function fetchLaptopsPcs(){
+    public function fetchLaptopsPcs($limit,$offset){
         try{
             $laptops_category = 2;
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ?";
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? LIMIT ? OFFSET ?";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$laptops_category);
+            $stmt->bindParam(2,$limit, PDO::PARAM_INT);
+            $stmt->bindParam(3,$offset, PDO::PARAM_INT);
             $stmt->execute();
             $rs = $stmt->fetchAll();
             $conn = null;
@@ -98,13 +102,15 @@ class Item extends Database{
         }
     }
 
-    public function fetchAccessories(){
+    public function fetchAccessories($limit, $offset){
         try{
             $accessories_id = 3;
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ?";
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? LIMIT ? OFFSET ?";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$accessories_id);
+            $stmt->bindParam(2,$limit, PDO::PARAM_INT);
+            $stmt->bindParam(3,$offset, PDO::PARAM_INT);
             $stmt->execute();
             $rs = $stmt->fetchAll();
             $conn = null;
@@ -115,13 +121,15 @@ class Item extends Database{
         }
     }
 
-    public function fetchConsoles(){
+    public function fetchConsoles($limit, $offset){
         try{
             $consoles_category = 4;
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ?";
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? LIMIT ? OFFSET ?";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$consoles_category);
+            $stmt->bindParam(2,$limit);
+            $stmt->bindParam(3,$offset);
             $stmt->execute();
             $rs = $stmt->fetchAll();
             $conn = null;
@@ -132,13 +140,15 @@ class Item extends Database{
         }
     }
 
-    public function fetchExtras(){
+    public function fetchExtras($limit, $offset){
         try{
             $extras_category = 5;
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ?";
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? LIMIT ? OFFSET ?";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$extras_category);
+            $stmt->bindParam(2,$limit);
+            $stmt->bindParam(3,$offset);
             $stmt->execute();
             $rs = $stmt->fetchAll();
             $conn = null;
@@ -169,7 +179,7 @@ class Item extends Database{
     public function searchItems($value){
         try{
             $searchValue = "%{$value}%";
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items WHERE name LIKE ?";
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items WHERE name LIKE ? LIMIT 15";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$searchValue);

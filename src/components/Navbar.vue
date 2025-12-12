@@ -17,7 +17,7 @@
 
   <div class="user_search">
     <i :class="!showSearch ? 'fas fa-search' : 'fas fa-times'" @click="invert()"></i>
-    <i class="fas fa-user" @click="openLogin"></i>
+    <i class="fas fa-user" @click = "$router.push({name: 'login'})"></i>
   </div>
 </nav>
 </template>
@@ -56,9 +56,6 @@ export default {
          
      },
 
-     openLogin() {
-      this.$emit("open-login")
-    },
     handleScroll() {
       const scroll = window.scrollY;
       const direction = scroll - this.lastScroll;
@@ -77,7 +74,6 @@ export default {
                  params: { value }
             });
             this.searchResult = response.data;
-            this.searchStore.searchResult = response.data;
         } catch(error){
 
         }
