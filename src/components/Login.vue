@@ -1,12 +1,16 @@
 <template>
+    <div class = "message">
+        <Error :message = "res" :key = "resKey"></Error>  
+        <Success :message = "res" :key = "resKey"></Success>
+    </div>
   <div class="wrapper">
-
+  
     <div class="login" @click.stop v-if = "!changeLayout">
      
 
       <h1 style="text-align:center;">Prihlásenie</h1>
 
-      <div class="inputs">
+      <form method = "post" class="inputs" @submit.prevent = "loginUser">
 
         <label>E-mail:
           <input type="email" v-model = "login_email" required >
@@ -17,11 +21,11 @@
         </label>
 
         <p>Nie ste zaregistrovaný ? <span @click = "changeLayout = true">Zaregistrujte sa</span></p>
-        <button>Prihlásiť</button>
+        <input type="submit">
 
-      </div>
+      </form>
     </div>
-  <div class = "register" v-else @click.stop>
+  <form method = "post" class = "register" v-else @click.stop  @submit.prevent="createUser">
       <h1 style = "text-align: center;">Registrácia</h1>
            <div class = "inputs">
               <label for="">Meno:
@@ -41,15 +45,18 @@
           <input type="password"v-model = "register_repeat_password">
         </label>
           <p>Ste zaregistrovaný ? <span @click = "changeLayout = false">Prihláste sa</span></p>
-          <button>Registrovať</button>
+          <input type="submit">
         
            </div>
-  </div>
+          </form>
   </div>
 </template>
 
 
 <script>
+import Error from './Error.vue';
+import Success from './Success.vue';
+import {useUserStore} from '../stores/user'
    export default{
     data(){
         return{
@@ -60,13 +67,104 @@
             register_surname: '',
             register_email: '',
             register_password: '',
-            register_repeat_password: ''
+            register_repeat_password: '',
+            role: '1',
+            res: {},
+            resKey: 0,
+            userStore: null
         }
+    },
+
+    created(){
+         this.userStore = useUserStore();
+    },
+
+    methods:{
+        async createUser(){
+             try{
+                 const response = await this.$axios.post("http://localhost/GameSpace/endpoints/add/register.php",
+                   {
+                     name: this.register_name,
+                     surname: this.register_surname,
+                     email: this.register_email,
+                     password: this.register_password,
+                     repeat_password: this.register_repeat_password,
+                     role: this.role 
+                   }
+                 );
+                 this.res = response.data;
+                 this.resKey++;
+                 this.changeLayout = false;
+                 this.login_email = '',
+                 this.login_password = '',
+                 this.register_name = '',
+                 this.register_surname = '',
+                 this.register_email = '',
+                 this.register_password = '',
+                 this.register_repeat_password = ''
+             } catch(error){
+                  this.res = {
+                      status: 'error',
+                      message: error.response?.data?.message || 'SERVER_ERROR'
+                  };
+                   this.resKey++;
+             }
+                window.scrollTo({
+                   top: 0,
+                   behavior: 'smooth' 
+                });
+        },
+
+        async loginUser(){
+            try{
+                const response = await this.$axios.post("http://localhost/GameSpace/endpoints/fetch/login_user.php",
+                  {
+                    email: this.login_email,
+                    password: this.login_password
+                  }
+                );
+                this.res = response.data;
+                this.resKey++;
+                this.userStore.setName(this.res.name);
+                this.userStore.setSurname(this.res.last_name);
+                this.userStore.setEmail(this.res.email);
+                this.userStore.setRole(this.res.role);
+                this.userStore.setID(this.res.user_id);
+
+                this.login_email = '';
+                this.login_password = '';
+                this.$router.push('/admin');
+            } catch(error){
+                  this.res = {
+                      status: 'error',
+                      message: error.response?.data?.message || 'SERVER_ERROR'
+                  };
+                   this.resKey++;
+                   this.$router.push('/login');
+            }
+            window.scrollTo({
+                   top: 0,
+                   behavior: 'smooth' 
+            });
+        }
+    },
+
+    components:{
+      Error,
+      Success
     }
    }
 </script>
 
 <style scoped lang="scss">
+   
+   .message{
+      display: flex;
+      flex-direction: column;
+      width: 48%;
+      justify-content: center;
+      align-items: center;
+   }
 
   .wrapper {
   display: flex; 
@@ -139,7 +237,7 @@
     }
   }
 
-  button {
+  input[type = "submit"] {
     background-color: #2979ff;
     color: white;
     border-radius: 10px;
@@ -147,6 +245,8 @@
     margin-top: 15px;
     transition: background-color 0.3s ease;
     width: 100%;
+    cursor: pointer;
+    border: 1px solid white;
 
     &:hover {
       background-color: blue;

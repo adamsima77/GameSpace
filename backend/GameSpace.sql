@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: Pi 12.Dec 2025, 17:03
+-- Čas generovania: So 13.Dec 2025, 17:33
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -397,6 +397,14 @@ CREATE TABLE `role` (
   `name` varchar(120) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Sťahujem dáta pre tabuľku `role`
+--
+
+INSERT INTO `role` (`idrole`, `name`) VALUES
+(1, 'user'),
+(2, 'admin');
+
 -- --------------------------------------------------------
 
 --
@@ -446,10 +454,18 @@ CREATE TABLE `users` (
   `password` varchar(255) NOT NULL,
   `mobile_number` varchar(30) DEFAULT NULL,
   `role_idrole` int(11) NOT NULL,
-  `Address_idAddress` int(11) NOT NULL,
+  `Address_idAddress` int(11) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `users`
+--
+
+INSERT INTO `users` (`idUsers`, `name`, `last_name`, `email`, `password`, `mobile_number`, `role_idrole`, `Address_idAddress`, `created_at`, `last_update`) VALUES
+(3, 'Adam', 'Šima', 'adamsima@gmail.com', '$2y$10$/jyrZXJeaBXImPE1YeHd/eVjpxWWvRkel30dFUsGgQWRjTo81Z.vq', NULL, 2, NULL, '2025-12-13 16:30:41', '2025-12-13 16:30:41'),
+(4, 'User', 'User', 'user@user.sk', '$2y$10$anDZQb3aYY/3D3tDgbks6uoVlsuE8xzi0uEw2KRoAOjg1uq7IPy/2', NULL, 1, NULL, '2025-12-13 16:32:34', '2025-12-13 16:32:34');
 
 --
 -- Kľúče pre exportované tabuľky
@@ -621,7 +637,7 @@ ALTER TABLE `payment`
 -- AUTO_INCREMENT pre tabuľku `role`
 --
 ALTER TABLE `role`
-  MODIFY `idrole` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idrole` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT pre tabuľku `slideshow`
@@ -639,7 +655,7 @@ ALTER TABLE `transport`
 -- AUTO_INCREMENT pre tabuľku `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUsers` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idUsers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Obmedzenie pre exportované tabuľky
@@ -691,7 +707,8 @@ ALTER TABLE `orders_has_items`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `fk_Users_Address` FOREIGN KEY (`Address_idAddress`) REFERENCES `address` (`idAddress`) ON DELETE NO ACTION ON UPDATE NO ACTION,
-  ADD CONSTRAINT `fk_Users_role` FOREIGN KEY (`role_idrole`) REFERENCES `role` (`idrole`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+  ADD CONSTRAINT `fk_Users_role` FOREIGN KEY (`role_idrole`) REFERENCES `role` (`idrole`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_address` FOREIGN KEY (`Address_idAddress`) REFERENCES `address` (`idAddress`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
