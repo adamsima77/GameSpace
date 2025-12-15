@@ -6,7 +6,7 @@
        <RouterLink :to = "{name: 'accessories'}"><li class = "category">Príslušenstvo</li></RouterLink>
        <RouterLink :to = "{name: 'consoles'}"><li class = "category">Konzoly</li></RouterLink>
        <RouterLink :to = "{name: 'extras'}"><li class = "category">Doplnky</li></RouterLink>
-      <RouterLink to="" class = "cart">
+       <RouterLink :to="{name: 'cart'}" class = "cart">
         <li><i class="fas fa-shopping-cart"></i>Košík</li>
       </RouterLink>
     </ul>
@@ -37,7 +37,10 @@ export default {
     },
       async fetchCategories(){
           try{
-               const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetch_main_categories.php");
+               const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetch_main_categories.php",
+               {
+                  withCredentials: false
+               });
                this.categories = response.data;
 
           } catch(error){

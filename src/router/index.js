@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import UserLayout from '../views/user/UserView.vue'
 import { useUserStore } from '../stores/user'
+import { useCartStore } from '../stores/cart'
 
 const routes = [
   {
@@ -23,6 +24,14 @@ const routes = [
       { path: 'search', name: 'search', component: () => import('../views/user/SearchView.vue') },
       { path: 'search/:slug', name: 'search-detail', component: () => import('../views/user/ItemDetailView.vue') },
       { path: 'login', name: 'login', component: () => import('../views/user/LoginView.vue') },
+      { path: ':slug', name: 'cart-item-detail', component: () => import('../views/user/ItemDetailView.vue') },
+      { path: 'cart', name: 'cart', component: () => import('../views/user/cart/Cart.vue'),
+        children:[
+            {path: 'dorucenie', name: 'delivery', meta: {requiresAuth: true}, component: () => import('../views/user/cart/Delivery.vue')},
+            {path: 'pokladna', name: 'checkout', meta: {requiresAuth: true} ,component: () => import('../views/user/cart/Checkout.vue')},
+            {path: 'uspesna-objednavka', name: 'successfull-order',component: () => import('../views/user/cart/SuccessfulOrder.vue')}
+        ]
+      }
     ],
   },
 
@@ -47,6 +56,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
+  const cartStore = useCartStore()
 
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin)
@@ -55,11 +65,18 @@ router.beforeEach((to, from, next) => {
     return next({ name: 'login' })
   }
 
-  if (requiresAdmin && userStore.role !== 2) { 
+  if (requiresAdmin && userStore.role !== 2) {
     return next({ name: 'home' })
+  }
+
+  if (requiresAuth && cartStore.cart.length === 0) {
+    return next({ name: 'cart' }) 
+  }
+
+  if (to.name === 'checkout' && !cartStore.isDeliverySet()) {
+    return next({ name: 'delivery' }) 
   }
 
   next()
 })
-
 export default router

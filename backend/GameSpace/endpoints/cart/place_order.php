@@ -17,9 +17,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
 }
-require $_SERVER['DOCUMENT_ROOT'] . '/GameSpace/classes/Item.php';
-$item = new Item();
-$data = $item->fetchSingleItem($_GET['slug']);
-
-echo json_encode($data);
-?>
+$data = json_decode(file_get_contents('php://input'), true);
+require $_SERVER['DOCUMENT_ROOT'] . '/GameSpace/classes/Cart.php';
+$cart = new Cart();
+$data = 
+$result = $cart->placeOrder($data['name'], $data['surname'], $data['email'], $data['telephone_number'], $data['city'],
+                            $data['street'], $data['postal_code'], $data['transport'], $data['payment']);

@@ -36,7 +36,7 @@ class Item extends Database{
     public function fetchSingleItem($slug){
         try{
             $conn = $this->connect();
-            $query = "SELECT name,price,description,image,alt,available FROM items WHERE slug = ?";
+            $query = "SELECT idItems as id,name,price,description,image,alt,available FROM items WHERE slug = ?";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$slug);
             $stmt->execute();

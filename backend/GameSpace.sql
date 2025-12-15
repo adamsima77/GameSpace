@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: So 13.Dec 2025, 17:33
+-- Čas generovania: Po 15.Dec 2025, 18:23
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -130,88 +130,89 @@ CREATE TABLE `items` (
   `available` varchar(255) DEFAULT NULL,
   `alt` varchar(255) DEFAULT NULL,
   `release_date` date DEFAULT NULL,
-  `slug` varchar(255) DEFAULT NULL
+  `slug` varchar(255) DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Sťahujem dáta pre tabuľku `items`
 --
 
-INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `created_at`, `last_update`, `available`, `alt`, `release_date`, `slug`) VALUES
-(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2025-12-09 13:22:23', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild'),
-(2, 'Minecraft', 26.95, 'Sandbox game about placing blocks and going on adventures.', 'http://localhost/GameSpace/img/user/minecraft.jpg', '2025-12-09 07:16:09', '2025-12-09 13:22:23', 'Na sklade', 'Minecraft cover', '2011-11-18', 'minecraft'),
-(3, 'Cyberpunk 2077', 49.99, 'Futuristic open-world RPG in a dystopian city.', 'http://localhost/GameSpace/img/user/cyberpunk2077.jpg', '2025-12-09 07:16:09', '2025-12-09 13:22:23', 'Na sklade', 'Cyberpunk 2077 cover', '2020-12-10', 'cyberpunk-2077'),
-(4, 'God of War', 39.99, 'Action-adventure game following Kratos and his son.', 'http://localhost/GameSpace/img/user/god_of_war.jpg', '2025-12-09 07:16:09', '2025-12-10 18:28:52', 'Nie je na sklade', 'God of War cover', '2018-04-20', 'god-of-war'),
-(5, 'Among Us', 4.99, 'Multiplayer social deduction game set on a spaceship.', 'http://localhost/GameSpace/img/user/among_us.jpg', '2025-12-09 07:16:09', '2025-12-09 13:22:23', 'Na sklade', 'Among Us cover', '2018-06-15', 'among-us'),
-(6, 'UltraBook Pro 14\"', 1299.99, 'Lightweight 14-inch ultrabook with 16GB RAM and 512GB SSD.', 'ultrabook_pro_14.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'UltraBook Pro 14\" laptop', '2025-01-15', 'ultrabook-pro-14'),
-(7, 'Gaming Beast 17\"', 2199, 'High-end gaming laptop with RTX 4080 and 32GB RAM.', 'gaming_beast_17.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'Gaming Beast 17\" laptop', '2025-02-10', 'gaming-beast-17'),
-(8, 'OfficeMate 15\"', 899.5, 'Reliable notebook for office tasks with 16GB RAM and 256GB SSD.', 'officemate_15.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'OfficeMate 15\" laptop', '2025-03-05', 'officemate-15'),
-(9, 'CompactBook 13\"', 749.99, 'Ultra-portable 13-inch notebook with long battery life.', 'compactbook_13.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'CompactBook 13\" laptop', '2025-01-22', 'compactbook-13'),
-(10, 'PowerStation 15\"', 1599.99, 'Powerful 15-inch PC laptop with 32GB RAM and 1TB SSD.', 'powerstation_15.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'PowerStation 15\" laptop', '2025-04-01', 'powerstation-15'),
-(11, 'Notebook X1', 1199, 'Slim notebook with touchscreen and 16GB RAM.', 'notebook_x1.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'Notebook X1 touchscreen laptop', '2025-02-28', 'notebook-x1'),
-(12, 'Gaming Mini 15\"', 1999.99, 'Compact gaming notebook with RTX 4070 and 16GB RAM.', 'gaming_mini_15.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'Gaming Mini 15\" laptop', '2025-03-12', 'gaming-mini-15'),
-(13, 'EcoBook 14\"', 679.5, 'Eco-friendly notebook with energy-efficient processor.', 'ecobook_14.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'EcoBook 14\" laptop', '2025-04-05', 'ecobook-14'),
-(14, 'ProStation 16\"', 1899.99, 'Professional workstation laptop with 64GB RAM.', 'prostation_16.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'ProStation 16\" laptop', '2025-01-30', 'prostation-16'),
-(15, 'TravelBook 13\"', 799.99, 'Light and portable notebook ideal for travel.', 'travelbook_13.jpg', '2025-12-11 09:09:12', '2025-12-11 09:14:16', 'Na sklade', 'TravelBook 13\" laptop', '2025-02-20', 'travelbook-13'),
-(16, 'Gaming Mouse X200', 49.99, 'High-precision gaming mouse with RGB lighting.', 'gaming_mouse_x200.jpg', '2025-12-11 09:33:33', '2025-12-11 09:33:33', 'Na sklade', 'Gaming Mouse X200', '2025-05-10', 'gaming-mouse-x200'),
-(17, 'Mechanical Keyboard K75', 89.99, 'Mechanical keyboard with customizable RGB keys.', 'mechanical_keyboard_k75.jpg', '2025-12-11 09:33:33', '2025-12-11 09:33:33', 'Na sklade', 'Mechanical Keyboard K75', '2025-06-01', 'mechanical-keyboard-k75'),
-(18, 'Wireless Headset H7', 79.99, 'Wireless headset with surround sound.', 'wireless_headset_h7.jpg', '2025-12-11 09:33:33', '2025-12-11 09:33:33', 'Na sklade', 'Wireless Headset H7', '2025-07-15', 'wireless-headset-h7'),
-(19, 'PlayStation 5', 499.99, 'Next-gen PlayStation console with ultra-fast SSD and 4K gaming.', 'playstation_5.jpg', '2025-12-11 09:35:48', '2025-12-11 09:35:48', 'Na sklade', 'PlayStation 5 console', '2020-11-12', 'playstation-5'),
-(20, 'Xbox Series X', 499.99, 'Powerful next-gen Xbox console with ray tracing and 4K gaming.', 'xbox_series_x.jpg', '2025-12-11 09:35:48', '2025-12-11 09:35:48', 'Na sklade', 'Xbox Series X console', '2020-11-10', 'xbox-series-x'),
-(21, 'Nintendo Switch OLED', 349.99, 'Portable Nintendo Switch console with OLED display and enhanced audio.', 'nintendo_switch_oled.jpg', '2025-12-11 09:35:48', '2025-12-11 09:35:48', 'Na sklade', 'Nintendo Switch OLED', '2021-10-08', 'nintendo-switch-oled'),
-(22, 'Xbox Game Pass Ultimate', 12.99, 'Monthly subscription giving access to over 100 games on Xbox and PC.', 'xbox_game_pass.jpg', '2025-12-11 09:36:32', '2025-12-11 09:36:32', 'Na sklade', 'Xbox Game Pass Ultimate', '2021-06-01', 'xbox-game-pass-ultimate'),
-(23, 'PlayStation Plus Premium', 14.99, 'Monthly subscription with access to classic games and cloud streaming.', 'ps_plus_premium.jpg', '2025-12-11 09:36:32', '2025-12-11 09:36:32', 'Na sklade', 'PlayStation Plus Premium', '2021-07-15', 'playstation-plus-premium'),
-(24, 'Steam Gift Card 50€', 50, 'Gift card redeemable on Steam for games and content.', 'steam_gift_card_50.jpg', '2025-12-11 09:36:32', '2025-12-11 09:36:32', 'Na sklade', 'Steam Gift Card 50€', '2022-01-10', 'steam-gift-card-50'),
-(25, 'Red Dead Redemption 2', 49.99, 'Epic Western action-adventure game by Rockstar Games.', 'rdr2.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Red Dead Redemption 2 cover', '2018-10-26', 'red-dead-redemption-2'),
-(26, 'The Witcher 3: Wild Hunt', 29.99, 'Open-world RPG following Geralt of Rivia.', 'witcher3.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'The Witcher 3 cover', '2015-05-19', 'the-witcher-3'),
-(27, 'Elden Ring', 59.99, 'Open-world action RPG by FromSoftware and George R. R. Martin.', 'elden_ring.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Elden Ring cover', '2022-02-25', 'elden-ring'),
-(28, 'Hogwarts Legacy', 69.99, 'Open-world RPG set in the Harry Potter universe.', 'hogwarts_legacy.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Hogwarts Legacy cover', '2023-02-10', 'hogwarts-legacy'),
-(29, 'Grand Theft Auto V', 19.99, 'Action-adventure game set in Los Santos.', 'gta_v.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'GTA V cover', '2013-09-17', 'grand-theft-auto-v'),
-(30, 'Baldur\'s Gate 3', 69.99, 'Top-tier CRPG based on D&D rules.', 'bg3.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Baldur\'s Gate 3 cover', '2023-08-03', 'baldurs-gate-3'),
-(31, 'Starfield', 69.99, 'Space open-world RPG by Bethesda.', 'starfield.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Starfield cover', '2023-09-06', 'starfield'),
-(32, 'Assassin\'s Creed Valhalla', 39.99, 'Viking adventure in Assassin\'s Creed franchise.', 'ac_valhalla.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Assassin\'s Creed Valhalla cover', '2020-11-10', 'assassins-creed-valhalla'),
-(33, 'Far Cry 6', 49.99, 'Open-world shooter set on Yara.', 'far_cry_6.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Far Cry 6 cover', '2021-10-07', 'far-cry-6'),
-(34, 'The Last of Us Part I', 69.99, 'Remake of the iconic survival adventure.', 'tlou_part1.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'The Last of Us Part I cover', '2022-09-02', 'the-last-of-us-part-1'),
-(35, 'The Last of Us Part II', 39.99, 'Emotional action-adventure set in a post-apocalypse.', 'tlou_part2.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'The Last of Us Part II cover', '2020-06-19', 'the-last-of-us-part-2'),
-(36, 'Ghost of Tsushima', 49.99, 'Samurai open-world game set in feudal Japan.', 'ghost_of_tsushima.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Ghost of Tsushima cover', '2020-07-17', 'ghost-of-tsushima'),
-(37, 'Horizon Forbidden West', 59.99, 'Sci-fi open-world adventure with Aloy.', 'hfw.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Horizon Forbidden West cover', '2022-02-18', 'horizon-forbidden-west'),
-(38, 'Spider-Man Remastered', 49.99, 'Superhero action game by Insomniac.', 'spiderman_remastered.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Spider-Man Remastered cover', '2020-11-12', 'spider-man-remastered'),
-(39, 'Spider-Man: Miles Morales', 39.99, 'Standalone spin-off starring Miles.', 'miles_morales.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Spider-Man Miles Morales cover', '2020-11-12', 'spider-man-miles-morales'),
-(40, 'Call of Duty: Modern Warfare II', 69.99, 'FPS reboot sequel from Infinity Ward.', 'mw2_2022.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'MW2 2022 cover', '2022-10-28', 'cod-modern-warfare-2'),
-(41, 'Call of Duty: Black Ops Cold War', 49.99, 'Cold War-era shooter in CoD series.', 'cold_war.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Cold War cover', '2020-11-13', 'cod-black-ops-cold-war'),
-(42, 'Battlefield 2042', 29.99, 'Large-scale modern warfare shooter.', 'bf2042.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Battlefield 2042 cover', '2021-11-19', 'battlefield-2042'),
-(43, 'Doom Eternal', 29.99, 'Fast-paced demon-slaying FPS.', 'doom_eternal.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Doom Eternal cover', '2020-03-20', 'doom-eternal'),
-(44, 'Forza Horizon 5', 59.99, 'Open-world racing in Mexico.', 'fh5.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Forza Horizon 5 cover', '2021-11-09', 'forza-horizon-5'),
-(45, 'FIFA 24', 69.99, 'Latest football simulation entry.', 'fifa24.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'FIFA 24 cover', '2023-09-29', 'fifa-24'),
-(46, 'NBA 2K24', 59.99, 'Basketball simulation by 2K Sports.', 'nba2k24.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'NBA 2K24 cover', '2023-09-08', 'nba-2k24'),
-(47, 'Mortal Kombat 1', 59.99, 'Reboot of the iconic fighting game.', 'mk1.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Mortal Kombat 1 cover', '2023-09-19', 'mortal-kombat-1'),
-(48, 'Tekken 8', 69.99, 'Latest entry in Tekken fighting franchise.', 'tekken8.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Tekken 8 cover', '2024-01-26', 'tekken-8'),
-(49, 'Street Fighter 6', 59.99, 'Capcom’s newest fighting game.', 'sf6.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Street Fighter 6 cover', '2023-06-02', 'street-fighter-6'),
-(50, 'Diablo IV', 69.99, 'Dark action RPG by Blizzard.', 'diablo4.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Diablo IV cover', '2023-06-06', 'diablo-4'),
-(51, 'Overwatch 2', 0, 'Team-based online FPS, free-to-play.', 'overwatch2.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Overwatch 2 cover', '2022-10-04', 'overwatch-2'),
-(52, 'Apex Legends', 0, 'Free-to-play battle royale.', 'apex_legends.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Apex Legends cover', '2019-02-04', 'apex-legends'),
-(53, 'Fortnite', 0, 'Battle royale phenomenon.', 'fortnite.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Fortnite cover', '2017-07-21', 'fortnite'),
-(54, 'PUBG: Battlegrounds', 0, 'Popular battle royale shooter.', 'pubg.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'PUBG cover', '2017-12-20', 'pubg-battlegrounds'),
-(55, 'League of Legends', 0, 'MOBA played worldwide.', 'lol.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'League of Legends cover', '2009-10-27', 'league-of-legends'),
-(56, 'Counter-Strike 2', 0, 'Tactical FPS and successor to CS:GO.', 'cs2.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Counter-Strike 2 cover', '2023-09-27', 'counter-strike-2'),
-(57, 'Valorant', 0, 'Character-based tactical FPS.', 'valorant.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Valorant cover', '2020-06-02', 'valorant'),
-(58, 'Genshin Impact', 0, 'Anime open-world action RPG.', 'genshin.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Genshin Impact cover', '2020-09-28', 'genshin-impact'),
-(59, 'Star Wars Jedi: Survivor', 69.99, 'Action-adventure starring Cal Kestis.', 'sw_jedi_survivor.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Star Wars Jedi Survivor cover', '2023-04-28', 'star-wars-jedi-survivor'),
-(60, 'Star Wars Jedi: Fallen Order', 19.99, 'Action-adventure prequel to Survivor.', 'fallen_order.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Star Wars Jedi Fallen Order cover', '2019-11-15', 'star-wars-jedi-fallen-order'),
-(61, 'Dead Space Remake', 59.99, 'Horror sci-fi remake by EA Motive.', 'dead_space_remake.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Dead Space Remake cover', '2023-01-27', 'dead-space-remake'),
-(62, 'Resident Evil 4 Remake', 59.99, 'Remake of the classic 2005 game.', 're4_remake.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Resident Evil 4 Remake cover', '2023-03-24', 'resident-evil-4-remake'),
-(63, 'Resident Evil Village', 39.99, 'First-person survival horror.', 're_village.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Resident Evil Village cover', '2021-05-07', 'resident-evil-village'),
-(64, 'Cyberpunk 2077: Phantom Liberty', 29.99, 'Expansion for Cyberpunk 2077.', 'phantom_liberty.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Phantom Liberty cover', '2023-09-26', 'cyberpunk-2077-phantom-liberty'),
-(65, 'Death Stranding', 29.99, 'Open-world walking adventure by Kojima.', 'death_stranding.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Death Stranding cover', '2019-11-08', 'death-stranding'),
-(66, 'Deathloop', 39.99, 'Time-loop FPS with stylish design.', 'deathloop.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Deathloop cover', '2021-09-14', 'deathloop'),
-(67, 'Control', 29.99, 'Supernatural third-person adventure.', 'control.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Control cover', '2019-08-27', 'control'),
-(68, 'Alan Wake 2', 69.99, 'Survival horror sequel by Remedy.', 'alan_wake_2.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Alan Wake 2 cover', '2023-10-27', 'alan-wake-2'),
-(69, 'Alan Wake Remastered', 29.99, 'Enhanced version of the original game.', 'alan_wake_remastered.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Alan Wake Remastered cover', '2021-10-05', 'alan-wake-remastered'),
-(70, 'S.T.A.L.K.E.R. 2: Heart of Chornobyl', 69.99, 'Post-apocalyptic FPS survival game.', 'stalker2.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'S.T.A.L.K.E.R. 2 cover', '2024-09-05', 'stalker-2-heart-of-chornobyl'),
-(71, 'Metro Exodus', 19.99, 'Post-apocalyptic FPS with survival elements.', 'metro_exodus.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Metro Exodus cover', '2019-02-15', 'metro-exodus'),
-(72, 'Monster Hunter: World', 29.99, 'Action RPG about hunting massive beasts.', 'mhw.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Monster Hunter World cover', '2018-01-26', 'monster-hunter-world'),
-(73, 'Monster Hunter Rise', 39.99, 'Fast-paced monster hunting adventure.', 'mhrise.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Monster Hunter Rise cover', '2021-03-26', 'monster-hunter-rise'),
-(74, 'Dark Souls III', 29.99, 'Challenging dark fantasy action RPG.', 'dark_souls_3.jpg', '2025-12-12 14:19:10', '2025-12-12 14:19:10', 'Na sklade', 'Dark Souls III cover', '2016-03-24', 'dark-souls-3');
+INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `created_at`, `last_update`, `available`, `alt`, `release_date`, `slug`, `stock`) VALUES
+(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild', 10),
+(2, 'Minecraft', 26.95, 'Sandbox game about placing blocks and going on adventures.', 'http://localhost/GameSpace/img/user/minecraft.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Na sklade', 'Minecraft cover', '2011-11-18', 'minecraft', 10),
+(3, 'Cyberpunk 2077', 49.99, 'Futuristic open-world RPG in a dystopian city.', 'http://localhost/GameSpace/img/user/cyberpunk2077.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Na sklade', 'Cyberpunk 2077 cover', '2020-12-10', 'cyberpunk-2077', 10),
+(4, 'God of War', 39.99, 'Action-adventure game following Kratos and his son.', 'http://localhost/GameSpace/img/user/god_of_war.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Nie je na sklade', 'God of War cover', '2018-04-20', 'god-of-war', 10),
+(5, 'Among Us', 4.99, 'Multiplayer social deduction game set on a spaceship.', 'http://localhost/GameSpace/img/user/among_us.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Na sklade', 'Among Us cover', '2018-06-15', 'among-us', 10),
+(6, 'UltraBook Pro 14\"', 1299.99, 'Lightweight 14-inch ultrabook with 16GB RAM and 512GB SSD.', 'ultrabook_pro_14.jpg', '2025-12-11 09:09:12', '2025-12-15 09:50:12', 'Na sklade', 'UltraBook Pro 14\" laptop', '2025-01-15', 'ultrabook-pro-14', 10),
+(7, 'Gaming Beast 17\"', 2199, 'High-end gaming laptop with RTX 4080 and 32GB RAM.', 'gaming_beast_17.jpg', '2025-12-11 09:09:12', '2025-12-15 09:50:12', 'Na sklade', 'Gaming Beast 17\" laptop', '2025-02-10', 'gaming-beast-17', 10),
+(8, 'OfficeMate 15\"', 899.5, 'Reliable notebook for office tasks with 16GB RAM and 256GB SSD.', 'officemate_15.jpg', '2025-12-11 09:09:12', '2025-12-15 09:50:12', 'Na sklade', 'OfficeMate 15\" laptop', '2025-03-05', 'officemate-15', 10),
+(9, 'CompactBook 13\"', 749.99, 'Ultra-portable 13-inch notebook with long battery life.', 'compactbook_13.jpg', '2025-12-11 09:09:12', '2025-12-15 09:50:12', 'Na sklade', 'CompactBook 13\" laptop', '2025-01-22', 'compactbook-13', 10),
+(10, 'PowerStation 15\"', 1599.99, 'Powerful 15-inch PC laptop with 32GB RAM and 1TB SSD.', 'powerstation_15.jpg', '2025-12-11 09:09:12', '2025-12-15 09:50:12', 'Na sklade', 'PowerStation 15\" laptop', '2025-04-01', 'powerstation-15', 10),
+(11, 'Notebook X1', 1199, 'Slim notebook with touchscreen and 16GB RAM.', 'notebook_x1.jpg', '2025-12-11 09:09:12', '2025-12-15 09:50:12', 'Na sklade', 'Notebook X1 touchscreen laptop', '2025-02-28', 'notebook-x1', 10),
+(12, 'Gaming Mini 15\"', 1999.99, 'Compact gaming notebook with RTX 4070 and 16GB RAM.', 'gaming_mini_15.jpg', '2025-12-11 09:09:12', '2025-12-15 09:50:12', 'Na sklade', 'Gaming Mini 15\" laptop', '2025-03-12', 'gaming-mini-15', 10),
+(13, 'EcoBook 14\"', 679.5, 'Eco-friendly notebook with energy-efficient processor.', 'ecobook_14.jpg', '2025-12-11 09:09:12', '2025-12-15 09:50:12', 'Na sklade', 'EcoBook 14\" laptop', '2025-04-05', 'ecobook-14', 10),
+(14, 'ProStation 16\"', 1899.99, 'Professional workstation laptop with 64GB RAM.', 'prostation_16.jpg', '2025-12-11 09:09:12', '2025-12-15 09:50:12', 'Na sklade', 'ProStation 16\" laptop', '2025-01-30', 'prostation-16', 10),
+(15, 'TravelBook 13\"', 799.99, 'Light and portable notebook ideal for travel.', 'travelbook_13.jpg', '2025-12-11 09:09:12', '2025-12-15 09:50:12', 'Na sklade', 'TravelBook 13\" laptop', '2025-02-20', 'travelbook-13', 10),
+(16, 'Gaming Mouse X200', 49.99, 'High-precision gaming mouse with RGB lighting.', 'gaming_mouse_x200.jpg', '2025-12-11 09:33:33', '2025-12-15 09:50:12', 'Na sklade', 'Gaming Mouse X200', '2025-05-10', 'gaming-mouse-x200', 10),
+(17, 'Mechanical Keyboard K75', 89.99, 'Mechanical keyboard with customizable RGB keys.', 'mechanical_keyboard_k75.jpg', '2025-12-11 09:33:33', '2025-12-15 09:50:12', 'Na sklade', 'Mechanical Keyboard K75', '2025-06-01', 'mechanical-keyboard-k75', 10),
+(18, 'Wireless Headset H7', 79.99, 'Wireless headset with surround sound.', 'wireless_headset_h7.jpg', '2025-12-11 09:33:33', '2025-12-15 09:50:12', 'Na sklade', 'Wireless Headset H7', '2025-07-15', 'wireless-headset-h7', 10),
+(19, 'PlayStation 5', 499.99, 'Next-gen PlayStation console with ultra-fast SSD and 4K gaming.', 'playstation_5.jpg', '2025-12-11 09:35:48', '2025-12-15 09:50:12', 'Na sklade', 'PlayStation 5 console', '2020-11-12', 'playstation-5', 10),
+(20, 'Xbox Series X', 499.99, 'Powerful next-gen Xbox console with ray tracing and 4K gaming.', 'xbox_series_x.jpg', '2025-12-11 09:35:48', '2025-12-15 09:50:12', 'Na sklade', 'Xbox Series X console', '2020-11-10', 'xbox-series-x', 10),
+(21, 'Nintendo Switch OLED', 349.99, 'Portable Nintendo Switch console with OLED display and enhanced audio.', 'nintendo_switch_oled.jpg', '2025-12-11 09:35:48', '2025-12-15 09:50:12', 'Na sklade', 'Nintendo Switch OLED', '2021-10-08', 'nintendo-switch-oled', 10),
+(22, 'Xbox Game Pass Ultimate', 12.99, 'Monthly subscription giving access to over 100 games on Xbox and PC.', 'xbox_game_pass.jpg', '2025-12-11 09:36:32', '2025-12-15 09:50:12', 'Na sklade', 'Xbox Game Pass Ultimate', '2021-06-01', 'xbox-game-pass-ultimate', 10),
+(23, 'PlayStation Plus Premium', 14.99, 'Monthly subscription with access to classic games and cloud streaming.', 'ps_plus_premium.jpg', '2025-12-11 09:36:32', '2025-12-15 09:50:12', 'Na sklade', 'PlayStation Plus Premium', '2021-07-15', 'playstation-plus-premium', 10),
+(24, 'Steam Gift Card 50€', 50, 'Gift card redeemable on Steam for games and content.', 'steam_gift_card_50.jpg', '2025-12-11 09:36:32', '2025-12-15 09:50:12', 'Na sklade', 'Steam Gift Card 50€', '2022-01-10', 'steam-gift-card-50', 10),
+(25, 'Red Dead Redemption 2', 49.99, 'Epic Western action-adventure game by Rockstar Games.', 'rdr2.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Red Dead Redemption 2 cover', '2018-10-26', 'red-dead-redemption-2', 10),
+(26, 'The Witcher 3: Wild Hunt', 29.99, 'Open-world RPG following Geralt of Rivia.', 'witcher3.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'The Witcher 3 cover', '2015-05-19', 'the-witcher-3', 10),
+(27, 'Elden Ring', 59.99, 'Open-world action RPG by FromSoftware and George R. R. Martin.', 'elden_ring.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Elden Ring cover', '2022-02-25', 'elden-ring', 10),
+(28, 'Hogwarts Legacy', 69.99, 'Open-world RPG set in the Harry Potter universe.', 'hogwarts_legacy.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Hogwarts Legacy cover', '2023-02-10', 'hogwarts-legacy', 10),
+(29, 'Grand Theft Auto V', 19.99, 'Action-adventure game set in Los Santos.', 'gta_v.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'GTA V cover', '2013-09-17', 'grand-theft-auto-v', 10),
+(30, 'Baldur\'s Gate 3', 69.99, 'Top-tier CRPG based on D&D rules.', 'bg3.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Baldur\'s Gate 3 cover', '2023-08-03', 'baldurs-gate-3', 10),
+(31, 'Starfield', 69.99, 'Space open-world RPG by Bethesda.', 'starfield.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Starfield cover', '2023-09-06', 'starfield', 10),
+(32, 'Assassin\'s Creed Valhalla', 39.99, 'Viking adventure in Assassin\'s Creed franchise.', 'ac_valhalla.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Assassin\'s Creed Valhalla cover', '2020-11-10', 'assassins-creed-valhalla', 10),
+(33, 'Far Cry 6', 49.99, 'Open-world shooter set on Yara.', 'far_cry_6.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Far Cry 6 cover', '2021-10-07', 'far-cry-6', 10),
+(34, 'The Last of Us Part I', 69.99, 'Remake of the iconic survival adventure.', 'tlou_part1.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'The Last of Us Part I cover', '2022-09-02', 'the-last-of-us-part-1', 10),
+(35, 'The Last of Us Part II', 39.99, 'Emotional action-adventure set in a post-apocalypse.', 'tlou_part2.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'The Last of Us Part II cover', '2020-06-19', 'the-last-of-us-part-2', 10),
+(36, 'Ghost of Tsushima', 49.99, 'Samurai open-world game set in feudal Japan.', 'ghost_of_tsushima.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Ghost of Tsushima cover', '2020-07-17', 'ghost-of-tsushima', 10),
+(37, 'Horizon Forbidden West', 59.99, 'Sci-fi open-world adventure with Aloy.', 'hfw.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Horizon Forbidden West cover', '2022-02-18', 'horizon-forbidden-west', 10),
+(38, 'Spider-Man Remastered', 49.99, 'Superhero action game by Insomniac.', 'spiderman_remastered.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Spider-Man Remastered cover', '2020-11-12', 'spider-man-remastered', 10),
+(39, 'Spider-Man: Miles Morales', 39.99, 'Standalone spin-off starring Miles.', 'miles_morales.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Spider-Man Miles Morales cover', '2020-11-12', 'spider-man-miles-morales', 10),
+(40, 'Call of Duty: Modern Warfare II', 69.99, 'FPS reboot sequel from Infinity Ward.', 'mw2_2022.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'MW2 2022 cover', '2022-10-28', 'cod-modern-warfare-2', 10),
+(41, 'Call of Duty: Black Ops Cold War', 49.99, 'Cold War-era shooter in CoD series.', 'cold_war.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Cold War cover', '2020-11-13', 'cod-black-ops-cold-war', 10),
+(42, 'Battlefield 2042', 29.99, 'Large-scale modern warfare shooter.', 'bf2042.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Battlefield 2042 cover', '2021-11-19', 'battlefield-2042', 10),
+(43, 'Doom Eternal', 29.99, 'Fast-paced demon-slaying FPS.', 'doom_eternal.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Doom Eternal cover', '2020-03-20', 'doom-eternal', 10),
+(44, 'Forza Horizon 5', 59.99, 'Open-world racing in Mexico.', 'fh5.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Forza Horizon 5 cover', '2021-11-09', 'forza-horizon-5', 10),
+(45, 'FIFA 24', 69.99, 'Latest football simulation entry.', 'fifa24.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'FIFA 24 cover', '2023-09-29', 'fifa-24', 10),
+(46, 'NBA 2K24', 59.99, 'Basketball simulation by 2K Sports.', 'nba2k24.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'NBA 2K24 cover', '2023-09-08', 'nba-2k24', 10),
+(47, 'Mortal Kombat 1', 59.99, 'Reboot of the iconic fighting game.', 'mk1.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Mortal Kombat 1 cover', '2023-09-19', 'mortal-kombat-1', 10),
+(48, 'Tekken 8', 69.99, 'Latest entry in Tekken fighting franchise.', 'tekken8.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Tekken 8 cover', '2024-01-26', 'tekken-8', 10),
+(49, 'Street Fighter 6', 59.99, 'Capcom’s newest fighting game.', 'sf6.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Street Fighter 6 cover', '2023-06-02', 'street-fighter-6', 10),
+(50, 'Diablo IV', 69.99, 'Dark action RPG by Blizzard.', 'diablo4.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Diablo IV cover', '2023-06-06', 'diablo-4', 10),
+(51, 'Overwatch 2', 0, 'Team-based online FPS, free-to-play.', 'overwatch2.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Overwatch 2 cover', '2022-10-04', 'overwatch-2', 10),
+(52, 'Apex Legends', 0, 'Free-to-play battle royale.', 'apex_legends.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Apex Legends cover', '2019-02-04', 'apex-legends', 10),
+(53, 'Fortnite', 0, 'Battle royale phenomenon.', 'fortnite.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Fortnite cover', '2017-07-21', 'fortnite', 10),
+(54, 'PUBG: Battlegrounds', 0, 'Popular battle royale shooter.', 'pubg.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'PUBG cover', '2017-12-20', 'pubg-battlegrounds', 10),
+(55, 'League of Legends', 0, 'MOBA played worldwide.', 'lol.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'League of Legends cover', '2009-10-27', 'league-of-legends', 10),
+(56, 'Counter-Strike 2', 0, 'Tactical FPS and successor to CS:GO.', 'cs2.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Counter-Strike 2 cover', '2023-09-27', 'counter-strike-2', 10),
+(57, 'Valorant', 0, 'Character-based tactical FPS.', 'valorant.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Valorant cover', '2020-06-02', 'valorant', 10),
+(58, 'Genshin Impact', 0, 'Anime open-world action RPG.', 'genshin.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Genshin Impact cover', '2020-09-28', 'genshin-impact', 10),
+(59, 'Star Wars Jedi: Survivor', 69.99, 'Action-adventure starring Cal Kestis.', 'sw_jedi_survivor.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Star Wars Jedi Survivor cover', '2023-04-28', 'star-wars-jedi-survivor', 10),
+(60, 'Star Wars Jedi: Fallen Order', 19.99, 'Action-adventure prequel to Survivor.', 'fallen_order.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Star Wars Jedi Fallen Order cover', '2019-11-15', 'star-wars-jedi-fallen-order', 10),
+(61, 'Dead Space Remake', 59.99, 'Horror sci-fi remake by EA Motive.', 'dead_space_remake.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Dead Space Remake cover', '2023-01-27', 'dead-space-remake', 10),
+(62, 'Resident Evil 4 Remake', 59.99, 'Remake of the classic 2005 game.', 're4_remake.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Resident Evil 4 Remake cover', '2023-03-24', 'resident-evil-4-remake', 10),
+(63, 'Resident Evil Village', 39.99, 'First-person survival horror.', 're_village.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Resident Evil Village cover', '2021-05-07', 'resident-evil-village', 10),
+(64, 'Cyberpunk 2077: Phantom Liberty', 29.99, 'Expansion for Cyberpunk 2077.', 'phantom_liberty.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Phantom Liberty cover', '2023-09-26', 'cyberpunk-2077-phantom-liberty', 10),
+(65, 'Death Stranding', 29.99, 'Open-world walking adventure by Kojima.', 'death_stranding.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Death Stranding cover', '2019-11-08', 'death-stranding', 10),
+(66, 'Deathloop', 39.99, 'Time-loop FPS with stylish design.', 'deathloop.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Deathloop cover', '2021-09-14', 'deathloop', 10),
+(67, 'Control', 29.99, 'Supernatural third-person adventure.', 'control.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Control cover', '2019-08-27', 'control', 10),
+(68, 'Alan Wake 2', 69.99, 'Survival horror sequel by Remedy.', 'alan_wake_2.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Alan Wake 2 cover', '2023-10-27', 'alan-wake-2', 10),
+(69, 'Alan Wake Remastered', 29.99, 'Enhanced version of the original game.', 'alan_wake_remastered.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Alan Wake Remastered cover', '2021-10-05', 'alan-wake-remastered', 10),
+(70, 'S.T.A.L.K.E.R. 2: Heart of Chornobyl', 69.99, 'Post-apocalyptic FPS survival game.', 'stalker2.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'S.T.A.L.K.E.R. 2 cover', '2024-09-05', 'stalker-2-heart-of-chornobyl', 10),
+(71, 'Metro Exodus', 19.99, 'Post-apocalyptic FPS with survival elements.', 'metro_exodus.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Metro Exodus cover', '2019-02-15', 'metro-exodus', 10),
+(72, 'Monster Hunter: World', 29.99, 'Action RPG about hunting massive beasts.', 'mhw.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Monster Hunter World cover', '2018-01-26', 'monster-hunter-world', 10),
+(73, 'Monster Hunter Rise', 39.99, 'Fast-paced monster hunting adventure.', 'mhrise.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Monster Hunter Rise cover', '2021-03-26', 'monster-hunter-rise', 10),
+(74, 'Dark Souls III', 29.99, 'Challenging dark fantasy action RPG.', 'dark_souls_3.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Dark Souls III cover', '2016-03-24', 'dark-souls-3', 10);
 
 -- --------------------------------------------------------
 
@@ -386,6 +387,20 @@ CREATE TABLE `payment` (
   `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Sťahujem dáta pre tabuľku `payment`
+--
+
+INSERT INTO `payment` (`idPayment`, `name`, `created_at`, `last_update`) VALUES
+(1, 'Dobierka', '2025-12-15 15:32:30', '2025-12-15 15:32:30'),
+(2, 'Platba kartou', '2025-12-15 15:32:30', '2025-12-15 15:32:30'),
+(3, 'Bankový prevod', '2025-12-15 15:32:30', '2025-12-15 15:32:30'),
+(4, 'Online bankový prevod', '2025-12-15 15:32:30', '2025-12-15 15:32:30'),
+(5, 'Apple Pay', '2025-12-15 15:32:30', '2025-12-15 15:32:30'),
+(6, 'Google Pay', '2025-12-15 15:32:30', '2025-12-15 15:32:30'),
+(7, 'PayPal', '2025-12-15 15:32:30', '2025-12-15 15:32:30'),
+(8, 'Hotovosť', '2025-12-15 15:32:30', '2025-12-15 15:32:30');
+
 -- --------------------------------------------------------
 
 --
@@ -440,6 +455,19 @@ CREATE TABLE `transport` (
   `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Sťahujem dáta pre tabuľku `transport`
+--
+
+INSERT INTO `transport` (`idTransport`, `name`, `created_at`, `last_update`) VALUES
+(1, 'Slovenská pošta', '2025-12-15 15:33:16', '2025-12-15 15:33:16'),
+(2, 'Packeta', '2025-12-15 15:33:16', '2025-12-15 15:33:16'),
+(3, 'DPD', '2025-12-15 15:33:16', '2025-12-15 15:33:16'),
+(4, 'GLS', '2025-12-15 15:33:16', '2025-12-15 15:33:16'),
+(5, 'DHL', '2025-12-15 15:33:16', '2025-12-15 15:33:16'),
+(6, 'UPS', '2025-12-15 15:33:16', '2025-12-15 15:33:16'),
+(7, 'Osobný odber', '2025-12-15 15:33:16', '2025-12-15 15:33:16');
+
 -- --------------------------------------------------------
 
 --
@@ -465,7 +493,8 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`idUsers`, `name`, `last_name`, `email`, `password`, `mobile_number`, `role_idrole`, `Address_idAddress`, `created_at`, `last_update`) VALUES
 (3, 'Adam', 'Šima', 'adamsima@gmail.com', '$2y$10$/jyrZXJeaBXImPE1YeHd/eVjpxWWvRkel30dFUsGgQWRjTo81Z.vq', NULL, 2, NULL, '2025-12-13 16:30:41', '2025-12-13 16:30:41'),
-(4, 'User', 'User', 'user@user.sk', '$2y$10$anDZQb3aYY/3D3tDgbks6uoVlsuE8xzi0uEw2KRoAOjg1uq7IPy/2', NULL, 1, NULL, '2025-12-13 16:32:34', '2025-12-13 16:32:34');
+(4, 'User', 'User', 'user@user.sk', '$2y$10$anDZQb3aYY/3D3tDgbks6uoVlsuE8xzi0uEw2KRoAOjg1uq7IPy/2', NULL, 1, NULL, '2025-12-13 16:32:34', '2025-12-13 16:32:34'),
+(5, 'Aadasd', 'Asdasd', 'fff@fff.sk', '$2y$10$IWMpHgYsjM.KZUjbda2Hn.WUb5OHYDCaPzoMHlM9tmMWRuHKuEE4q', NULL, 1, NULL, '2025-12-13 20:07:33', '2025-12-13 20:07:33');
 
 --
 -- Kľúče pre exportované tabuľky
@@ -631,7 +660,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT pre tabuľku `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `idPayment` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idPayment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT pre tabuľku `role`
@@ -649,13 +678,13 @@ ALTER TABLE `slideshow`
 -- AUTO_INCREMENT pre tabuľku `transport`
 --
 ALTER TABLE `transport`
-  MODIFY `idTransport` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idTransport` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT pre tabuľku `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUsers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idUsers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- Obmedzenie pre exportované tabuľky

@@ -1,7 +1,7 @@
 <template>
     <div class = "message">
-        <Error :message = "res" :key = "resKey"></Error>  
-        <Success :message = "res" :key = "resKey"></Success>
+        <Error :message = "res"></Error>  
+        <Success :message = "res"></Success>
     </div>
   <div class="wrapper">
   
@@ -89,7 +89,8 @@ import {useUserStore} from '../stores/user'
                      email: this.register_email,
                      password: this.register_password,
                      repeat_password: this.register_repeat_password,
-                     role: this.role 
+                     role: this.role,
+                     withCredentials: false
                    }
                  );
                  this.res = response.data;
@@ -120,7 +121,8 @@ import {useUserStore} from '../stores/user'
                 const response = await this.$axios.post("http://localhost/GameSpace/endpoints/fetch/login_user.php",
                   {
                     email: this.login_email,
-                    password: this.login_password
+                    password: this.login_password,
+                    withCredentials: true
                   }
                 );
                 this.res = response.data;

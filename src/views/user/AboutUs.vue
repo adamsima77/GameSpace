@@ -127,7 +127,10 @@ import Accordion from '../../components/Accordion.vue';
         methods:{
             async fetchFAQ(){
             try{
-            const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/accordion.php")
+            const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/accordion.php",
+            {
+                withCredentials: false
+            })
             this.faq = response.data;
             } catch(error){
                    if (error.response) {

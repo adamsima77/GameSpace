@@ -1,4 +1,5 @@
 <template>
+ 
     <div class="img_desc">
       <img :src="item.image" :alt="item.alt">
       <div class="desc">
@@ -8,30 +9,51 @@
           <p :class = "{available: item.available === 'Na sklade', not_available: item.available === 'Nie je na sklade'}">{{ item.available }}</p>
           <p class = "price">{{item.price}}€</p>
         </div>
-        <button v-if = "item.available === 'Na sklade'"><i class="fas fa-shopping-cart"></i>Do Košíka</button>
+        <button v-if = "item.available === 'Na sklade'" @click = "addToCart(item.id)"><i class="fas fa-shopping-cart"></i>Do Košíka</button>
       </div>
     </div>
 </template>
 
 <script>
+  import {useCartStore} from '../stores/cart'
+  import Success from '../components/Success.vue'
+  import Error from '../components/Error.vue'
  export default{
     data(){
       return{
-         item: {}
+         item: {},
+         cartStore: null,
+         reskey: 0
+        
       }
+    },
+
+    components:{
+       Error,
+       Success
+    }, 
+    
+    created(){
+        this.cartStore = useCartStore();
     },
         methods:{
              async fetchDetail(){
                   try{
                        const slug = this.$route.params.slug;
                        const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/singleItem.php",{
-                           params: { slug }
+                           params: { slug },
+                           withCredentials: false
                        });
                        this.item = response.data;
                   } catch(error){
 
                   }
-             }  
+             },
+
+             addToCart(id){
+                 this.cartStore.add(id);
+                 this.reskey++;
+             }
         },
         mounted(){
           this.fetchDetail();
@@ -40,6 +62,17 @@
 </script>
 
 <style scoped lang = "scss">
+
+   
+   .message{
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      justify-content: center;
+      align-items: center;
+
+   }
+
     .img_desc {
     display: flex;
     justify-content: space-between;

@@ -1,7 +1,8 @@
 <template>
     <div class = "breadCrumbs">
-        <RouterLink to = "/"><span><i class = "fas fa-home"></i> /</span></RouterLink>
-        <RouterLink v-if = "routerPath != ''" v-for = "(value,index) in names" :to = "getPath(index)"><span>{{ decodeURIComponent(names[index]) }}</span></RouterLink>
+        <RouterLink to = "/"><span><i class = "fas fa-home"> </i></span></RouterLink>
+        <RouterLink v-if = "routerPath != ''" v-for = "(value,index) in names" :to = "getPath(index)"><span v-if = "index < names.length - 1">{{ decodeURIComponent(names[index]) }} /</span> 
+          <span v-else>{{ decodeURIComponent(names[index]) }}</span></RouterLink>
     </div>
 </template>
 

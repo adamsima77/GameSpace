@@ -19,11 +19,11 @@ export const useSearchStore = defineStore('search', {
 
     async fetchSearch() { 
       try {
-        const response = await axios.get(
-          "http://localhost/GameSpace/endpoints/fetch/search_items.php",
+        const response = await axios.get("http://localhost/GameSpace/endpoints/fetch/search_items.php",
           {
-            params: { value: this.search_value }
-          }
+            params: { value: this.search_value },
+            withCredentials: false
+          } 
         );
 
         this.searchResult = response.data;

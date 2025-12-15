@@ -29,7 +29,10 @@ import { RouterLink } from 'vue-router';
       methods:{
        async fetchFooterIcons(){
         try{
-           const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/footer_socials.php");
+           const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/footer_socials.php",
+           {
+             withCredentials: false
+           });
            if(response.status !== 200){
                    return;
            }

@@ -43,7 +43,8 @@ export const useUserStore = defineStore('user', {
           try{
                const response = await this.$axios.post("http://localhost/GameSpace/endpoints/fetch/check_if_admin.php",
                 {
-                     id: this.user_id    
+                     id: this.user_id,
+                    withCredentials: false  
                 });
                 const res = response.data;
                 if(res.state === 'success'){

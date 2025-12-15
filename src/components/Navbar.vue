@@ -71,7 +71,8 @@ export default {
     async searchValue(value){
         try{
             const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/search_items.php", {
-                 params: { value }
+                 params: { value },
+                 withCredentials: false
             });
             this.searchResult = response.data;
         } catch(error){

@@ -48,7 +48,10 @@
     methods:{
         async fetchSlides(){
             try{
-            const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/slideshow.php")
+            const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/slideshow.php",
+            {
+                 withCredentials: false
+            })
             this.slides = response.data;
             } catch(error){
                    if (error.response) {
@@ -63,7 +66,10 @@
         },
         async fetchNewestItems(){
              try {
-                 const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetch_newest_items.php");
+                 const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetch_newest_items.php",
+                 {
+                     withCredentials: false
+                 });
                  this.ItemsNewest = response.data;
             } catch(error){
                 if (error.response) {
@@ -77,7 +83,10 @@
         },
         async fetchMostAnticipatedGames(){
             try{
-                const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/most_anticipated_games.php");
+                const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/most_anticipated_games.php",
+                {
+                     withCredentials: false
+                });
                 this.most_anticipated = response.data;
             } catch(error){
 
@@ -85,7 +94,10 @@
         },
         async fetchAccessories(){
             try{
-                const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetch_newest_accessories.php");
+                const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetch_newest_accessories.php",
+                {
+                     withCredentials: false
+                });
                 this.accessories = response.data;
             } catch(error){
 

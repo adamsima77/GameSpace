@@ -27,7 +27,8 @@ export default{
                          params: {
                              limit: this.limit,
                              offset: this.offset
-                        }
+                        },
+                        withCredentials: false
                       }
                     );
                 this.games.push(...response.data)
