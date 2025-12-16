@@ -42,9 +42,9 @@ export default{
     },
 
     methods:{
-        placeOrder(){
-            this.cartStore.placeOrder();
-            this.$router.push({name: 'successfull-order'});
+        async placeOrder(){
+            await this.cartStore.placeOrder();
+            this.$router.push({name: 'successful-order'});
         }
     }
 }

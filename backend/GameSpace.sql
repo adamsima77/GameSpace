@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: Po 15.Dec 2025, 18:23
+-- Čas generovania: Út 16.Dec 2025, 16:30
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -51,13 +51,28 @@ INSERT INTO `accordion` (`idAccordion`, `title`, `description`, `created_at`, `l
 
 CREATE TABLE `address` (
   `idAddress` int(11) NOT NULL,
-  `state` varchar(70) NOT NULL,
   `city` varchar(60) NOT NULL,
   `postal_code` varchar(15) NOT NULL,
   `street` varchar(45) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `address`
+--
+
+INSERT INTO `address` (`idAddress`, `city`, `postal_code`, `street`, `created_at`, `last_update`) VALUES
+(1, 'asd', 'sad', 'asd', '2025-12-16 13:16:45', '2025-12-16 13:16:45'),
+(2, 'safasf', '123456', 'asfasf', '2025-12-16 13:21:07', '2025-12-16 13:21:07'),
+(3, 'asf', 'asf', 'asf', '2025-12-16 13:40:25', '2025-12-16 13:40:25'),
+(4, 'asf', 'asf', 'asf', '2025-12-16 13:44:42', '2025-12-16 13:44:42'),
+(5, 'asf', 'asf', 'asf', '2025-12-16 13:49:13', '2025-12-16 13:49:13'),
+(6, 'asf', 'asdasd', 'asf', '2025-12-16 13:53:49', '2025-12-16 13:53:49'),
+(7, 'asf', 'asf', 'asf', '2025-12-16 13:55:44', '2025-12-16 13:55:44'),
+(9, 'asf', 'asf', 'asf', '2025-12-16 14:04:08', '2025-12-16 14:04:08'),
+(10, 'asf', 'asf', 'asf', '2025-12-16 14:08:27', '2025-12-16 14:08:27'),
+(11, 'Hfs', '123456', 'Asf', '2025-12-16 15:00:34', '2025-12-16 15:00:34');
 
 -- --------------------------------------------------------
 
@@ -131,7 +146,7 @@ CREATE TABLE `items` (
   `alt` varchar(255) DEFAULT NULL,
   `release_date` date DEFAULT NULL,
   `slug` varchar(255) DEFAULT NULL,
-  `stock` int(11) DEFAULT NULL
+  `stock` int(10) UNSIGNED NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -139,8 +154,8 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `created_at`, `last_update`, `available`, `alt`, `release_date`, `slug`, `stock`) VALUES
-(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild', 10),
-(2, 'Minecraft', 26.95, 'Sandbox game about placing blocks and going on adventures.', 'http://localhost/GameSpace/img/user/minecraft.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Na sklade', 'Minecraft cover', '2011-11-18', 'minecraft', 10),
+(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2025-12-16 15:00:34', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild', 5),
+(2, 'Minecraft', 26.95, 'Sandbox game about placing blocks and going on adventures.', 'http://localhost/GameSpace/img/user/minecraft.jpg', '2025-12-09 07:16:09', '2025-12-16 14:08:27', 'Nie je na sklade', 'Minecraft cover', '2011-11-18', 'minecraft', 0),
 (3, 'Cyberpunk 2077', 49.99, 'Futuristic open-world RPG in a dystopian city.', 'http://localhost/GameSpace/img/user/cyberpunk2077.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Na sklade', 'Cyberpunk 2077 cover', '2020-12-10', 'cyberpunk-2077', 10),
 (4, 'God of War', 39.99, 'Action-adventure game following Kratos and his son.', 'http://localhost/GameSpace/img/user/god_of_war.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Nie je na sklade', 'God of War cover', '2018-04-20', 'god-of-war', 10),
 (5, 'Among Us', 4.99, 'Multiplayer social deduction game set on a spaceship.', 'http://localhost/GameSpace/img/user/among_us.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Na sklade', 'Among Us cover', '2018-06-15', 'among-us', 10),
@@ -346,6 +361,22 @@ CREATE TABLE `orderdetail` (
   `Transport_idTransport` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Sťahujem dáta pre tabuľku `orderdetail`
+--
+
+INSERT INTO `orderdetail` (`idOrderDetail`, `name`, `last_name`, `email`, `mobile_number`, `Address_idAddress`, `Payment_idPayment`, `Transport_idTransport`) VALUES
+(1, 'fff', 'asd', 'as', '123', 1, 7, 1),
+(2, 'aasd', 'asfaas', 'asd@asda.sk', '55295296529', 2, 2, 2),
+(3, 'asd', 'asf', 'asd', 'asf', 3, 2, 2),
+(4, 'asf', 'asf', 'asf', 'asfasf', 4, 1, 3),
+(5, 'asfasf', 'asfafs', 'adsasd', 'asf', 5, 7, 2),
+(6, 'asf', 'asf', 'asf', 'asfas', 6, 5, 3),
+(7, 'asf', 'asf', 'asf', 'asf', 7, 6, 2),
+(9, 'asf', 'asf', 'asf', 'asf', 9, 1, 3),
+(10, 'asf', 'asf', 'asf', 'asf', 10, 7, 2),
+(11, 'Al', 'Af', 'assfas', '+432242424', 11, 4, 2);
+
 -- --------------------------------------------------------
 
 --
@@ -362,6 +393,22 @@ CREATE TABLE `orders` (
   `total_price` float NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+--
+-- Sťahujem dáta pre tabuľku `orders`
+--
+
+INSERT INTO `orders` (`idOrders`, `creation_date`, `last_update`, `OrderDetail_idOrderDetail`, `Users_idUsers`, `status`, `total_price`) VALUES
+(1, '2025-12-16 13:16:45', '2025-12-16 13:16:45', 1, NULL, 'V príprave', 0),
+(2, '2025-12-16 13:21:07', '2025-12-16 13:21:07', 2, NULL, 'V príprave', 0),
+(3, '2025-12-16 13:40:25', '2025-12-16 13:40:25', 3, NULL, 'V príprave', 0),
+(4, '2025-12-16 13:44:42', '2025-12-16 13:44:42', 4, NULL, 'V príprave', 149.97),
+(5, '2025-12-16 13:49:13', '2025-12-16 13:49:13', 5, NULL, 'V príprave', 26.95),
+(6, '2025-12-16 13:53:49', '2025-12-16 13:53:49', 6, NULL, 'V príprave', 26.95),
+(7, '2025-12-16 13:55:44', '2025-12-16 13:55:44', 7, NULL, 'V príprave', 49.99),
+(9, '2025-12-16 14:04:08', '2025-12-16 14:04:08', 9, NULL, 'V príprave', 239.96),
+(10, '2025-12-16 14:08:27', '2025-12-16 14:08:27', 10, NULL, 'V príprave', 269.5),
+(11, '2025-12-16 15:00:34', '2025-12-16 15:00:34', 11, NULL, 'V príprave', 59.99);
+
 -- --------------------------------------------------------
 
 --
@@ -373,6 +420,19 @@ CREATE TABLE `orders_has_items` (
   `Items_idItems` int(11) NOT NULL,
   `quantity` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `orders_has_items`
+--
+
+INSERT INTO `orders_has_items` (`Orders_idOrders`, `Items_idItems`, `quantity`) VALUES
+(4, 3, 3),
+(5, 2, 1),
+(6, 2, 1),
+(7, 3, 1),
+(9, 1, 4),
+(10, 2, 10),
+(11, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -618,7 +678,7 @@ ALTER TABLE `accordion`
 -- AUTO_INCREMENT pre tabuľku `address`
 --
 ALTER TABLE `address`
-  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pre tabuľku `category`
@@ -648,13 +708,13 @@ ALTER TABLE `most_anticipated`
 -- AUTO_INCREMENT pre tabuľku `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `idOrderDetail` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idOrderDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pre tabuľku `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT pre tabuľku `payment`

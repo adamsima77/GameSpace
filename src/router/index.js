@@ -29,9 +29,9 @@ const routes = [
         children:[
             {path: 'dorucenie', name: 'delivery', meta: {requiresAuth: true}, component: () => import('../views/user/cart/Delivery.vue')},
             {path: 'pokladna', name: 'checkout', meta: {requiresAuth: true} ,component: () => import('../views/user/cart/Checkout.vue')},
-            {path: 'uspesna-objednavka', name: 'successfull-order',component: () => import('../views/user/cart/SuccessfulOrder.vue')}
         ]
-      }
+      },
+      {path: 'uspesna-objednavka', name: 'successful-order',component: () => import('../views/user/cart/SuccessfulOrder.vue')}
     ],
   },
 

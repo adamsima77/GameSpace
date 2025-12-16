@@ -127,7 +127,7 @@ export const useCartStore = defineStore('cart', {
             cart: this.cart,
             total: this.total
           },
-          { withCredentials: false }
+          { withCredentials: true }
         );
         this.cleanStore();
       } catch(error){}

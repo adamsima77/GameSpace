@@ -281,6 +281,88 @@ public function addQuantity($id){
     }
 
     public function placeOrder($name,$surname,$email,$telephone_number,$city,$street,$postal_code,$transport,$payment){
+        $conn = $this->connect();
+        try{ 
+             $conn->beginTransaction();
+             $query = "INSERT INTO address(city,postal_code,street) VALUES(?,?,?);";
+             $stmt = $conn->prepare($query);
+             $stmt->bindParam(1, $city);
+             $stmt->bindParam(2, $postal_code);
+             $stmt->bindParam(3, $street);
+             $stmt->execute();
+             $address_id = $conn->lastInsertId();
 
+             $query = "INSERT INTO orderdetail(name,last_name,email,mobile_number,Address_idAddress, Payment_idPayment, Transport_idTransport) VALUES(?,?,?,?,?,?,?);";
+             $stmt = $conn->prepare($query);
+             $stmt->bindParam(1, $name);
+             $stmt->bindParam(2, $surname);
+             $stmt->bindParam(3, $email);
+             $stmt->bindParam(4, $telephone_number);
+             $stmt->bindParam(5, $address_id);
+             $stmt->bindParam(6, $payment);
+             $stmt->bindParam(7, $transport);
+             $stmt->execute();
+              $order_detail_id = $conn->lastInsertId();
+             $total = 0;
+             foreach($this->cart as $value){
+                 $query = "SELECT price FROM items WHERE idItems = ?";
+                 $stmt = $conn->prepare($query);
+                 $id = $value['id'];
+                 $stmt->bindParam(1, $id);
+                 $stmt->execute();
+                 $rs = $stmt->fetch();
+                 $total += $rs['price'] * $value['quantity'];
+             }
+            
+
+             $status = "V príprave";
+             $query = "INSERT INTO `orders` (OrderDetail_idOrderDetail, status, total_price) VALUES (?,?,?)";
+             $stmt = $conn->prepare($query);
+             $stmt->bindParam(1, $order_detail_id);
+             $stmt->bindParam(2, $status);
+             $stmt->bindParam(3, $total);
+             $stmt->execute();
+
+             $order_id = $conn->lastInsertId();
+             foreach($this->cart as $value){
+                   $quantity = $value['quantity'];
+                   $item_id = $value['id'];
+                   $query = "INSERT INTO orders_has_items(Orders_idOrders, Items_idItems, quantity) VALUES(?,?,?);";
+                   $stmt = $conn->prepare($query);
+                   $stmt->bindParam(1, $order_id);
+                   $stmt->bindParam(2, $item_id);
+                   $stmt->bindParam(3, $quantity);
+                   $stmt->execute();
+             }
+
+             foreach($this->cart as $value){
+                    $quantity = $value['quantity'];
+                    $item_id = $value['id'];
+                    $query = "SELECT stock FROM items WHERE idItems = ?;";
+                    $stmt = $conn->prepare($query);
+                    $stmt->bindParam(1, $item_id);
+                    $stmt->execute();
+                    $rs = $stmt->fetch();
+                
+                    $stock_change = $rs['stock'] - $value['quantity'];
+                    $available_text = $stock_change <= 0 ? "Nie je na sklade" : "Na sklade";
+                    $query_1 = "UPDATE items SET stock = ?, available = ? WHERE idItems = ?";
+                    $stmt = $conn->prepare($query_1);
+                    $stmt->bindParam(1, $stock_change);
+                    $stmt->bindParam(2, $available_text);
+                    $stmt->bindParam(3, $item_id);
+                    $stmt->execute();
+             }
+
+             $conn->commit();
+             $this->cart = [];
+             setcookie('cart', '', time() - 3600, '/');
+        } catch(Exception $e){
+               die($e->getMessage());
+               $conn->rollback();
+               die;
+        } finally{
+            $conn = null;
+        }
     }
 }

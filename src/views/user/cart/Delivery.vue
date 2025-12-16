@@ -2,42 +2,42 @@
     <div class = "inputs">
     <h1>Adresa doručenia</h1>
     <label for="email">E-mail:
-        <input type="text" :class="{bad_input: errors.email, good_input: !errors.email}"  @input="errors.email = false"  v-model = "email" id = "email" placeholder = "Zadajte E-mail...">
+        <input type="text" :class="{bad_input: !isEmailValid && touched.email, good_input: isEmailValid && touched.email}"  @input="touched.email = true"  v-model = "email" id = "email" placeholder = "Zadajte E-mail...">
     </label>
 
      <label for="name">Meno:
-        <input type="text" :class="{bad_input: errors.name, good_input: !errors.name}"   @input="errors.name = false" v-model = "name" id = "name" placeholder = "Zadajte meno...">
+        <input type="text" v-model = "name"  :class="{bad_input: !isName && touched.name, good_input: isName && touched.name}"   @input="touched.name = true"  id = "name" placeholder = "Zadajte meno...">
     </label>
 
      <label for="surname">Priezvisko
-        <input type="text" :class="{bad_input: errors.surname, good_input: !errors.surname}"  @input="errors.surname = false"  v-model = "surname" id = "surname" placeholder = "Zadajte priezvisko...">
+        <input type="text" :class="{bad_input: !isSurnameValid && touched.surname, good_input: isSurnameValid && touched.surname}"  @input="touched.surname = true"  v-model = "surname" id = "surname" placeholder = "Zadajte priezvisko...">
     </label>
 
      <label for="city">Mesto:
-        <input type="text" :class="{bad_input: errors.city, good_input: !errors.city}"   @input="errors.city = false" v-model = "city" id = "city" placeholder = "Zadajte mesto...">
+        <input type="text" :class="{bad_input: !isCityValid && touched.city, good_input: isCityValid && touched.city}"   @input="touched.city = true" v-model = "city" id = "city" placeholder = "Zadajte mesto...">
     </label>
 
      <label for="street">Ulica:
-        <input type="text" :class="{bad_input: errors.street, good_input: !errors.street}"   @input="errors.street = false" v-model = "street" id = "street" placeholder = "Zadajte ulicu...">
+        <input type="text" :class="{bad_input: !isStreetValid && touched.street, good_input: isStreetValid && touched.street}"   @input="touched.street = true" v-model = "street" id = "street" placeholder = "Zadajte ulicu...">
     </label>
 
      <label for="postal">PSČ:
-        <input type="text" :class="{bad_input: errors.postal_code, good_input: !errors.postal_code}"  @input="errors.postal_code = false"  v-model = "postal_code" id = "postal" placeholder = "Zadajte PSČ...">
+        <input type="text" :class="{bad_input: !isPostalValid && touched.postal_code, good_input: isPostalValid && touched.postal_code}"  @input="touched.postal_code = true"  v-model = "postal_code" id = "postal" placeholder = "Zadajte PSČ...">
     </label>
 
      <label for="phone_num">Telefónne číslo:
-        <input type="text" :class="{bad_input: errors.telephone_number, good_input: !errors.telephone_number}"   @input="errors.telephone_number = false" v-model = "telephone_number" id = "phone_num" placeholder = "Zadajte telefónne číslo...">
+        <input type="text" :class="{bad_input: !isTelephoneValid && touched.telephone_number, good_input: isTelephoneValid && touched.telephone_number}"  @input="touched.telephone_number = true"   v-model = "telephone_number" id = "phone_num" placeholder = "Zadajte telefónne číslo...">
     </label>
 
     <h1>Spôsob dopravy</h1>
     <label for="transit">Vyberte spôsob dopravy:
-        <select id="transit" name="" v-model.number = "transport" :class="{bad_input: errors.transport, good_input: !errors.transport}"   @change="errors.transport = false">
+        <select id="transit" name="" v-model.number = "transport" :class="{bad_input: !isTransportValid && touched.transport, good_input: isTransportValid && touched.transport}"   @change="touched.transport = true">
             <option disabled value="-1">Vyberte spôsob dopravy...</option>
           <option :value="value.id" v-for = "(value,index) in transits" :key = "index">{{ value.name }}</option>
         </select>
         </label>
         <label for="payment">Vyberte spôsob platby:
-        <select id="payment" name="" v-model.number = "payment" :class="{bad_input: errors.payment, good_input: !errors.payment}"   @change="errors.payment = false">
+        <select id="payment" name="" v-model.number = "payment" :class="{bad_input: !isPaymentValid && touched.payment, good_input: isPaymentValid && touched.payment}"   @change="touched.payment = true">
            <option disabled value="-1">Vyberte spôsob platby...</option>
            <option :value="value.id" v-for = "(value,index) in payments" :key = "index">{{ value.name }}</option>
         </select>
@@ -76,7 +76,18 @@ export default{
               transport: false,
               payment: false
              },
-             cartStore: null
+             cartStore: null,
+               touched: {
+                   email: false,
+                   name: false,
+                   surname: false,
+                   city: false,
+                   street: false,
+                   postal_code: false,
+                   telephone_number: false,
+                   transport: false,
+                   payment: false
+                }
         }
     },
 
@@ -108,44 +119,45 @@ export default{
         },
 
         checkVariables(){
-              
+            this.onLoad = false;
             if(this.email === ''){
                  this.errors.email = true
             } else {
                 this.errors.email = false;
             }
 
-            if(this.name === ''){
-                  this.errors.name = true;
-            } else {
+            if (!this.name || this.name.length < 2 || !this.isFirstLetterUpper(this.name)) {
+                   
+                   this.errors.name = true;
+            }else {
                 this.errors.name = false;
             }
 
-            if(this.surname === ''){
+           if (!this.surname || this.surname.length < 2 || !this.isFirstLetterUpper(this.surname)) {
                  this.errors.surname = true;
             } else{
                 this.errors.surname = false;
             }
 
-            if(this.city === ''){
+           if (!this.city || this.city.length < 2 || !this.isFirstLetterUpper(this.city)) {
                   this.errors.city = true;
             } else{
                 this.errors.city = false;
             }
 
-            if(this.street === ''){
+            if (!this.street || this.street.length < 2 || !this.isFirstLetterUpper(this.street)) {
                  this.errors.street = true;
             } else{
                 this.errors.street = false;
             } 
 
-            if(this.postal_code === ''){
+            if(!this.postal_code || !this.checkPostalCode(this.postal_code)){
                    this.errors.postal_code = true;
             } else{
                 this.errors.postal_code = false;
             }
 
-            if(this.telephone_number === ''){
+            if(!this.telephone_number || !this.checkTelephoneNumber(this.telephone_number)){
                  this.errors.telephone_number = true;
             } else{
                 this.errors.telephone_number = false;
@@ -172,6 +184,53 @@ export default{
                 }
         },
 
+   checkTelephoneNumber(number) {
+    if (!number) return false;
+
+    let plusCount = 0;
+    let digitCount = 0;
+
+    for (let i = 0; i < number.length; i++) {
+        const char = number[i];
+
+        if (char === '+') {
+            plusCount++;
+            if (i !== 0) return false; 
+        } else if ((char >= '0' && char <= '9')) {
+            digitCount++;
+    
+        } else if(char == ' '){
+            continue;
+        } else {
+            return false; 
+        }
+    }
+
+    if (plusCount > 1) return false;
+    if (digitCount < 5 || digitCount > 15) return false;
+
+    return true;
+},
+
+      isFirstLetterUpper(str) {
+          if (!str) return false; 
+          const firstChar = str.charAt(0);
+          return firstChar === firstChar.toUpperCase();
+      },
+
+      checkPostalCode(postal_code){
+          let isDigit = true;
+          for(let i = 0; i < postal_code.length; i++){
+               if(!(postal_code.charAt(i) >= '0' && postal_code.charAt(i) <= '9')){
+                     isDigit = false;
+                     break;
+               }
+          }
+          if(isDigit) return true;
+          else return false;
+      },
+
+
         ifDeclaredAssign(){
             this.email = this.cartStore.email;
             this.name = this.cartStore.name;
@@ -182,8 +241,51 @@ export default{
             this.telephone_number = this.cartStore.telephone_number;
             this.transport = this.cartStore.transport;
             this.payment = this.cartStore.payment;
+        },
+
+        checkEmail(email){
+             let isEmail = false;
+             for(let i = 0; i < email.length; i++){
+                      if(email.charAt(i) == '@'){
+                           isEmail = true;
+                      }
+             }
+
+             return isEmail;
+        }
+
+    },
+
+    computed:{
+         isTelephoneValid(){
+            return this.checkTelephoneNumber(this.telephone_number);
+         },
+         isEmailValid(){
+            return this.checkEmail(this.email);
+         },
+         isName(){
+            return this.isFirstLetterUpper(this.name);
+         },
+         isSurnameValid() {
+            return this.surname.length >= 2 && this.isFirstLetterUpper(this.surname);
+         },
+         isCityValid() {
+           return this.city.length >= 2 && this.isFirstLetterUpper(this.city);
+         },
+         isStreetValid() {
+              return this.street.length >= 2 && this.isFirstLetterUpper(this.street);
+         },
+         isPostalValid() {
+            return this.checkPostalCode(this.postal_code);
+         },
+        isTransportValid() {
+           return this.transport !== -1;
+        },
+        isPaymentValid() {
+           return this.payment !== -1;
         }
     },
+
 
     mounted(){
          this.fetchTransits();
