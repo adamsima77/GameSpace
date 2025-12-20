@@ -111,4 +111,14 @@ footer {
   }
 }
 
+@media only screen and (max-width: 800px) {
+    footer{
+       .aligment{
+           flex-direction: column;
+           gap: 30px;
+           padding: 15px;
+       }
+    }
+}
+
 </style>

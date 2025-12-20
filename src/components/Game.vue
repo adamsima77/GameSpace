@@ -64,4 +64,11 @@
   }
 }
 
+    @media only screen and (max-width: 800px) {
+    .game_boxes{
+        width: 100%;
+        margin-bottom: 25px;        
+    }
+}
+
 </style>

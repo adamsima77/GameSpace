@@ -131,4 +131,14 @@
     }
   }
 }
+
+ @media only screen and (max-width: 800px) {
+  .ItemDetail {
+    .wrapper{
+      button{
+        flex: 1;
+      }
+    }
+  }
+}
 </style>

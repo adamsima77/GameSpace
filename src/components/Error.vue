@@ -60,6 +60,7 @@ export default {
   display: flex;
   flex-direction: column;
   gap: 10px; 
+  font-family: 'Roboto', sans-serif;
 
   .loading-bar-container {
     width: 100%;

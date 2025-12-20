@@ -4,7 +4,8 @@ import axios from 'axios'
 export const useSearchStore = defineStore('search', {
   state: () => ({
     search_value: '',
-    searchResult: []
+    searchResult: [],
+    filter: null
   }),
 
   getters: {
@@ -16,12 +17,18 @@ export const useSearchStore = defineStore('search', {
     setSearch(value) {
       this.search_value = value;
     },
+    
+    setFilter(filter){
+      this.filter = filter;
+    },
 
     async fetchSearch() { 
       try {
         const response = await axios.get("http://localhost/GameSpace/endpoints/fetch/search_items.php",
           {
-            params: { value: this.search_value },
+            params: { value: this.search_value, filter: this.filter
+
+            },
             withCredentials: false
           } 
         );
@@ -32,5 +39,6 @@ export const useSearchStore = defineStore('search', {
         console.error("Fetch search failed:", error);
       }
     }
-  }
+  },
+  persist: true
 });

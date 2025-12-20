@@ -1,5 +1,9 @@
 <template>
-    <ItemsShow :item = "extras" parent-route-name="extras-detail" :loading = "loading"></ItemsShow>    
+    <ItemsShow :item = "extras" title = "Doplnky" 
+    desc = "Dolaďte svoje zariadenie k dokonalosti. V našej ponuke nájdete široký výber doplnkov, ktoré zlepšia funkčnosť, pohodlie aj ochranu vašej techniky. Od káblov, adaptérov a obalov až po stojany, nabíjačky či ochranné prvky – všetko pre jednoduchšie a pohodlnejšie používanie každý deň. 
+    Vyberte si doplnky, ktoré spravia vaše zariadenie ešte lepším."
+    parent-route-name="extras-detail" :loading = "loading"
+    @filter-change="fetchWithFilter"></ItemsShow>    
 </template>
 
 
@@ -13,12 +17,13 @@ export default{
             loading: false,
             offset: 0,
             limit: 15,
-            allLoaded: false
+            allLoaded: false,
+            currentFilter: null 
         }
     },
    
     methods:{
-        async fetchExtras(){
+        async fetchExtras(filter){
            try{
                 if (this.loading || this.allLoaded) return;
                 this.loading = true;
@@ -26,7 +31,8 @@ export default{
                       {
                          params: {
                              limit: this.limit,
-                             offset: this.offset
+                             offset: this.offset,
+                             filter: filter
                         },
                         withCredentials: false
                       }
@@ -46,10 +52,18 @@ export default{
              this.currentPosition = window.scrollY;
              const bottomOffset = 50;
              if(this.currentPosition >= document.body.offsetHeight - bottomOffset){
-                 this.fetchExtras();
+                 this.fetchExtras(this.currentFilter);
                  
              }
-         }
+         },
+
+        fetchWithFilter(filter){
+             this.extras = [];
+             this.offset = 0;
+             this.allLoaded = false;
+             this.currentFilter = filter;
+             this.fetchExtras(this.currentFilter);
+        }
     },
 
     components:{
@@ -58,7 +72,7 @@ export default{
 
     mounted(){
          window.addEventListener("scroll", this.DetectPosition);
-        this.fetchExtras();
+        this.fetchExtras(this.currentFilter);
     },
     
     beforeUnmount(){

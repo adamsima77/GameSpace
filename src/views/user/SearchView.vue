@@ -1,6 +1,10 @@
 <template>
    <div class = "wrapper">
-        <ItemsShow :item = "searchStore.getResult" parent-route-name="search-detail" v-if = "searchStore.getResult.length > 0"></ItemsShow>
+        <ItemsShow :item = "searchStore.getResult"
+         :title="`Výsledky vyhľadávania pre: '${searchStore.search_value}'`" desc = "Tu nájdeš všetky produkty, ktoré zodpovedajú tvojmu vyhľadávaniu – hry, PC, doplnky a ďalšie. 
+         Prezri si výsledky a objav, čo by ťa mohlo zaujať."
+        parent-route-name="search-detail" v-if = "searchStore.getResult.length > 0"
+         @filter-change="fetchWithFilter"></ItemsShow>
         <p v-else>Neboli nájdené žiadne produkty</p>
     </div> 
    
@@ -13,19 +17,23 @@ export default{
     data(){
         return{
             searchStore: null,
+
         }
     },
     components:{
        ItemsShow
     },
-
-    methods:{
-       
-    },
     
     created(){
         this.searchStore = useSearchStore();
     },
+
+    methods:{
+        fetchWithFilter(filter){
+            this.searchStore.setFilter(filter);
+            this.searchStore.fetchSearch(); 
+        }
+    }
 }
 
 </script>
@@ -39,5 +47,11 @@ export default{
             margin-top: 100px; 
         } 
     }
+
+@media only screen and (max-width: 800px) {
+    .wrapper{
+        place-self: center;
+    }
+}
  
 </style>

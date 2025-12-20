@@ -119,11 +119,13 @@ import {useUserStore} from '../stores/user'
         async loginUser(){
             try{
                 const response = await this.$axios.post("http://localhost/GameSpace/endpoints/fetch/login_user.php",
-                  {
-                    email: this.login_email,
-                    password: this.login_password,
-                    withCredentials: true
-                  }
+                {
+                   email: this.login_email,
+                   password: this.login_password
+                },
+                {
+                    withCredentials: true   
+                }
                 );
                 this.res = response.data;
                 this.resKey++;

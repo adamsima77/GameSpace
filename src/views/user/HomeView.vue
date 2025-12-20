@@ -124,10 +124,25 @@
 
   .wrapper {
     display: flex;
-    flex-wrap: wrap;
     gap: 15px; 
     justify-content: flex-start;
     width: 100%;
   }
 }
+
+@media only screen and (max-width: 800px) {
+    .Home{
+        justify-content: center;
+        align-items: center;
+        place-self: center;
+        width: 100%;
+
+        .wrapper{
+            display: block;
+            place-items: center;
+        }
+    }
+}
+
+
 </style>

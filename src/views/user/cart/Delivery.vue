@@ -385,4 +385,37 @@ export default{
         }
     }
 
+@media only screen and (max-width: 800px) {
+        .inputs{
+            justify-content: center;
+            align-items: center;
+            h1{
+                display: inline;
+                text-align: center;
+            
+            }
+
+            .buttons{
+                gap: 20px;
+                width: 100%;
+                a,button{
+                    flex: 1;
+                }
+            }
+
+            label{
+                width: 100%;
+                justify-content: center;
+                margin-right: 25px;
+                input{
+                    width: 100%;
+                }
+
+                select{
+                    width: 100%;
+                }
+            }
+        }
+}
+
 </style>

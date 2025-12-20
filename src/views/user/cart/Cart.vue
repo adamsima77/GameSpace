@@ -6,11 +6,15 @@
          <div class = "box" v-for = "(item,index) in cart_content" :key = "index">
                <img :src="item.image" :alt="item.alt">
                <RouterLink :to = "{name: 'cart-item-detail', params:{slug: item.slug}}"><h2>{{ item.name }}</h2></RouterLink>
+               <div class = "quantity">
                <button v-if = "item.quantity > 0" @click = "decrementQuantity(item.id)">-</button>
                <p>{{ item.quantity }}</p>
                <button @click = "addQuantity(item.id)">+</button>
+               </div>
+               <div class = "price_trash">
                <p>{{ item.price }}€</p>
                <i class="fas fa-trash" @click = "removeFromCart(item.id)"></i>
+               </div>
          </div>
        
          <p class = "total">Výsledná cena: {{ Math.round(cartStore.total * 100) / 100.0 }}€</p>
@@ -116,6 +120,16 @@ export default{
   padding: 35px;
   box-shadow: $box_sh_boxes;
   margin-top: 10px;
+
+  .quantity{
+     display: flex;
+     gap: 15px;
+  }
+
+  .price_trash{
+    display: flex;
+    gap: 15px;
+  }
 
   .total{
     margin-left: auto;
@@ -290,5 +304,52 @@ export default{
   background-color: #10b981;
 }
 }
+
+@media only screen and (max-width: 800px) {
+     .wrapper{
+          width: 85%;
+           .delivery{
+              width: 100%;
+              margin-top: 15px;
+              margin-right: 25px;
+            }
+          .cart{
+            justify-content: center;
+            align-items: center;
+            h1{
+              
+              text-align: center;
+               
+            }
+
+          .total{
+            display: inline;
+            }
+
+           
+          }
+
+          .box{
+            flex-direction: column;
+            .quantity{
+              display: flex;
+              flex-direction: row;
+              gap: 15px;
+            }
+          }
+
+          .price_trash{
+            display: flex;
+            width: 100%;
+            justify-content: space-between;
+            p{
+              margin: 0;
+            }
+          }
+
+        
+     }
+}
+
 
 </style>

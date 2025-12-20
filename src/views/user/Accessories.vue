@@ -1,5 +1,9 @@
 <template>
-    <ItemsShow :item = "accessories" parent-route-name="accessories-detail" :loading = "loading"></ItemsShow>    
+    <ItemsShow :item = "accessories" title = "Príslušenstvo" 
+    desc = "Vytvorte si dokonalé herné prostredie. Objavte široký výber herného príslušenstva, ktoré posunie váš zážitok z hrania na vyššiu úroveň. Herné myši, klávesnice, slúchadlá, podložky či ovládače – všetko navrhnuté pre maximálnu presnosť, pohodlie a výkon. Či už ste príležitostný
+     hráč alebo hardcore gamer, u nás nájdete vybavenie, ktoré vám pomôže zvíťaziť." 
+    parent-route-name="accessories-detail" :loading = "loading"
+    @filter-change="fetchWithFilter"></ItemsShow>    
 </template>
 
 
@@ -13,12 +17,13 @@ export default{
             loading: false,
             offset: 0,
             limit: 15,
-            allLoaded: false
+            allLoaded: false,
+            currentFilter: null 
         }
     },
    
     methods:{
-        async fetchAccessories(){
+        async fetchAccessories(filter){
             try{
                 if (this.loading || this.allLoaded) return;
                 this.loading = true;
@@ -26,7 +31,8 @@ export default{
                       {
                          params: {
                              limit: this.limit,
-                             offset: this.offset
+                             offset: this.offset,
+                             filter
                         },
                         withCredentials: false
                       }
@@ -46,10 +52,18 @@ export default{
              this.currentPosition = window.scrollY;
              const bottomOffset = 50;
              if(this.currentPosition >= document.body.offsetHeight - bottomOffset){
-                 this.fetchAccessories();
+                 this.fetchAccessories(this.currentFilter);
                  
              }
-         }
+         },
+
+           fetchWithFilter(filter){
+             this.accessories = [];
+             this.offset = 0;
+             this.allLoaded = false;
+             this.currentFilter = filter;
+             this.fetchAccessories(this.currentFilter);
+        }
     },
 
     components:{
@@ -58,7 +72,7 @@ export default{
 
     mounted(){
         window.addEventListener("scroll", this.DetectPosition);
-        this.fetchAccessories();
+        this.fetchAccessories(this.currentFilter);
     },
     beforeUnmount(){
         window.removeEventListener("scroll", this.DetectPosition);

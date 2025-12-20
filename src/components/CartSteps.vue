@@ -96,4 +96,15 @@
 .step.completed + .line {
   background-color: #10b981;
 }
+
+
+@media only screen and (max-width: 800px) {
+   .steps{
+    gap: 25px;
+    .line{
+      display: none;
+    }
+   }
+}
+
 </style>

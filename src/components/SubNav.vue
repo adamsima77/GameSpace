@@ -7,23 +7,29 @@
        <RouterLink :to = "{name: 'consoles'}"><li class = "category">Konzoly</li></RouterLink>
        <RouterLink :to = "{name: 'extras'}"><li class = "category">Doplnky</li></RouterLink>
        <RouterLink :to="{name: 'cart'}" class = "cart">
-        <li><i class="fas fa-shopping-cart"></i>Košík</li>
+        <li><i class="fas fa-shopping-cart"></i>Košík<p class = "cart_count" v-if = "cartStore.cart.length > 0">{{ cartStore.cart.length }}</p></li>
       </RouterLink>
     </ul>
   </div>
 </template>
 
 <script>
-
+import { useCartStore } from '../stores/cart';
 export default {
   data() {
     return {
       isScrolled: false,
       lastScroll: 0,
       categories: [],
-      showMegaMenu: true
+      showMegaMenu: true,
+      cartStore: null
     };
   },
+
+  created(){
+      this.cartStore = useCartStore();
+  },
+
   methods: {
     handleScroll() {
       const currentScroll = window.scrollY;
@@ -107,9 +113,24 @@ export default {
     }
 
     .cart li {
-      border-right: none;
+       display: flex;          
+       align-items: center;      
+       gap: 5px;                 
+       border-right: none;
       i{
-        margin-right: 5px;
+         margin-right: 0;  
+      }
+
+      .cart_count{
+         display: inline-flex;   
+         justify-content: center;
+         align-items: center;
+         color: white;
+         background-color: red;
+         border-radius: 50%;
+         width: 20px;           
+         height: 20px;
+         font-size: 12px;
       }
     }
   }
@@ -125,6 +146,9 @@ export default {
     top: 90px;
   }
 }
-
-
+@media only screen and (max-width: 632px) {
+    .subnav{
+      display: none;
+    }
+}
 </style>

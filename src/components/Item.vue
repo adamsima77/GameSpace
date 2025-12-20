@@ -89,4 +89,14 @@ export default {
             }
         }
     }
+
+    @media only screen and (max-width: 800px) {
+    .box{
+        width: 88%;
+        margin-bottom: 25px;        
+    }
+
+   
+}
+
 </style>

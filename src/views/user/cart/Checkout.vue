@@ -117,5 +117,17 @@ export default{
   }
 }
 
-    
+@media only screen and (max-width: 800px) {
+   .checkout{
+    justify-content: center;
+    align-items: center;
+    h1{
+      text-align: center;
+    }
+   .card{
+    width: 100%;
+   }
+   }
+}
+
 </style>

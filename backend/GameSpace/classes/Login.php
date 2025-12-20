@@ -9,49 +9,71 @@ class Login extends Database{
         }
     }
 
-    public function logUser($email, $password){
-           try{
-                 $user_id = $this->checkLogin($email, $password);
-                 $conn = $this->connect();
-                 $query = "SELECT idUsers,name,last_name,email,role_idrole FROM users WHERE idUsers = ?";
-                 $stmt = $conn->prepare($query);
-                 $stmt->bindParam(1, $user_id);
-                 $stmt->execute();
-                 $rs = $stmt->fetch();
-                 http_response_code(200);
-                 echo json_encode([
-                         "status" => "success",
-                         "message" => "Prihlásenie bolo úspešné",
-                         "user_id" => $rs['idUsers'],
-                         "name" => $rs['name'],
-                         "last_name" => $rs['last_name'],
-                         "email" => $rs['email'],
-                         "role" => $rs['role_idrole']
-                 ]);
+   public function logUser($email, $password){
+    try{
+        $user_id = $this->checkLogin($email, $password);
+        $conn = $this->connect();
+        $query = "SELECT idUsers,name,last_name,email,role_idrole,is_deleted FROM users WHERE idUsers = ?";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $user_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $rs = $stmt->fetch();
 
-                 $_SESSION['user_id'] = $rs['idUsers'];
-                 $_SESSION['name'] = $rs['name'];
-                 $_SESSION['last_name'] = $rs['last_name'];
-                 $_SESSION['email'] = $rs['email'];
-                 $_SESSION['role'] = $rs['role_idrole'];
+        if(!$rs || $rs['is_deleted'] == 1){
+            http_response_code(403); 
+            echo json_encode([
+                "status" => "error",
+                "message" => "Tento účet bol vymazaný alebo neexistuje."
+            ]);
+            exit;
+        }
 
-           } catch(Exception $e){
-                $status = (int)$e->getCode();
-                if ($status < 400 || $status > 599) {
-                   $status = 500;
-                }
-                http_response_code($status);
-                echo json_encode([
-                    "status" => "error",
-                    "message" => $e->getMessage()
-                ]);
-                exit;
-           }
+       
+        session_regenerate_id(true);
+        $_SESSION['user_id'] = $rs['idUsers'];
+        $_SESSION['name'] = $rs['name'];
+        $_SESSION['last_name'] = $rs['last_name'];
+        $_SESSION['email'] = $rs['email'];
+        $_SESSION['role'] = $rs['role_idrole'];
+
+        http_response_code(200);
+        echo json_encode([
+            "status" => "success",
+            "message" => "Prihlásenie bolo úspešné",
+            "user_id" => $rs['idUsers'],
+            "name" => $rs['name'],
+            "last_name" => $rs['last_name'],
+            "email" => $rs['email'],
+            "role" => $rs['role_idrole']
+        ]);
+
+    } catch(Exception $e){
+        $status = (int)$e->getCode();
+        if ($status < 400 || $status > 599) {
+           $status = 500;
+        }
+        http_response_code($status);
+        echo json_encode([
+            "status" => "error",
+            "message" => $e->getMessage()
+        ]);
+        exit;
     }
+}
 
-    public function checkIfAdmin($id){
+    public function checkIfAdmin(){
            try{
-                $query = "SELECT idUsers FROM users WHERE idUsers = ?";
+                if(!isset($_SESSION['user_id'])){
+                       http_response_code(401);
+                       echo json_encode([
+                            "status" => "error",
+                            "message" => "Not authenticated"
+                       ]);
+                       return;
+                }  
+                $id = $_SESSION['user_id'];
+
+                $query = "SELECT idUsers FROM users u JOIN role r ON u.role_idrole = r.idrole WHERE idUsers = ? AND r.idrole = 2";
                 $conn = $this->connect();
                 $stmt = $conn->prepare($query);
                 $stmt->bindParam(1, $id);
@@ -232,12 +254,52 @@ class Login extends Database{
     }
 }
     public function deleteUser(){
-
+        if(!isset($_SESSION['user_id'])) return;
+        $user_id = $_SESSION['user_id'];
+        try{
+            $delete = 1;
+            $query = "UPDATE users SET is_deleted = ? WHERE idUsers = ?";
+            $conn = $this->connect();
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(1, $delete);
+            $stmt->bindParam(2, $user_id);
+            $stmt->execute();
+            $conn = null;
+            exit;
+        } catch(Exception $e){
+            die;
+        }
     }
 
     public function updateUser(){
         
-    } 
+    }
+public function logout() {
+
+    $_SESSION = [];
+
+    if (ini_get("session.use_cookies")) {
+        $params = session_get_cookie_params();
+        setcookie(
+            session_name(),
+            '',
+            time() - 42000,
+            $params["path"],
+            $params["domain"],
+            $params["secure"],
+            $params["httponly"]
+        );
+    }
+
+    session_destroy();
+
+    http_response_code(200);
+    echo json_encode([
+        "status" => "success",
+        "message" => "Logged out"
+    ]);
+    exit;
+}
 }
 
 

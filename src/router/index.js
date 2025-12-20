@@ -27,11 +27,18 @@ const routes = [
       { path: ':slug', name: 'cart-item-detail', component: () => import('../views/user/ItemDetailView.vue') },
       { path: 'cart', name: 'cart', component: () => import('../views/user/cart/Cart.vue'),
         children:[
-            {path: 'dorucenie', name: 'delivery', meta: {requiresAuth: true}, component: () => import('../views/user/cart/Delivery.vue')},
-            {path: 'pokladna', name: 'checkout', meta: {requiresAuth: true} ,component: () => import('../views/user/cart/Checkout.vue')},
+            {path: 'dorucenie', name: 'delivery', component: () => import('../views/user/cart/Delivery.vue')},
+            {path: 'pokladna', name: 'checkout', component: () => import('../views/user/cart/Checkout.vue')},
         ]
       },
-      {path: 'uspesna-objednavka', name: 'successful-order',component: () => import('../views/user/cart/SuccessfulOrder.vue')}
+      {path: 'uspesna-objednavka', name: 'successful-order',component: () => import('../views/user/cart/SuccessfulOrder.vue')},
+      {path: 'nastavenia', name: 'user-settings', redirect: { name: 'order-history' }, meta: {requiresAuth: true}, component: () => import('../views/user/user_settings/UserSettings.vue'),
+            children:[
+                {path: 'historia-nakupov', name: 'order-history', component: () => import('../views/user/user_settings/OrderHistory.vue')},
+                {path: 'osobne-udaje', name: 'personal-info', component: () => import('../views/user/user_settings/PersonalInfo.vue')},
+                {path: 'ucet', name: 'account-management', component: () => import('../views/user/user_settings/AccountManagment.vue')}
+            ]
+      },
     ],
   },
 
@@ -58,6 +65,10 @@ router.beforeEach((to, from, next) => {
   const userStore = useUserStore()
   const cartStore = useCartStore()
 
+  if(to.name === 'user-settings' && !userStore.user_id){
+      return next({ name: 'home' });
+  }
+
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
   const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin)
 
@@ -69,7 +80,7 @@ router.beforeEach((to, from, next) => {
     return next({ name: 'home' })
   }
 
-  if (requiresAuth && cartStore.cart.length === 0) {
+  if (requiresAuth && cartStore.cart.length === 0 && !['user-settings', 'order-history', 'personal-info', 'account-management'].includes(to.name)) {
     return next({ name: 'cart' }) 
   }
 

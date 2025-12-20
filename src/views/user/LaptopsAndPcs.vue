@@ -1,5 +1,8 @@
 <template>
-    <ItemsShow :item = "laptops_pcs" parent-route-name="laptops-detail" :loading = "loading"></ItemsShow>    
+    <ItemsShow :item = "laptops_pcs" title="Notebooky a PC" desc = "Vyberte si spoľahlivý výkon pre prácu, štúdium aj zábavu. V našej ponuke nájdete notebooky a stolné PC pre každodenné používanie, náročných profesionálov aj hráčov. Od kompaktných zariadení na cesty až po výkonné herné zostavy – všetko s modernými technológiami, rýchlym chodom a
+     elegantným dizajnom. Doprajte si výkon, na ktorý sa môžete spoľahnúť každý deň."
+      parent-route-name="laptops-detail" :loading = "loading"
+      @filter-change="fetchWithFilter"></ItemsShow>    
 </template>
 
 
@@ -13,12 +16,13 @@ export default{
             loading: false,
             offset: 0,
             limit: 15,
-            allLoaded: false
+            allLoaded: false,
+            currentFilter: null 
         }
     },
    
     methods:{
-        async fetchLaptopsAndPcs(){
+        async fetchLaptopsAndPcs(filter){
            try{
                 if (this.loading || this.allLoaded) return;
                 this.loading = true;
@@ -26,7 +30,8 @@ export default{
                       {
                          params: {
                              limit: this.limit,
-                             offset: this.offset
+                             offset: this.offset,
+                             filter: filter
                         },
                         withCredentials: false
                       }
@@ -46,9 +51,17 @@ export default{
              this.currentPosition = window.scrollY;
              const bottomOffset = 50;
              if(this.currentPosition >= document.body.offsetHeight - bottomOffset){
-                 this.fetchLaptopsAndPcs();
+                 this.fetchLaptopsAndPcs(this.currentFilter);
              }
          },
+
+          fetchWithFilter(filter){
+             this.laptops_pcs = [];
+             this.offset = 0;
+             this.allLoaded = false;
+             this.currentFilter = filter;
+             this.fetchLaptopsAndPcs(this.currentFilter);
+        }
     },
 
     components:{

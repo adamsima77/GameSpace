@@ -3,11 +3,11 @@ import axios from 'axios'
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-      name:  '',
-      surname: '',
-      email: '',
-      role: '',
-      user_id: ''
+      name:  null,
+      surname: null,
+      email: null,
+      role: null,
+      user_id: null
   }),
 
   getters: {
@@ -39,13 +39,20 @@ export const useUserStore = defineStore('user', {
            this.user_id = value;
       },
 
+      cleanStore(){
+          this.name = null;
+          this.surname = null;
+          this.email = null;
+          this.role = null;
+          this.user_id = null;
+      },
+
       async checkIfAdmin(){
           try{
-               const response = await this.$axios.post("http://localhost/GameSpace/endpoints/fetch/check_if_admin.php",
-                {
-                     id: this.user_id,
-                    withCredentials: false  
-                });
+               const response = await axios.post("http://localhost/GameSpace/endpoints/fetch/check_if_admin.php",
+                    {},  
+                    { withCredentials: true }
+               );
                 const res = response.data;
                 if(res.state === 'success'){
                       return true;
@@ -54,6 +61,19 @@ export const useUserStore = defineStore('user', {
                 }
           } catch(error){
                  return false;
+          }
+      },
+
+      async logout(){
+          try{ 
+             const response = await axios.post("http://localhost/GameSpace/endpoints/fetch/logout.php",
+                 {},  
+                 { withCredentials: true }
+             );        
+          } catch(error){
+
+          } finally{
+               this.cleanStore();   
           }
       }
   },

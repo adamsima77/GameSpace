@@ -1,5 +1,8 @@
 <template>
-    <ItemsShow :item = "games" parent-route-name="item-detail" :loading = "this.loading"></ItemsShow>    
+    <ItemsShow :item = "games" title = "Hry" desc = "Objav široký výber hier pre všetky platformy a vekové kategórie. Či už hľadáš akčné dobrodružstvá, logické výzvy, športové hry alebo zábavu pre celú rodinu, u nás si určite vyberieš. Nájdeš tu obľúbené tituly aj novinky, ktoré ti 
+    prinesú hodiny zábavy doma aj s priateľmi. Vyber si hru, ktorá ťa bude baviť najviac." 
+    parent-route-name="item-detail" :loading = "this.loading"
+    @filter-change="fetchWithFilter"></ItemsShow>    
 </template>
 
 
@@ -13,12 +16,13 @@ export default{
             loading: false,
             offset: 0,
             limit: 15,
-            allLoaded: false
+            allLoaded: false,
+            currentFilter: null 
         }
     },
    
     methods:{
-        async fetchGames(){
+        async fetchGames(filter){
             try{
                 if (this.loading || this.allLoaded) return;
                 this.loading = true;
@@ -26,13 +30,16 @@ export default{
                       {
                          params: {
                              limit: this.limit,
-                             offset: this.offset
+                             offset: this.offset,
+                             filter: filter
                         },
                         withCredentials: false
                       }
                     );
+                     console.log(response.data);
                 this.games.push(...response.data)
                 this.offset += this.limit;
+               
                 
                 if(response.data.length < this.limit){
                     this.allLoaded = true;
@@ -42,20 +49,29 @@ export default{
             }
              this.loading = false;
         },
+
          DetectPosition(){
              this.currentPosition = window.scrollY;
              const bottomOffset = 50;
              if(this.currentPosition >= document.body.offsetHeight - bottomOffset){
-                 this.fetchGames();
+                 this.fetchGames(this.currentFilter);
                  
-             }
-         }
+             }        
+         },   
+
+         fetchWithFilter(filter){
+             this.games = [];
+             this.offset = 0;
+             this.allLoaded = false;
+             this.currentFilter = filter;
+             this.fetchGames(this.currentFilter);
+        }
     },
 
     mounted(){
           
         window.addEventListener("scroll", this.DetectPosition);
-         this.fetchGames();
+        this.fetchGames(this.currentFilter);
           
     },
     beforeUnmount(){

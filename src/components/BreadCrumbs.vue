@@ -91,4 +91,17 @@
     }
   }
 }
+
+@media only screen and (max-width: 800px) {
+    .breadCrumbs {
+    flex-wrap: wrap;
+    font-size: 14px;
+    line-height: 1.4;
+    gap: 4px 8px;
+  }
+
+  .breadCrumbs span {
+    margin-left: 0;
+  }
+}
 </style>

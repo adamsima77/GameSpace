@@ -64,10 +64,27 @@ class Item extends Database{
                 return [];
         }
     }
-    public function fetchGames($limit, $offset){
+    public function fetchGames($limit, $offset, $filter){
         try{
             $game_category = 1;
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE Category_idCategory = ? LIMIT ? OFFSET ?";
+            $orderBy = "CASE WHEN available = 'Na sklade' THEN 0 ELSE 1 END";
+            if($filter !== NULL){
+            switch($filter){
+                case 'Newest':
+                  $orderBy .= ", idItems DESC";
+                break;
+                case 'Cheapest':
+                  $orderBy .= ", price ASC";
+                  break;
+                case 'MostExpensive':
+                   $orderBy .= ", price DESC";
+                  break;
+            }
+            }
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems 
+            WHERE Category_idCategory = ? 
+            ORDER BY $orderBy
+            LIMIT ? OFFSET ?";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$game_category);
@@ -83,10 +100,26 @@ class Item extends Database{
         }
     }
 
-    public function fetchLaptopsPcs($limit,$offset){
+    public function fetchLaptopsPcs($limit,$offset,$filter){
         try{
             $laptops_category = 2;
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? LIMIT ? OFFSET ?";
+            $orderBy =  "CASE WHEN available = 'Na sklade' THEN 0 ELSE 1 END";
+            if($filter !== NULL){
+                switch($filter){
+                  case 'Newest':
+                      $orderBy .= ", idItems DESC";
+                      break;
+                  case 'Cheapest':
+                      $orderBy .= ", price ASC";
+                      break;
+                  case 'MostExpensive':
+                       $orderBy .= ", price DESC";
+                       break;
+                  }
+            }
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? 
+            ORDER BY $orderBy
+            LIMIT ? OFFSET ?";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$laptops_category);
@@ -102,10 +135,26 @@ class Item extends Database{
         }
     }
 
-    public function fetchAccessories($limit, $offset){
+    public function fetchAccessories($limit, $offset, $filter){
         try{
-            $accessories_id = 3;
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? LIMIT ? OFFSET ?";
+             $accessories_id = 3;
+             $orderBy =  "CASE WHEN available = 'Na sklade' THEN 0 ELSE 1 END";
+             if($filter !== NULL){
+                switch($filter){
+                  case 'Newest':
+                      $orderBy .= ", idItems DESC";
+                      break;
+                  case 'Cheapest':
+                      $orderBy .= ", price ASC";
+                      break;
+                  case 'MostExpensive':
+                       $orderBy .= ", price DESC";
+                       break;
+                  }
+            }
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? 
+            ORDER BY $orderBy
+            LIMIT ? OFFSET ?";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$accessories_id);
@@ -121,10 +170,26 @@ class Item extends Database{
         }
     }
 
-    public function fetchConsoles($limit, $offset){
+    public function fetchConsoles($limit, $offset, $filter){
         try{
             $consoles_category = 4;
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? LIMIT ? OFFSET ?";
+             $orderBy =  "CASE WHEN available = 'Na sklade' THEN 0 ELSE 1 END";
+             if($filter !== NULL){
+                switch($filter){
+                  case 'Newest':
+                      $orderBy .= ", idItems DESC";
+                      break;
+                  case 'Cheapest':
+                      $orderBy .= ", price ASC";
+                      break;
+                  case 'MostExpensive':
+                       $orderBy .= ", price DESC";
+                       break;
+                  }
+            }
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? 
+            ORDER BY $orderBy
+            LIMIT ? OFFSET ?";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$consoles_category);
@@ -140,10 +205,26 @@ class Item extends Database{
         }
     }
 
-    public function fetchExtras($limit, $offset){
+    public function fetchExtras($limit, $offset, $filter){
         try{
             $extras_category = 5;
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? LIMIT ? OFFSET ?";
+             $orderBy =  "CASE WHEN available = 'Na sklade' THEN 0 ELSE 1 END";
+             if($filter !== NULL){
+                switch($filter){
+                  case 'Newest':
+                      $orderBy .= ", idItems DESC";
+                      break;
+                  case 'Cheapest':
+                      $orderBy .= ", price ASC";
+                      break;
+                  case 'MostExpensive':
+                       $orderBy .= ", price DESC";
+                       break;
+                  }
+            }
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? 
+            ORDER BY $orderBy
+            LIMIT ? OFFSET ?";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$extras_category);
@@ -176,10 +257,25 @@ class Item extends Database{
         }
     }
 
-    public function searchItems($value){
+    public function searchItems($value, $filter){
         try{
             $searchValue = "%{$value}%";
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items WHERE name LIKE ? LIMIT 15";
+              $orderBy =  "CASE WHEN available = 'Na sklade' THEN 0 ELSE 1 END";
+             if($filter !== NULL){
+                switch($filter){
+                  case 'Newest':
+                      $orderBy .= ", idItems DESC";
+                      break;
+                  case 'Cheapest':
+                      $orderBy .= ", price ASC";
+                      break;
+                  case 'MostExpensive':
+                       $orderBy .= ", price DESC";
+                       break;
+                  }
+            }
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items WHERE name LIKE ? 
+                      ORDER BY $orderBy LIMIT 15";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$searchValue);

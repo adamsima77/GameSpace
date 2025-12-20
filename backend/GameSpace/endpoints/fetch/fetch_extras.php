@@ -19,7 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 require $_SERVER['DOCUMENT_ROOT'] . '/GameSpace/classes/Item.php';
 $items = new Item();
-$data = $items->fetchExtras($_GET['limit'], $_GET['offset']);
+$filter = isset($_GET['filter']) ? $_GET['filter'] : null;
+$data = $items->fetchExtras($_GET['limit'], $_GET['offset'], $filter);
 
 echo json_encode($data);
 ?>

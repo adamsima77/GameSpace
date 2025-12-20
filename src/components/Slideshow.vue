@@ -157,4 +157,18 @@
     }
   }
 }
+
+@media only screen and (max-width: 800px) {
+  .slideshow{
+    width: 100%;
+    height: 450px;
+    .images{
+      .controls{
+        i{
+          padding: 10px;
+        }
+      }
+    }
+  }
+}
 </style>

@@ -16,8 +16,14 @@
   </div>
 
   <div class="user_search">
-    <i :class="!showSearch ? 'fas fa-search' : 'fas fa-times'" @click="invert()"></i>
-    <i class="fas fa-user" @click = "$router.push({name: 'login'})"></i>
+    <i class = "search_i" :class="!showSearch ? 'fas fa-search' : 'fas fa-times'" @click="invert()"></i>
+    <i class="fas fa-user log" @click = "$router.push({name: 'login'})" v-if = "!userStore.user_id"></i>
+      
+    <div class = "logged" v-else>
+        <i class="fas fa-user-circle" @click = "this.$router.push({name: 'user-settings'})"></i>
+        <i class="fas fa-sign-out-alt" @click = "logout()"></i>  
+    </div>
+    <i class = "fas fa-bars hamburger" @click = ""></i>    
   </div>
 </nav>
 </template>
@@ -25,6 +31,7 @@
 <script>
 import SearchItem from './SearchItem.vue';
 import { useSearchStore } from "../stores/search";
+import { useUserStore } from '../stores/user';
 export default {
   data() {
     return {
@@ -35,11 +42,14 @@ export default {
       searchResult: [],
       delay: null,
       hideresult: false,
-      searchStore: null
+      searchStore: null,
+      userStore: null,
+      windowWidth: window.innerWidth
     };
   },
   created(){
       this.searchStore = useSearchStore();
+      this.userStore = useUserStore();
   },
 
   methods: {
@@ -57,6 +67,10 @@ export default {
      },
 
     handleScroll() {
+       if (window.innerWidth < 630) {
+           this.isScrolled = false; 
+           return;
+       }
       const scroll = window.scrollY;
       const direction = scroll - this.lastScroll;
       if(direction > 0 && scroll > 50){
@@ -86,6 +100,11 @@ export default {
         await this.searchStore.fetchSearch();
         this.$router.push({ name: 'search' });
         this.search = "";
+    },
+
+    async logout(){
+        await this.userStore.logout();
+        this.$router.push({ name: 'home' });
     }
   },
   mounted() {
@@ -180,7 +199,15 @@ nav {
   position: relative; 
   display: flex;
   flex-direction: row;
+
+  .hamburger{
+    display: none;
+  }
   
+  .logged{
+    display: flex;
+    flex-direction: row;
+  }
 
   i {
     padding: $padding_10;
@@ -257,5 +284,26 @@ nav {
 
 .user_search i {
   z-index: 100001;
+}
+
+@media only screen and (max-width: 800px) {
+    nav{
+      .search_wrapper{
+        display: none;
+      }
+      .user_search{
+        .logged{
+        display: none;
+      } 
+         .search_i,.log{
+          display: none;
+         }
+
+         .hamburger{
+             display: block;
+             font-size: 1.2rem;
+         }
+      }
+    }
 }
 </style>

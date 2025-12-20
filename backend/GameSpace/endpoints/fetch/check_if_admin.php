@@ -19,5 +19,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 require $_SERVER['DOCUMENT_ROOT'] . '/GameSpace/classes/Login.php';
 $login = new Login();
-$login->checkIfAdmin($_GET['id']);
+$login->checkIfAdmin();
 ?>

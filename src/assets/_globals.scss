@@ -10,7 +10,6 @@ html,
 body {
   height: 100%;
   line-height: 1.5;
-  font-family: sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -20,6 +19,7 @@ body {
   display: flex;
   flex-direction: column;
   background-color: rgb(230, 230, 230);
+  width: 100%;
 }
 
 
@@ -161,7 +161,7 @@ $ease_in_out_background: background-color 0.5s ease-in-out;
 $ease_in_out_opacity: opacity 0.5s ease-in-out;
 
 //Global font
-p,a,button,span,label,input{
+p,a,button,span,label,input,td,th,tr,table{
   font-family: 'Roboto', sans-serif;
 }
 

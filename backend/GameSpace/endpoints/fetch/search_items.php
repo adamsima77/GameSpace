@@ -24,7 +24,8 @@ if(empty($value)){
     echo json_encode([]);
     exit;
 }
-$data = $item->searchItems($value);
+$filter = isset($_GET['filter']) ? $_GET['filter'] : null;
+$data = $item->searchItems($value, $filter);
 
 echo json_encode($data);
 ?>
