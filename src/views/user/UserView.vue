@@ -1,8 +1,9 @@
 <template>
     <div class="page-wrapper">
       <div class = "header">
-    <Navbar></Navbar>
+    <Navbar @activate-sidebar = "handleSidebar"></Navbar>
     <SubNav></SubNav>
+    <Sidebar :active = "sidebarActive" @close = "sidebarActive = false"></Sidebar>
     </div>
     <main>
         <BreadCrumbs v-if = "showBreadcrumbs" :key="$route.fullPath"></BreadCrumbs>
@@ -17,23 +18,27 @@ import Navbar from '../../components/Navbar.vue';
 import SubNav from '../../components/SubNav.vue';
 import Footer from '../../components/Footer.vue';
 import BreadCrumbs from '../../components/BreadCrumbs.vue';
+import Sidebar from '../../components/Sidebar.vue'
 export default{
- 
   data(){
    return{
        showLogin: false,
        showBreadcrumbs: true,
-       route : ''
+       route : '',
+       sidebarActive: false
    }
   },
   components:{
        Navbar,
        SubNav,
        Footer,    
-       BreadCrumbs
+       BreadCrumbs,
+       Sidebar
   },
   methods:{
-      
+      handleSidebar(value){
+          this.sidebarActive = value;
+      }
   },
   computed:{
 

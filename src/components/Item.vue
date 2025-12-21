@@ -7,7 +7,7 @@
       <RouterLink :to="{ name: parentRouteName, params: { slug: item.slug } }">
         <h2>{{ item.name }}</h2>
       </RouterLink>
-      <p>{{ item.description }}</p>
+      <p>{{ sliceText(item.description) }}</p>
     </div>
     <hr class="item_hr" />
     <div class="price_available">
@@ -26,9 +26,13 @@ export default {
   methods: {
     defineAvailability(value) {
       return value === "Na sklade" ? "available" : "not_available";
+    },
+
+    sliceText(description, maxLength = 150){
+        return description.length > maxLength ? description.slice(0,maxLength) + "..." : description;
     }
   }
-};
+}
 </script>
 
 

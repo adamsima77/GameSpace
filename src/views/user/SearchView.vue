@@ -41,7 +41,11 @@ export default{
 
 <style scoped lang = "scss">
    .wrapper{ 
-    min-width: 95%; 
+    min-width: 95%;
+    padding: 20px;   
+    display: flex;
+    flex-direction: column;
+    align-items: center;
         p{ 
             text-align: center; 
             margin-top: 100px; 
@@ -51,7 +55,7 @@ export default{
 @media only screen and (max-width: 800px) {
     .wrapper{
         place-self: center;
+        width: 75%;
     }
 }
- 
 </style>

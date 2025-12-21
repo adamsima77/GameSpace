@@ -58,23 +58,29 @@ export default{
   flex-direction: column;
   padding: 20px;
   display: flex;
+  align-items: center;
   gap: 20px;
+
+ 
 }
 
 .warning_box {
   display: flex;
   align-items: center;
-  background-color: #fff4f4;
-  border: 2px solid #ff4d4f;
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.2);
+  justify-content: center;
+  background-color: #fff4f4; 
+  border: 2px solid #ff4d4f; 
+  border-radius: 12px; 
+  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.2); 
   gap: 15px;
-  max-width: 75%;
-
+  padding: 20px;
+  margin: 0 auto;    
   .warning_text{
     .buttons{  
-        margin-top: 15px;    
+         margin-top: 20px;
+         display: flex;
+         justify-content: center; 
+         gap: 15px;
     .delete{
        background-color: red;
        color: white;
@@ -142,11 +148,58 @@ export default{
   border-radius: 10px;
   cursor: pointer;
   transition: 0.2s all ease;
-  margin-right: auto;
+  margin: 0 auto;
 }
 
 .delete_btn:hover {
 
   background-color: #a41717;
+}
+
+@media only screen and (max-width: 600px) {
+  .account_managment{
+    justify-content: center;
+    align-items: center;
+  }
+  .warning_box {
+    flex-direction: column; 
+    align-items: flex-start;
+     
+    gap: 15px;
+
+    .warning_text {
+      width: 100%;         
+      h1 {
+        font-size: 1.2rem;
+      }
+      p {
+        font-size: 0.9rem;
+      }
+
+      .buttons {
+        flex-direction: column;
+        gap: 15px;
+        width: 100%;
+
+        .delete,
+        .cancel {
+          width: 100%;
+          text-align: center;
+          margin: 0;
+        }
+      }
+    }
+  }
+
+  .delete_btn {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+  }
+
+  .warning_icon {
+    font-size: 2rem;
+    margin-bottom: 5px;
+  }
 }
 </style>

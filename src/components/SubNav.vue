@@ -28,6 +28,7 @@ export default {
 
   created(){
       this.cartStore = useCartStore();
+      this.cartStore.fetchCart();
   },
 
   methods: {

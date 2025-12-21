@@ -70,6 +70,7 @@ export default{
     box-shadow: $box_sh_boxes;
     display: flex;
     flex-direction: column;
+    font-family: 'Roboto', sans-serif;;
     gap: 12px;
 
     h2 {

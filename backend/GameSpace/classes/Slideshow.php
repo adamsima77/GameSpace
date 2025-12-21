@@ -6,7 +6,7 @@ class Slideshow extends Database{
     public function fetchSlides(){
         try{
             $conn = $this->connect();
-            $query = "SELECT img,alt FROM slideshow;";
+            $query = "SELECT img,alt,link FROM slideshow ORDER BY last_update DESC;";
             $stmt = $conn->prepare($query);
             $stmt->execute();
             $data = $stmt->fetchAll();

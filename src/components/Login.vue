@@ -1,7 +1,7 @@
 <template>
     <div class = "message">
-        <Error :message = "res"></Error>  
-        <Success :message = "res"></Success>
+        <Error :message = "res" :key = "resKey"></Error>  
+        <Success :message = "res" :key = "resKey"></Success>
     </div>
   <div class="wrapper">
   
@@ -12,12 +12,12 @@
 
       <form method = "post" class="inputs" @submit.prevent = "loginUser">
 
-        <label>E-mail:
-          <input type="email" v-model = "login_email" required >
+        <label for = "log_email">E-mail:
+          <input type="email" id = "log_email" v-model = "login_email" required >
         </label>
 
-        <label>Heslo:
-          <input type="password" v-model = "login_password" required>
+        <label for = "log_password">Heslo:
+          <input type="password" id = "log_password" v-model = "login_password" required>
         </label>
 
         <p>Nie ste zaregistrovaný ? <span @click = "changeLayout = true">Zaregistrujte sa</span></p>
@@ -28,21 +28,21 @@
   <form method = "post" class = "register" v-else @click.stop  @submit.prevent="createUser">
       <h1 style = "text-align: center;">Registrácia</h1>
            <div class = "inputs">
-              <label for="">Meno:
-            <input type="text" v-model = "register_name">
+              <label for="name">Meno:
+            <input type="text" id = "name" v-model = "register_name" autocomplete="on">
           </label>
-          <label for="">Priezvisko:
-            <input type="text" v-model = "register_surname">
+          <label for="surname">Priezvisko:
+            <input type="text" id = "surname" v-model = "register_surname" autocomplete="on">
           </label>
-                   <label>E-mail:
-          <input type="email" v-model = "register_email">
+                   <label for = "email">E-mail:
+          <input type="email" id = "email" v-model = "register_email" autocomplete="on">
         </label>
 
-        <label>Heslo:
-          <input type="password" v-model = "register_password">
+        <label for = "password">Heslo:
+          <input type="password" id = "password" v-model = "register_password" autocomplete="off">
         </label>
-        <label>Zopakujte heslo:
-          <input type="password"v-model = "register_repeat_password">
+        <label for = "repeat_password">Zopakujte heslo:
+          <input type="password" id = "repeat_password" v-model = "register_repeat_password" autocomplete="off">
         </label>
           <p>Ste zaregistrovaný ? <span @click = "changeLayout = false">Prihláste sa</span></p>
           <input type="submit">
@@ -256,6 +256,24 @@ import {useUserStore} from '../stores/user'
       background-color: blue;
     }
   }
+}
+
+@media only screen and (max-width: 850px) {
+   .wrapper{
+       width: 100%;
+       .login{
+           margin-right: 5px;
+           max-height: 700px;
+           place-self: center;
+           justify-content: space-evenly;
+       }
+
+       .register{
+           justify-content: space-evenly;
+           max-height: 700px;
+           place-self: center;
+       }
+   }
 }
 
 </style>

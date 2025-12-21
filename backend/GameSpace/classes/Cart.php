@@ -316,11 +316,13 @@ public function addQuantity($id){
             
 
              $status = "V príprave";
-             $query = "INSERT INTO `orders` (OrderDetail_idOrderDetail, status, total_price) VALUES (?,?,?)";
+             $logged_user = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
+             $query = "INSERT INTO `orders` (OrderDetail_idOrderDetail, status, total_price, Users_idUsers) VALUES (?,?,?,?)";
              $stmt = $conn->prepare($query);
              $stmt->bindParam(1, $order_detail_id);
              $stmt->bindParam(2, $status);
              $stmt->bindParam(3, $total);
+             $stmt->bindParam(4, $logged_user);
              $stmt->execute();
 
              $order_id = $conn->lastInsertId();

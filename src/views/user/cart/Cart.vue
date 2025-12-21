@@ -331,6 +331,14 @@ export default{
 
           .box{
             flex-direction: column;
+            img{
+               min-width: 240px;
+               min-height: 180px;
+            }
+
+            h2{
+              text-align: center;
+            }
             .quantity{
               display: flex;
               flex-direction: row;

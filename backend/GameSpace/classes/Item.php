@@ -6,7 +6,10 @@ class Item extends Database{
     public function fetchNewestItems(){
         try{
             $conn = $this->connect();
-            $query = "SELECT name,price,description,image,available,alt,slug FROM items ORDER BY last_update LIMIT 4;";
+            $query = "SELECT name,price,description,image,available,alt,slug FROM items
+            WHERE available = 'Na sklade'
+            ORDER BY last_update DESC
+            LIMIT 4;";
             $stmt = $conn->prepare($query);
             $stmt->execute();
             $rs = $stmt->fetchAll();

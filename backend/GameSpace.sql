@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: So 20.Dec 2025, 17:51
+-- Čas generovania: Sun 21.Dec 2025, 15:02
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -73,7 +73,8 @@ INSERT INTO `address` (`idAddress`, `city`, `postal_code`, `street`, `created_at
 (9, 'asf', 'asf', 'asf', '2025-12-16 14:04:08', '2025-12-16 14:04:08'),
 (10, 'asf', 'asf', 'asf', '2025-12-16 14:08:27', '2025-12-16 14:08:27'),
 (11, 'Hfs', '123456', 'Asf', '2025-12-16 15:00:34', '2025-12-16 15:00:34'),
-(12, 'Male', '95182', 'Velke', '2025-12-19 15:40:57', '2025-12-19 15:40:57');
+(12, 'Male', '95182', 'Velke', '2025-12-19 15:40:57', '2025-12-19 15:40:57'),
+(13, 'Malé Vozokany', '95182', 'Hlavná ulica 81/21', '2025-12-21 12:40:31', '2025-12-21 12:40:31');
 
 -- --------------------------------------------------------
 
@@ -157,7 +158,7 @@ CREATE TABLE `items` (
 INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `created_at`, `last_update`, `available`, `alt`, `release_date`, `slug`, `stock`) VALUES
 (1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2025-12-16 15:00:34', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild', 5),
 (2, 'Minecraft', 26.95, 'Sandbox game about placing blocks and going on adventures.', 'http://localhost/GameSpace/img/user/minecraft.jpg', '2025-12-09 07:16:09', '2025-12-16 14:08:27', 'Nie je na sklade', 'Minecraft cover', '2011-11-18', 'minecraft', 0),
-(3, 'Cyberpunk 2077', 49.99, 'Futuristic open-world RPG in a dystopian city.', 'http://localhost/GameSpace/img/user/cyberpunk2077.jpg', '2025-12-09 07:16:09', '2025-12-19 15:40:57', 'Na sklade', 'Cyberpunk 2077 cover', '2020-12-10', 'cyberpunk-2077', 9),
+(3, 'Cyberpunk 2077', 49.99, 'Futuristic open-world RPG in a dystopian city.', 'http://localhost/GameSpace/img/user/cyberpunk2077.jpg', '2025-12-09 07:16:09', '2025-12-21 12:40:31', 'Na sklade', 'Cyberpunk 2077 cover', '2020-12-10', 'cyberpunk-2077', 3),
 (4, 'God of War', 39.99, 'Action-adventure game following Kratos and his son.', 'http://localhost/GameSpace/img/user/god_of_war.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Nie je na sklade', 'God of War cover', '2018-04-20', 'god-of-war', 10),
 (5, 'Among Us', 4.99, 'Multiplayer social deduction game set on a spaceship.', 'http://localhost/GameSpace/img/user/among_us.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Na sklade', 'Among Us cover', '2018-06-15', 'among-us', 10),
 (6, 'UltraBook Pro 14\"', 1299.99, 'Lightweight 14-inch ultrabook with 16GB RAM and 512GB SSD.', 'ultrabook_pro_14.jpg', '2025-12-11 09:09:12', '2025-12-15 09:50:12', 'Na sklade', 'UltraBook Pro 14\" laptop', '2025-01-15', 'ultrabook-pro-14', 10),
@@ -228,7 +229,8 @@ INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `create
 (71, 'Metro Exodus', 19.99, 'Post-apocalyptic FPS with survival elements.', 'metro_exodus.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Metro Exodus cover', '2019-02-15', 'metro-exodus', 10),
 (72, 'Monster Hunter: World', 29.99, 'Action RPG about hunting massive beasts.', 'mhw.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Monster Hunter World cover', '2018-01-26', 'monster-hunter-world', 10),
 (73, 'Monster Hunter Rise', 39.99, 'Fast-paced monster hunting adventure.', 'mhrise.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Monster Hunter Rise cover', '2021-03-26', 'monster-hunter-rise', 10),
-(74, 'Dark Souls III', 29.99, 'Challenging dark fantasy action RPG.', 'dark_souls_3.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Dark Souls III cover', '2016-03-24', 'dark-souls-3', 10);
+(74, 'Dark Souls III', 29.99, 'Challenging dark fantasy action RPG.', 'dark_souls_3.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Dark Souls III cover', '2016-03-24', 'dark-souls-3', 10),
+(75, 'Clair Obscur: Expedition 33', 49.99, '„Rok čo rok nás vymazáva.“ Veďte členov Expedície 33 na ich ceste za zničením Paintress, aby už nikdy nemohla maľovať smrť. Preskúmajte svet zázrakov inšpirovaný Belle Époque France a bojujte s jedinečnými nepriateľmi v tomto ťahovom RPG s mechanikou v reálnom čase. Raz do roka sa Paintress zobudí a namaľuje na svoj monolit.', 'http://localhost/GameSpace/img/user/expedition_33_1.jpg', '2025-12-21 11:54:56', '2025-12-21 11:57:36', 'Na sklade', 'expedition-33', '2025-04-25', 'expedition-33', 20);
 
 -- --------------------------------------------------------
 
@@ -319,7 +321,8 @@ INSERT INTO `items_has_category` (`Items_idItems`, `Category_idCategory`) VALUES
 (71, 1),
 (72, 1),
 (73, 1),
-(74, 1);
+(74, 1),
+(75, 1);
 
 -- --------------------------------------------------------
 
@@ -377,7 +380,8 @@ INSERT INTO `orderdetail` (`idOrderDetail`, `name`, `last_name`, `email`, `mobil
 (9, 'asf', 'asf', 'asf', 'asf', 9, 1, 3),
 (10, 'asf', 'asf', 'asf', 'asf', 10, 7, 2),
 (11, 'Al', 'Af', 'assfas', '+432242424', 11, 4, 2),
-(12, 'Adam', 'Šima', 'email@email.sk', '+421904329 027', 12, 6, 2);
+(12, 'Adam', 'Šima', 'email@email.sk', '+421904329 027', 12, 6, 2),
+(13, 'Adam', 'Šima', 'admin@outlook.sk', '0904 245 367', 13, 1, 4);
 
 -- --------------------------------------------------------
 
@@ -410,7 +414,8 @@ INSERT INTO `orders` (`idOrders`, `creation_date`, `last_update`, `OrderDetail_i
 (9, '2025-12-16 14:04:08', '2025-12-19 09:37:44', 9, 4, 'V príprave', 239.96),
 (10, '2025-12-16 14:08:27', '2025-12-19 09:37:44', 10, 4, 'V príprave', 269.5),
 (11, '2025-12-16 15:00:34', '2025-12-19 09:37:44', 11, 4, 'V príprave', 59.99),
-(12, '2025-12-19 15:40:57', '2025-12-19 15:40:57', 12, NULL, 'V príprave', 49.99);
+(12, '2025-12-19 15:40:57', '2025-12-19 15:40:57', 12, NULL, 'V príprave', 49.99),
+(13, '2025-12-21 12:40:31', '2025-12-21 12:40:31', 13, 4, 'V príprave', 299.94);
 
 -- --------------------------------------------------------
 
@@ -436,7 +441,8 @@ INSERT INTO `orders_has_items` (`Orders_idOrders`, `Items_idItems`, `quantity`) 
 (9, 1, 4),
 (10, 2, 10),
 (11, 1, 1),
-(12, 3, 1);
+(12, 3, 1),
+(13, 3, 6);
 
 -- --------------------------------------------------------
 
@@ -495,16 +501,18 @@ CREATE TABLE `slideshow` (
   `img` varchar(255) NOT NULL,
   `alt` varchar(120) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `last_update` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `link` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Sťahujem dáta pre tabuľku `slideshow`
 --
 
-INSERT INTO `slideshow` (`idSlideshow`, `img`, `alt`, `created_at`, `last_update`) VALUES
-(1, 'http://localhost/GameSpace/img/user/god_of_war.jpg', 'God Of War', '2025-12-07 11:33:50', '2025-12-07 12:15:27'),
-(2, 'http://localhost/GameSpace/img/user/expedition_33.jpg', 'Expedition 33', '2025-12-07 11:34:27', '2025-12-07 12:14:36');
+INSERT INTO `slideshow` (`idSlideshow`, `img`, `alt`, `created_at`, `last_update`, `link`) VALUES
+(1, 'http://localhost/GameSpace/img/user/god_of_war.jpg', 'God Of War', '2025-12-07 11:33:50', '2025-12-21 12:07:01', '/hry/god-of-war'),
+(2, 'http://localhost/GameSpace/img/user/expedition_33.jpg', 'Expedition 33', '2025-12-07 11:34:27', '2025-12-21 12:06:19', '/hry/expedition-33'),
+(3, 'http://localhost/GameSpace/img/user/cyberpunk2077_1.jpg', 'Cyberpunk 2077', '2025-12-21 12:15:45', '2025-12-21 12:15:45', '/hry/cyberpunk-2077');
 
 -- --------------------------------------------------------
 
@@ -558,7 +566,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`idUsers`, `name`, `last_name`, `email`, `password`, `mobile_number`, `role_idrole`, `Address_idAddress`, `created_at`, `last_update`, `is_deleted`) VALUES
 (3, 'Adam', 'Šima', 'adamsima@gmail.com', '$2y$10$/jyrZXJeaBXImPE1YeHd/eVjpxWWvRkel30dFUsGgQWRjTo81Z.vq', NULL, 2, NULL, '2025-12-13 16:30:41', '2025-12-13 16:30:41', 0),
-(4, 'User', 'User', 'user@user.sk', '$2y$10$anDZQb3aYY/3D3tDgbks6uoVlsuE8xzi0uEw2KRoAOjg1uq7IPy/2', NULL, 1, NULL, '2025-12-13 16:32:34', '2025-12-20 16:47:17', 1),
+(4, 'User', 'User', 'user@user.sk', '$2y$10$anDZQb3aYY/3D3tDgbks6uoVlsuE8xzi0uEw2KRoAOjg1uq7IPy/2', NULL, 1, NULL, '2025-12-13 16:32:34', '2025-12-21 12:34:20', 0),
 (5, 'Aadasd', 'Asdasd', 'fff@fff.sk', '$2y$10$IWMpHgYsjM.KZUjbda2Hn.WUb5OHYDCaPzoMHlM9tmMWRuHKuEE4q', NULL, 1, NULL, '2025-12-13 20:07:33', '2025-12-13 20:07:33', 0);
 
 --
@@ -683,7 +691,7 @@ ALTER TABLE `accordion`
 -- AUTO_INCREMENT pre tabuľku `address`
 --
 ALTER TABLE `address`
-  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pre tabuľku `category`
@@ -701,7 +709,7 @@ ALTER TABLE `footer`
 -- AUTO_INCREMENT pre tabuľku `items`
 --
 ALTER TABLE `items`
-  MODIFY `idItems` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `idItems` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- AUTO_INCREMENT pre tabuľku `most_anticipated`
@@ -713,13 +721,13 @@ ALTER TABLE `most_anticipated`
 -- AUTO_INCREMENT pre tabuľku `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `idOrderDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idOrderDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pre tabuľku `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT pre tabuľku `payment`
@@ -737,7 +745,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT pre tabuľku `slideshow`
 --
 ALTER TABLE `slideshow`
-  MODIFY `idSlideshow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idSlideshow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT pre tabuľku `transport`

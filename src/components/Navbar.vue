@@ -23,7 +23,7 @@
         <i class="fas fa-user-circle" @click = "this.$router.push({name: 'user-settings'})"></i>
         <i class="fas fa-sign-out-alt" @click = "logout()"></i>  
     </div>
-    <i class = "fas fa-bars hamburger" @click = ""></i>    
+    <i class = "fas fa-bars hamburger" @click = "$emit('activate-sidebar', true)"></i>    
   </div>
 </nav>
 </template>
@@ -51,6 +51,8 @@ export default {
       this.searchStore = useSearchStore();
       this.userStore = useUserStore();
   },
+
+  
 
   methods: {
     invert(){
