@@ -39,7 +39,7 @@ class Item extends Database{
     public function fetchSingleItem($slug){
         try{
             $conn = $this->connect();
-            $query = "SELECT idItems as id,name,price,description,image,alt,available FROM items WHERE slug = ?";
+            $query = "SELECT idItems as id,name,price,description,image,alt,available, html_description FROM items WHERE slug = ?";
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$slug);
             $stmt->execute();
@@ -291,6 +291,86 @@ class Item extends Database{
             return [];
         }
     }
+
+    public function fetchHtmlDesc($slug){
+        try{
+            $conn = $this->connect();
+            $query = "SELECT html_description FROM items WHERE slug = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(1, $slug);
+            $stmt->execute();
+            $rs = $stmt->fetch();
+            echo json_encode($rs);
+        } catch(Exception $e){
+            die;
+        } finally {
+            $conn = null;
+        }
+    }
+
+  public function fetchRecommendedProducts($slug) {
+    try {
+        $conn = $this->connect();
+        $getCategoriesQuery = "SELECT i.idItems, ic.Category_idCategory
+        FROM items i JOIN items_has_category ic ON i.idItems = ic.Items_idItems
+        WHERE i.slug = ?;";
+
+        $stmt = $conn->prepare($getCategoriesQuery);
+        $stmt->bindParam(1, $slug);
+        $stmt->execute();
+
+        $rows = $stmt->fetchAll();
+
+        if (!$rows) {
+            echo json_encode([]);
+            return;
+        }
+
+        $itemId = $rows[0]['idItems'];
+        $categories = array_column($rows, 'Category_idCategory');
+
+        $placeholders = implode(',', array_fill(0, count($categories), '?'));
+
+        $recommendedQuery = "SELECT DISTINCT i.name, i.price, i.description, i.image, i.available, i.alt,i.slug
+            FROM items i JOIN items_has_category ic ON i.idItems = ic.Items_idItems
+            WHERE ic.Category_idCategory IN ($placeholders) AND i.idItems != ? AND i.available = 'Na sklade' LIMIT 15";
+
+        $stmt = $conn->prepare($recommendedQuery);
+        $params = array_merge($categories, [$itemId]);
+        $stmt->execute($params);
+        echo json_encode($stmt->fetchAll());
+    } catch (Exception $e) {
+        http_response_code(500);
+        echo json_encode(['error' => 'Server error']);
+    } finally {
+        $conn = null;
+    }
 }
 
+    public function fetchReviews($slug){
+        try{
+            $conn = $this->connect();
+            $query = "SELECT idItems FROM items WHERE slug = ?";
+            $query_1 = "SELECT u.name as name, u.last_name as last_name,
+                        r.description as description, r.rating as rating FROM reviews r JOIN users u ON r.user_id = u.idUsers
+                        WHERE item_id = ?;";
+
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(1, $slug);
+            $stmt->execute();
+            $id = $stmt->fetch();
+
+            $id_1 = $id['idItems'];
+            $stmt = $conn->prepare($query_1);
+            $stmt->bindParam(1, $id_1);
+            $stmt->execute();
+            $reviews = $stmt->fetchAll();
+            echo json_encode($reviews);
+        } catch(Exception $e){
+            die;
+        } finally{
+            $conn = null;
+        }
+    }
+}
 ?>

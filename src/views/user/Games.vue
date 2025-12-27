@@ -36,7 +36,7 @@ export default{
                         withCredentials: false
                       }
                     );
-                     console.log(response.data);
+                     
                 this.games.push(...response.data)
                 this.offset += this.limit;
                

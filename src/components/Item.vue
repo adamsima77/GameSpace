@@ -69,7 +69,9 @@ export default {
             margin-top: 15px;
             gap: 10px;
            
-
+            p{
+              margin-bottom: 20px;
+            }
             h2{
                   text-decoration: none;
                   border-bottom: 3px solid transparent;

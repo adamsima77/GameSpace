@@ -20,6 +20,7 @@ export default{
         active(){
             switch(this.$route.name){
                 case 'order-history': return 1;
+                case 'order-detail': return 1;
                 case 'personal-info': return 2;
                 case 'account-management': return 3;
                 default: return 0;

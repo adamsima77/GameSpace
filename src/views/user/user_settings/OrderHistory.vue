@@ -13,7 +13,7 @@
                  <td>{{ order.creation_date }}</td>
                  <td>{{ order.status }}</td>
                  <td>{{ order.total_price }}€</td>
-                 <td class = "detail"><RouterLink :to = "{}">Detail</RouterLink></td>
+                 <td class = "detail"><RouterLink :to = "{name: 'order-detail', params:{id: order.id_Orders}}">Detail</RouterLink></td>
             </tr>
             
         </table>

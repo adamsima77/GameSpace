@@ -23,22 +23,18 @@ export default{
   .wrapper {
   display: flex;
   flex-direction: row;
-  justify-content: flex-start;
-  padding: 25px;
   width: 100%;
   gap: 10px;
 
-  .wrapp {
-    flex: 1;
+ .wrapp {
     display: flex;
     flex-direction: column;
-    gap: 25px;
-    background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    width: 100%;
+    background-color: white;
     border-radius: 15px;
-    padding: 20px;
-    box-sizing: border-box; 
-  }
+    padding: 10px;
+    position: relative;
+}
 }
 
 @media only screen and (max-width: 810px) {
@@ -49,10 +45,7 @@ export default{
     gap: 15px;
 
     .wrapp {
-      width: 100%; 
-      padding: 20px; 
-      flex-direction: column; 
-      gap: 20px; 
+      
     }
   }
 }

@@ -300,6 +300,81 @@ public function logout() {
     ]);
     exit;
 }
+
+public function userData(){
+    try{
+        $user_id = $_SESSION['user_id'];
+        if(!isset($_SESSION['user_id'])) return;
+        $conn = $this->connect();
+        $query = "SELECT u.name as name, u.last_name as last_name,
+                  u.email as email, u.mobile_number as mobile_number,
+                   a.city as city,a.street as street,a.postal_code as postal_code
+                   FROM users u LEFT JOIN address a ON u.Address_idAddress = a.idAddress
+                   WHERE idUsers = ?;";
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $user_id);
+        $stmt->execute();
+        $rs = $stmt->fetch();
+        echo json_encode($rs);
+    } catch(Exception $e){
+        $conn = null;
+        die;
+    } finally{
+        $conn = null;
+        exit;
+    }
+}
+
+public function saveUserData($name,$surname,$email,$city,$street,$postal_code){
+    try{
+         $user_id = $_SESSION['user_id'];
+         if(!isset($_SESSION['user_id'])) return;
+         $userQuery = "UPDATE users SET name = ?, last_name = ?, email = ? WHERE idUsers = ?";
+         $addressQuery = "UPDATE address SET city = ?, street = ?, postal_code = ? WHERE idAddress = ?";
+         $conn = $this->connect();
+         $stmt = $conn->prepare($userQuery);
+         $stmt->bindParam(1, $name);
+         $stmt->bindParam(2, $surname);
+         $stmt->bindParam(3, $email);
+         $stmt->bindParam(4, $user_id);
+         $stmt->execute();
+         
+         $query = "SELECT Address_idAddress FROM users WHERE idUsers = ?";
+         $stmt = $conn->prepare($query);
+         $stmt->bindParam(1, $user_id);
+         $stmt->execute();
+         $rs = $stmt->fetch();
+         $address_id = $rs['Address_idAddress'];
+         if(!$address_id){
+             $sql = "INSERT INTO address(city,street,postal_code) VALUES(?,?,?);";
+             $stmt = $conn->prepare($sql);
+             $stmt->bindParam(1, $city);
+             $stmt->bindParam(2, $street);
+             $stmt->bindParam(3, $postal_code);
+             $stmt->execute();
+             $address_id = $conn->lastInsertId();
+             
+             $stmt = $conn->prepare("UPDATE users SET Address_idAddress = ? WHERE idUsers = ?");
+             $stmt->bindParam(1, $address_id);
+             $stmt->bindParam(2, $user_id);
+             $stmt->execute();
+         } else{
+            $stmt = $conn->prepare($addressQuery);
+            $stmt->bindParam(1, $city);
+            $stmt->bindParam(2, $street);
+            $stmt->bindParam(3, $postal_code);
+            $stmt->bindParam(4, $address_id);
+            $stmt->execute();
+         }
+      
+    } catch(Exception $e){
+        $conn = null;
+        die;
+    } finally{
+           $conn = null;
+           exit;
+    }
+}
 }
 
 

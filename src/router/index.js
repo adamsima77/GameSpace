@@ -36,7 +36,8 @@ const routes = [
             children:[
                 {path: 'historia-nakupov', name: 'order-history', component: () => import('../views/user/user_settings/OrderHistory.vue')},
                 {path: 'osobne-udaje', name: 'personal-info', component: () => import('../views/user/user_settings/PersonalInfo.vue')},
-                {path: 'ucet', name: 'account-management', component: () => import('../views/user/user_settings/AccountManagment.vue')}
+                {path: 'ucet', name: 'account-management', component: () => import('../views/user/user_settings/AccountManagment.vue')},
+                {path: ':id', name: 'order-detail', component: () => import('../views/user/user_settings/OrderDetail.vue')}
             ]
       },
     ],
@@ -80,7 +81,7 @@ router.beforeEach((to, from, next) => {
     return next({ name: 'home' })
   }
 
-  if (requiresAuth && cartStore.cart.length === 0 && !['user-settings', 'order-history', 'personal-info', 'account-management'].includes(to.name)) {
+  if (requiresAuth && cartStore.cart.length === 0 && !['user-settings', 'order-detail', 'order-history', 'personal-info', 'account-management'].includes(to.name)) {
     return next({ name: 'cart' }) 
   }
 

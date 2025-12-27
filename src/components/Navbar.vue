@@ -279,7 +279,11 @@ nav {
   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
   z-index: 100001;
   overflow: visible;   
-  max-height: none;     
+  max-height: none;   
+  
+  p{
+    text-align: center;
+  }
   
 }
 

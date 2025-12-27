@@ -23,7 +23,10 @@
       <div class="row"><span>Platba</span><strong>{{ cartStore.paymentName }}</strong></div>
     </section>
 
-    <button class="confirm" @click = "placeOrder()">Potvrdiť objednávku</button>
+    <div class = "confirm_delivery">
+        <button @click = "$router.push({name: 'delivery'})">Doručenie</button>
+        <button class="confirm" @click = "placeOrder()">Potvrdiť objednávku</button>
+    </div>
   </div>
 </template>
 
@@ -101,14 +104,20 @@ export default{
     }
   }
 
-  .confirm {
+
+  .confirm_delivery{
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+    width: 100%;
+  button {
     background-color: $blue;
     color: white;
     padding: 16px;
     border-radius: 12px;
     font-size: 16px;
     font-weight: 600;
-    width: 100%;
+    min-width: 20%;
     cursor: pointer;
     transition: background-color 0.3s ease;
 
@@ -117,11 +126,17 @@ export default{
     }
   }
 }
-
+}
 @media only screen and (max-width: 800px) {
    .checkout{
     justify-content: center;
     align-items: center;
+
+    .confirm_delivery{
+      button{
+        flex: 1;
+      }
+    } 
     h1{
       text-align: center;
     }

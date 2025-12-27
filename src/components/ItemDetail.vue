@@ -1,5 +1,4 @@
 <template>
- 
     <div class="img_desc">
       <img :src="item.image" :alt="item.alt">
       <div class="desc">
@@ -57,7 +56,14 @@
         },
         mounted(){
           this.fetchDetail();
-        }
+        },
+
+        
+  watch:{
+    '$route.params.slug'(){
+        this.fetchDetail();
+    }
+  }
  }
 </script>
 
@@ -155,7 +161,6 @@
   }
 
   @media only screen and (max-width: 800px) {
-  .ItemDetail {
      .img_desc{
         flex-direction: column;
         justify-content: center;
@@ -171,5 +176,4 @@
       width: 100%;
      }
   }
-}
 </style>
