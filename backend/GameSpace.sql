@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: Út 23.Dec 2025, 15:05
+-- Čas generovania: Pi 02.Jan 2026, 18:48
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -74,7 +74,11 @@ INSERT INTO `address` (`idAddress`, `city`, `postal_code`, `street`, `created_at
 (10, 'asf', 'asf', 'asf', '2025-12-16 14:08:27', '2025-12-16 14:08:27'),
 (11, 'Hfs', '123456', 'Asf', '2025-12-16 15:00:34', '2025-12-16 15:00:34'),
 (12, 'Male', '95182', 'Velke', '2025-12-19 15:40:57', '2025-12-19 15:40:57'),
-(13, 'Malé Vozokany', '95182', 'Hlavná ulica 81/21', '2025-12-21 12:40:31', '2025-12-21 12:40:31');
+(13, 'Malé Vozokany', '95182', 'Hlavná ulica 81/21', '2025-12-21 12:40:31', '2025-12-21 12:40:31'),
+(14, 'Adsad', '95182', 'Asds', '2025-12-25 15:20:14', '2025-12-25 15:20:14'),
+(15, 'Male', '95182', 'SD', '2025-12-27 13:14:18', '2025-12-27 13:14:18'),
+(16, 'asd', '12345', 'asf', '2025-12-27 14:27:50', '2025-12-27 14:27:56'),
+(17, 'Male', '95182', 'Velke', '2025-12-27 14:47:03', '2025-12-27 14:47:03');
 
 -- --------------------------------------------------------
 
@@ -157,7 +161,7 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `created_at`, `last_update`, `available`, `alt`, `release_date`, `slug`, `stock`, `html_description`) VALUES
-(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2025-12-16 15:00:34', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild', 5, ''),
+(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2025-12-27 14:47:03', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild', 3, ''),
 (2, 'Minecraft', 26.95, 'Sandbox game about placing blocks and going on adventures.', 'http://localhost/GameSpace/img/user/minecraft.jpg', '2025-12-09 07:16:09', '2025-12-16 14:08:27', 'Nie je na sklade', 'Minecraft cover', '2011-11-18', 'minecraft', 0, ''),
 (3, 'Cyberpunk 2077', 49.99, 'Futuristic open-world RPG in a dystopian city.', 'http://localhost/GameSpace/img/user/cyberpunk2077.jpg', '2025-12-09 07:16:09', '2025-12-21 12:40:31', 'Na sklade', 'Cyberpunk 2077 cover', '2020-12-10', 'cyberpunk-2077', 3, ''),
 (4, 'God of War', 39.99, 'Action-adventure game following Kratos and his son.', 'http://localhost/GameSpace/img/user/god_of_war.jpg', '2025-12-09 07:16:09', '2025-12-15 09:50:12', 'Nie je na sklade', 'God of War cover', '2018-04-20', 'god-of-war', 10, ''),
@@ -231,7 +235,7 @@ INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `create
 (72, 'Monster Hunter: World', 29.99, 'Action RPG about hunting massive beasts.', 'mhw.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Monster Hunter World cover', '2018-01-26', 'monster-hunter-world', 10, ''),
 (73, 'Monster Hunter Rise', 39.99, 'Fast-paced monster hunting adventure.', 'mhrise.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Monster Hunter Rise cover', '2021-03-26', 'monster-hunter-rise', 10, ''),
 (74, 'Dark Souls III', 29.99, 'Challenging dark fantasy action RPG.', 'dark_souls_3.jpg', '2025-12-12 14:19:10', '2025-12-15 09:50:12', 'Na sklade', 'Dark Souls III cover', '2016-03-24', 'dark-souls-3', 10, ''),
-(75, 'Clair Obscur: Expedition 33', 49.99, '„Rok čo rok nás vymazáva.“ Veďte členov Expedície 33 na ich ceste za zničením Paintress, aby už nikdy nemohla maľovať smrť. Preskúmajte svet zázrakov inšpirovaný Belle Époque France a bojujte s jedinečnými nepriateľmi v tomto ťahovom RPG s mechanikou v reálnom čase. Raz do roka sa Paintress zobudí a namaľuje na svoj monolit.', 'http://localhost/GameSpace/img/user/expedition_33_1.jpg', '2025-12-21 11:54:56', '2025-12-23 09:27:30', 'Na sklade', 'expedition-33', '2025-04-25', 'expedition-33', 20, '<p>\r\n<strong>Expedition 33</strong> je atmosférická príbehová hra, ktorá spája hlboký naratív,\r\numelecký vizuálny štýl a moderný ťahový súbojový systém. Hráč sa ocitá v temnom,\r\nno fascinujúcom svete, kde každý rok záhadná entita známa ako Maliarka\r\nvymaže zo sveta ľudí, ktorí dosiahnu určitý vek. Tento rok padla voľba na číslo 33.\r\n</p>\r\n\r\n<p>\r\nAko člen poslednej expedície máte jedinú úlohu – zastaviť tento neúprosný cyklus\r\na čeliť osudu, ktorý sa zdá byť vopred napísaný. Každý krok vpred je sprevádzaný\r\notázkami o živote, smrti, obete a nádeji. Príbeh je rozprávaný emocionálne,\r\ns dôrazom na postavy, ich vnútorné konflikty a vzťahy.\r\n</p>\r\n\r\n<h2>Jedinečný svet a atmosféra</h2>\r\n\r\n<p>\r\nHerný svet Expedition 33 je inšpirovaný umeleckými smermi ako surrealizmus\r\na belle époque, čím vytvára nezameniteľnú atmosféru plnú kontrastov.\r\nKrása a rozklad tu existujú bok po boku a každý nový región rozpráva\r\nvlastný príbeh bez potreby slov.\r\n</p>\r\n\r\n<p>\r\nProstredia sú bohaté na detaily a podporujú pocit melanchólie,\r\nktorý sa nesie celou hrou. Hudobný sprievod podčiarkuje emócie\r\na umocňuje dramatické momenty príbehu.\r\n</p>\r\n\r\n<h2>Súbojový systém</h2>\r\n\r\n<p>\r\nHra využíva moderný ťahový súbojový systém obohatený o prvky v reálnom čase.\r\nSprávne načasovanie útokov, obrany a špeciálnych schopností má zásadný vplyv\r\nna priebeh boja. Každá postava má vlastné schopnosti a štýl boja,\r\nčo umožňuje strategické kombinácie a rôzne herné prístupy.\r\n</p>\r\n\r\n<ul>\r\n<li>Taktické ťahové súboje s dynamickými prvkami</li>\r\n<li>Unikátne schopnosti jednotlivých členov expedície</li>\r\n<li>Postupné odhaľovanie silných aj slabých stránok nepriateľov</li>\r\n</ul>\r\n\r\n<h2>Postavy a príbeh</h2>\r\n\r\n<p>\r\nČlenovia Expedition 33 nie sú len bojovníci, ale ľudia s vlastnými obavami,\r\nspomienkami a motiváciami. Počas hry sa ich príbehy prehlbujú\r\nprostredníctvom dialógov a kľúčových rozhodnutí.\r\n</p>\r\n\r\n<p>\r\nHráčove voľby môžu ovplyvniť nielen vzťahy medzi postavami,\r\nale aj samotný vývoj príbehu. Morálne dilemy často nemajú jednoznačne\r\nsprávne riešenie a nútia zamyslieť sa nad následkami vlastných činov.\r\n</p>\r\n\r\n<h2>Hlavné prvky hry</h2>\r\n\r\n<ul>\r\n<li>Silný príbehový zážitok zameraný na emócie a atmosféru</li>\r\n<li>Originálny umelecký štýl a jedinečný svet</li>\r\n<li>Prepracovaný súbojový systém s taktickou hĺbkou</li>\r\n<li>Zapamätateľné postavy a dospelé témy</li>\r\n<li>Dôraz na rozhodnutia a ich následky</li>\r\n</ul>\r\n\r\n<h2>Záver</h2>\r\n\r\n<p>\r\nExpedition 33 je hra, ktorá sa nebojí klásť ťažké otázky a rozprávať príbeh\r\no pominuteľnosti života a sile ľudskej vôle. Je určená hráčom,\r\nktorí hľadajú viac než len akciu – chcú hlboký zážitok,\r\nktorý v nich zanechá stopu ešte dlho po dohraní.\r\n</p>');
+(75, 'Clair Obscur: Expedition 33', 49.99, '„Rok čo rok nás vymazáva.“ Veďte členov Expedície 33 na ich ceste za zničením Paintress, aby už nikdy nemohla maľovať smrť. Preskúmajte svet zázrakov inšpirovaný Belle Époque France a bojujte s jedinečnými nepriateľmi v tomto ťahovom RPG s mechanikou v reálnom čase. Raz do roka sa Paintress zobudí a namaľuje na svoj monolit.', 'http://localhost/GameSpace/img/user/expedition_33_1.jpg', '2025-12-21 11:54:56', '2025-12-27 14:47:03', 'Na sklade', 'expedition-33', '2025-04-25', 'expedition-33', 17, '<p>\r\n<strong>Expedition 33</strong> je atmosférická príbehová hra, ktorá spája hlboký naratív,\r\numelecký vizuálny štýl a moderný ťahový súbojový systém. Hráč sa ocitá v temnom,\r\nno fascinujúcom svete, kde každý rok záhadná entita známa ako Maliarka\r\nvymaže zo sveta ľudí, ktorí dosiahnu určitý vek. Tento rok padla voľba na číslo 33.\r\n</p>\r\n\r\n<p>\r\nAko člen poslednej expedície máte jedinú úlohu – zastaviť tento neúprosný cyklus\r\na čeliť osudu, ktorý sa zdá byť vopred napísaný. Každý krok vpred je sprevádzaný\r\notázkami o živote, smrti, obete a nádeji. Príbeh je rozprávaný emocionálne,\r\ns dôrazom na postavy, ich vnútorné konflikty a vzťahy.\r\n</p>\r\n\r\n<h2>Jedinečný svet a atmosféra</h2>\r\n\r\n<p>\r\nHerný svet Expedition 33 je inšpirovaný umeleckými smermi ako surrealizmus\r\na belle époque, čím vytvára nezameniteľnú atmosféru plnú kontrastov.\r\nKrása a rozklad tu existujú bok po boku a každý nový región rozpráva\r\nvlastný príbeh bez potreby slov.\r\n</p>\r\n\r\n<p>\r\nProstredia sú bohaté na detaily a podporujú pocit melanchólie,\r\nktorý sa nesie celou hrou. Hudobný sprievod podčiarkuje emócie\r\na umocňuje dramatické momenty príbehu.\r\n</p>\r\n\r\n<h2>Súbojový systém</h2>\r\n\r\n<p>\r\nHra využíva moderný ťahový súbojový systém obohatený o prvky v reálnom čase.\r\nSprávne načasovanie útokov, obrany a špeciálnych schopností má zásadný vplyv\r\nna priebeh boja. Každá postava má vlastné schopnosti a štýl boja,\r\nčo umožňuje strategické kombinácie a rôzne herné prístupy.\r\n</p>\r\n\r\n<ul>\r\n<li>Taktické ťahové súboje s dynamickými prvkami</li>\r\n<li>Unikátne schopnosti jednotlivých členov expedície</li>\r\n<li>Postupné odhaľovanie silných aj slabých stránok nepriateľov</li>\r\n</ul>\r\n\r\n<h2>Postavy a príbeh</h2>\r\n\r\n<p>\r\nČlenovia Expedition 33 nie sú len bojovníci, ale ľudia s vlastnými obavami,\r\nspomienkami a motiváciami. Počas hry sa ich príbehy prehlbujú\r\nprostredníctvom dialógov a kľúčových rozhodnutí.\r\n</p>\r\n\r\n<p>\r\nHráčove voľby môžu ovplyvniť nielen vzťahy medzi postavami,\r\nale aj samotný vývoj príbehu. Morálne dilemy často nemajú jednoznačne\r\nsprávne riešenie a nútia zamyslieť sa nad následkami vlastných činov.\r\n</p>\r\n\r\n<h2>Hlavné prvky hry</h2>\r\n\r\n<ul>\r\n<li>Silný príbehový zážitok zameraný na emócie a atmosféru</li>\r\n<li>Originálny umelecký štýl a jedinečný svet</li>\r\n<li>Prepracovaný súbojový systém s taktickou hĺbkou</li>\r\n<li>Zapamätateľné postavy a dospelé témy</li>\r\n<li>Dôraz na rozhodnutia a ich následky</li>\r\n</ul>\r\n\r\n<h2>Záver</h2>\r\n\r\n<p>\r\nExpedition 33 je hra, ktorá sa nebojí klásť ťažké otázky a rozprávať príbeh\r\no pominuteľnosti života a sile ľudskej vôle. Je určená hráčom,\r\nktorí hľadajú viac než len akciu – chcú hlboký zážitok,\r\nktorý v nich zanechá stopu ešte dlho po dohraní.\r\n</p>');
 
 -- --------------------------------------------------------
 
@@ -382,7 +386,10 @@ INSERT INTO `orderdetail` (`idOrderDetail`, `name`, `last_name`, `email`, `mobil
 (10, 'asf', 'asf', 'asf', 'asf', 10, 7, 2),
 (11, 'Al', 'Af', 'assfas', '+432242424', 11, 4, 2),
 (12, 'Adam', 'Šima', 'email@email.sk', '+421904329 027', 12, 6, 2),
-(13, 'Adam', 'Šima', 'admin@outlook.sk', '0904 245 367', 13, 1, 4);
+(13, 'Adam', 'Šima', 'admin@outlook.sk', '0904 245 367', 13, 1, 4),
+(14, 'Al', 'AAs', 'adam.sima@student.ukf.sk', '0904319555', 14, 4, 1),
+(15, 'Al', 'Šima', 'adamsima77@gmail.com', '123456', 15, 3, 2),
+(16, 'AAsf', 'Šima', 'admin@outlook.sk', '123456', 17, 6, 1);
 
 -- --------------------------------------------------------
 
@@ -416,7 +423,10 @@ INSERT INTO `orders` (`idOrders`, `creation_date`, `last_update`, `OrderDetail_i
 (10, '2025-12-16 14:08:27', '2025-12-19 09:37:44', 10, 4, 'V príprave', 269.5),
 (11, '2025-12-16 15:00:34', '2025-12-19 09:37:44', 11, 4, 'V príprave', 59.99),
 (12, '2025-12-19 15:40:57', '2025-12-19 15:40:57', 12, NULL, 'V príprave', 49.99),
-(13, '2025-12-21 12:40:31', '2025-12-21 12:40:31', 13, 4, 'V príprave', 299.94);
+(13, '2025-12-21 12:40:31', '2025-12-21 12:40:31', 13, 4, 'V príprave', 299.94),
+(14, '2025-12-25 15:20:14', '2025-12-25 15:20:14', 14, NULL, 'V príprave', 49.99),
+(15, '2025-12-27 13:14:18', '2025-12-27 13:14:18', 15, NULL, 'V príprave', 109.98),
+(16, '2025-12-27 14:47:03', '2025-12-27 14:47:03', 16, 4, 'V príprave', 109.98);
 
 -- --------------------------------------------------------
 
@@ -443,7 +453,12 @@ INSERT INTO `orders_has_items` (`Orders_idOrders`, `Items_idItems`, `quantity`) 
 (10, 2, 10),
 (11, 1, 1),
 (12, 3, 1),
-(13, 3, 6);
+(13, 3, 6),
+(14, 75, 1),
+(15, 1, 1),
+(15, 75, 1),
+(16, 1, 1),
+(16, 75, 1);
 
 -- --------------------------------------------------------
 
@@ -471,6 +486,45 @@ INSERT INTO `payment` (`idPayment`, `name`, `created_at`, `last_update`) VALUES
 (6, 'Google Pay', '2025-12-15 15:32:30', '2025-12-15 15:32:30'),
 (7, 'PayPal', '2025-12-15 15:32:30', '2025-12-15 15:32:30'),
 (8, 'Hotovosť', '2025-12-15 15:32:30', '2025-12-15 15:32:30');
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `platform`
+--
+
+CREATE TABLE `platform` (
+  `platform_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `platform`
+--
+
+INSERT INTO `platform` (`platform_id`, `name`) VALUES
+(1, 'PC'),
+(2, 'PS5'),
+(3, 'Xbox Series X'),
+(4, 'Nintendo');
+
+-- --------------------------------------------------------
+
+--
+-- Štruktúra tabuľky pre tabuľku `platform_has_items`
+--
+
+CREATE TABLE `platform_has_items` (
+  `platform_id` int(11) NOT NULL,
+  `idItems` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Sťahujem dáta pre tabuľku `platform_has_items`
+--
+
+INSERT INTO `platform_has_items` (`platform_id`, `idItems`) VALUES
+(1, 75);
 
 -- --------------------------------------------------------
 
@@ -592,7 +646,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`idUsers`, `name`, `last_name`, `email`, `password`, `mobile_number`, `role_idrole`, `Address_idAddress`, `created_at`, `last_update`, `is_deleted`) VALUES
 (3, 'Adam', 'Šima', 'adamsima@gmail.com', '$2y$10$/jyrZXJeaBXImPE1YeHd/eVjpxWWvRkel30dFUsGgQWRjTo81Z.vq', NULL, 2, NULL, '2025-12-13 16:30:41', '2025-12-13 16:30:41', 0),
-(4, 'User', 'User', 'user@user.sk', '$2y$10$anDZQb3aYY/3D3tDgbks6uoVlsuE8xzi0uEw2KRoAOjg1uq7IPy/2', NULL, 1, NULL, '2025-12-13 16:32:34', '2025-12-21 12:34:20', 0),
+(4, 'user', 'user', 'user@user.sk', '$2y$10$anDZQb3aYY/3D3tDgbks6uoVlsuE8xzi0uEw2KRoAOjg1uq7IPy/2', NULL, 1, 16, '2025-12-13 16:32:34', '2025-12-27 14:27:50', 0),
 (5, 'Aadasd', 'Asdasd', 'fff@fff.sk', '$2y$10$IWMpHgYsjM.KZUjbda2Hn.WUb5OHYDCaPzoMHlM9tmMWRuHKuEE4q', NULL, 1, NULL, '2025-12-13 20:07:33', '2025-12-13 20:07:33', 0);
 
 --
@@ -678,6 +732,19 @@ ALTER TABLE `payment`
   ADD PRIMARY KEY (`idPayment`);
 
 --
+-- Indexy pre tabuľku `platform`
+--
+ALTER TABLE `platform`
+  ADD PRIMARY KEY (`platform_id`);
+
+--
+-- Indexy pre tabuľku `platform_has_items`
+--
+ALTER TABLE `platform_has_items`
+  ADD PRIMARY KEY (`platform_id`,`idItems`),
+  ADD KEY `idItems` (`idItems`);
+
+--
 -- Indexy pre tabuľku `reviews`
 --
 ALTER TABLE `reviews`
@@ -725,7 +792,7 @@ ALTER TABLE `accordion`
 -- AUTO_INCREMENT pre tabuľku `address`
 --
 ALTER TABLE `address`
-  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT pre tabuľku `category`
@@ -755,19 +822,25 @@ ALTER TABLE `most_anticipated`
 -- AUTO_INCREMENT pre tabuľku `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `idOrderDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idOrderDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pre tabuľku `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT pre tabuľku `payment`
 --
 ALTER TABLE `payment`
   MODIFY `idPayment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT pre tabuľku `platform`
+--
+ALTER TABLE `platform`
+  MODIFY `platform_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT pre tabuľku `reviews`
@@ -843,6 +916,13 @@ ALTER TABLE `orders`
 ALTER TABLE `orders_has_items`
   ADD CONSTRAINT `fk_Orders_has_Items_Items` FOREIGN KEY (`Items_idItems`) REFERENCES `items` (`idItems`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   ADD CONSTRAINT `fk_Orders_has_Items_Orders` FOREIGN KEY (`Orders_idOrders`) REFERENCES `orders` (`idOrders`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Obmedzenie pre tabuľku `platform_has_items`
+--
+ALTER TABLE `platform_has_items`
+  ADD CONSTRAINT `platform_has_items_ibfk_1` FOREIGN KEY (`platform_id`) REFERENCES `platform` (`platform_id`),
+  ADD CONSTRAINT `platform_has_items_ibfk_2` FOREIGN KEY (`idItems`) REFERENCES `items` (`idItems`);
 
 --
 -- Obmedzenie pre tabuľku `reviews`

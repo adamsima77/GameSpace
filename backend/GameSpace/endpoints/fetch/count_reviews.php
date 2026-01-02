@@ -19,6 +19,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 require $_SERVER['DOCUMENT_ROOT'] . '/GameSpace/classes/Item.php';
 $item = new Item();
-
-$item->fetchReviews($_GET['slug'], $_GET['limit'], $_GET['offset']);
+$item->getCountOfReviews($_GET['slug']);
 ?>

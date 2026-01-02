@@ -26,6 +26,10 @@
               </div>
                <p>{{ value.description }}</p>
            </div>
+           <hr>
+           <div class = "pagination">
+               <p :class = "{active: actual_page === index}" v-for = "index in (Math.ceil(reviews_max / review_limit))" @click = "actual_page = index">{{ index }}</p>
+           </div>
         </div>
       </div>
     </div>
@@ -71,7 +75,10 @@ export default {
       recommended_products: [],
       reviews: [],
       recommendedScrollPosition: 0,
-      maxScrollLeft: 0
+      maxScrollLeft: 0,
+      review_limit: 10,
+      reviews_max: 0,
+      actual_page: 1
     };
   },
   methods: {
@@ -118,18 +125,36 @@ export default {
     async fetchReviews(){
       const slug = this.$route.params.slug;
       const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetch_reviews.php",{
-        params: {slug},
+        params: {slug: slug, limit: this.review_limit, offset: ((this.actual_page - 1) * this.review_limit)},
         withCredentials: false
       });
       this.reviews = response.data;
   },
+      async getMaxReviews(){
+        try{
+             const slug = this.$route.params.slug;
+             const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/count_reviews.php",{
+              params: {slug},
+              withCredentials: false});
+              return response.data.total_reviews;
+        } catch(error){
+
+        }
+      }
   },
 
-  mounted() {
-    this.fetchDesc();
-    this.recommendedProducts();
-    this.fetchReviews();
+  async mounted() {
+    await this.fetchDesc();
+    await this.recommendedProducts();
+    await this.fetchReviews();
+    this.reviews_max = await this.getMaxReviews();
   },
+
+  watch:{
+    actual_page(){
+      this.fetchReviews();
+    }
+  }
 };
 </script>
 
@@ -151,6 +176,40 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    .pagination{
+         display: flex;
+         flex-direction: row;
+         gap: 15px;
+         justify-content: center;
+         align-items: center;
+         margin-top: 15px;
+      p{
+        background-color: white;
+        box-shadow: $box_sh_boxes;
+        padding: 10px;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &.active{
+          background-color: $blue;
+          color: white;
+          &:hover{
+            background-color: rgb(170, 170, 170);
+            color: $dark_blue;
+          }
+        }
+
+        &:hover{
+           background-color: $dark_blue;
+           color: white;
+        }
+      }
+    }
 
     .review_box {
       display: flex;

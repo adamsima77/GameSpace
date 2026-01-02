@@ -347,13 +347,13 @@ class Item extends Database{
     }
 }
 
-    public function fetchReviews($slug){
+    public function fetchReviews($slug, $limit, $offset){
         try{
             $conn = $this->connect();
             $query = "SELECT idItems FROM items WHERE slug = ?";
             $query_1 = "SELECT u.name as name, u.last_name as last_name,
                         r.description as description, r.rating as rating FROM reviews r JOIN users u ON r.user_id = u.idUsers
-                        WHERE item_id = ?;";
+                        WHERE item_id = ? LIMIT ? OFFSET ?;";
 
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1, $slug);
@@ -363,6 +363,8 @@ class Item extends Database{
             $id_1 = $id['idItems'];
             $stmt = $conn->prepare($query_1);
             $stmt->bindParam(1, $id_1);
+            $stmt->bindParam(2, $limit);
+            $stmt->bindParam(3, $offset);
             $stmt->execute();
             $reviews = $stmt->fetchAll();
             echo json_encode($reviews);
@@ -370,6 +372,22 @@ class Item extends Database{
             die;
         } finally{
             $conn = null;
+        }
+    }
+
+    public function getCountOfReviews($slug){
+        try{
+            $query = "SELECT COUNT(r.reviews_id) as total_reviews FROM items i LEFT JOIN reviews r ON i.idItems = r.item_id WHERE i.slug = ?";
+            $conn = $this->connect();
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(1, $slug);
+            $stmt->execute();
+            $rs = $stmt->fetch();
+            echo json_encode($rs);
+            $conn = null;
+            exit;
+        } catch(Exception $e){
+            die;
         }
     }
 }
