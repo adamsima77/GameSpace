@@ -368,17 +368,20 @@ public function addQuantity($id){
         }
     }
 
-    public function getOrders(){
+    public function getOrders($limit, $offset){
         
         $user_id = $_SESSION['user_id'];
 
         try{ 
             $query = "SELECT o.idOrders as id_Orders,o.creation_date as creation_date,o.status as status,o.total_price as total_price
                       FROM orders o
-                      WHERE o.Users_idUsers = ? ORDER BY o.creation_date DESC";
+                      WHERE o.Users_idUsers = ? ORDER BY o.creation_date DESC
+                      LIMIT ? OFFSET ?";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1, $user_id);
+            $stmt->bindParam(2, $limit);
+            $stmt->bindParam(3, $offset);
             $stmt->execute();
             $rs = $stmt->fetchAll();
             $conn = null;
@@ -387,5 +390,22 @@ public function addQuantity($id){
               $conn = null;
               die;
         }
+    }
+
+    public function getTotalPagesOfUserOrders(){
+         try{
+             $user_id = $_SESSION['user_id'];
+             $query = "SELECT COUNT(*) as total_pages FROM orders WHERE Users_idUsers = ?";
+             $conn = $this->connect();
+             $stmt = $conn->prepare($query);
+             $stmt->bindParam(1, $user_id);
+             $stmt->execute();
+             $rs = $stmt->fetch();
+             echo json_encode($rs);
+             $conn = null;
+             exit;
+         } catch(Exception $e){
+            die;
+         }
     }
 }

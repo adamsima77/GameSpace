@@ -3,6 +3,14 @@ require_once $_SERVER['DOCUMENT_ROOT'] . '/GameSpace/classes/Database.php';
 class Item extends Database{
 
     private $conn;
+
+
+     public function __construct(){
+        if(session_status() == PHP_SESSION_NONE){
+               session_start();
+        }
+    }
+
     public function fetchNewestItems(){
         try{
             $conn = $this->connect();
@@ -67,6 +75,77 @@ class Item extends Database{
                 return [];
         }
     }
+
+    public function addReview($slug, $text, $rating){
+           try{
+                $query = "SELECT idItems FROM items WHERE slug = ?";
+                $conn = $this->connect();
+                $stmt = $conn->prepare($query);
+                $stmt->bindParam(1, $slug);
+                $stmt->execute();
+                $item = $stmt->fetch();
+                
+                $user_id = $_SESSION['user_id'];
+                $item_id = $item['idItems'];
+                $query_1 = "INSERT INTO reviews(description, rating,user_id,item_id) VALUES(?,?,?,?);";
+                $stmt = $conn->prepare($query_1);
+                $stmt->bindParam(1, $text);
+                $stmt->bindParam(2, $rating);
+                $stmt->bindParam(3, $user_id);
+                $stmt->bindParam(4, $item_id);
+                $stmt->execute();
+                $conn = null;
+                exit;
+           } catch(Exception $e){
+               die;
+           }
+    }
+
+   public function hasUserPostedReview($slug){
+    try{
+
+        $current_user_id = $_SESSION['user_id'] ?? null;
+        
+
+        if (!$current_user_id) {
+            echo json_encode(['hasPosted' => false]);
+            return;
+        }
+
+        
+        $query = "SELECT idItems FROM items WHERE slug = ?;";
+        $conn = $this->connect();
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $slug);
+        $stmt->execute();
+        $item = $stmt->fetch();
+
+        if (!$item) {
+            echo json_encode(['hasPosted' => false]);
+            return;
+        }
+
+        $id_item = $item['idItems'];
+
+      
+        $query_1 = "SELECT reviews_id FROM reviews WHERE item_id = ? AND user_id = ?;";
+        $stmt = $conn->prepare($query_1);
+        $stmt->bindParam(1, $id_item);
+        $stmt->bindParam(2, $current_user_id);
+        $stmt->execute();
+        $review = $stmt->fetch();
+
+        if ($review) {
+            echo json_encode(['hasPosted' => true]);
+        } else {
+            echo json_encode(['hasPosted' => false]);
+        }
+        
+    } catch(Exception $e){
+        echo json_encode(['hasPosted' => false]);
+    }
+}
+
     public function fetchGames($limit, $offset, $filter){
         try{
             $game_category = 1;
@@ -102,6 +181,8 @@ class Item extends Database{
                 return [];
         }
     }
+
+   
 
     public function fetchLaptopsPcs($limit,$offset,$filter){
         try{

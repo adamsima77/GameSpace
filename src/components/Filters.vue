@@ -7,7 +7,6 @@
         <button @click = "changeActive('MostExpensive')"
         :class = "{active: active === 'MostExpensive'}">Najdrahšie</button>
     </div>
-    <hr>
 </template>
 
 <script>

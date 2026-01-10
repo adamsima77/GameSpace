@@ -15,37 +15,68 @@
                  <td>{{ order.total_price }}€</td>
                  <td class = "detail"><RouterLink :to = "{name: 'order-detail', params:{id: order.id_Orders}}">Detail</RouterLink></td>
             </tr>
-            
+   
         </table>
         <p v-else>Vaša história nákupov je prázdna</p>
+
     </div>
+             <div class="pagination">
+        <p v-for="index in (Math.ceil(total_pages / limit))" :key="index" 
+        :class="{ active: actual_page === index }" @click="changePage(index)"
+  >
+    {{ index }}
+  </p>
+</div>
 </template>
 
 <script>
 export default{
     data(){
         return{
-            orders: []
+            orders: [],
+            limit: 10,
+            actual_page: 1,
+            total_pages: 0
         }
     },
     
     methods: { 
+
+        async changePage(page){
+           this.actual_page = page;
+           await this.fetchOrders();
+        },
         async fetchOrders(){
             try{
                 const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetch_orders.php",
-                {withCredentials: true});
+                {
+                    params: {limit: this.limit, offset: (this.actual_page - 1) * this.limit},
+                    withCredentials: true});
                 this.orders = response.data;
-                console.log("Orders from backend:", response.data);
             } catch(error){
                    if (error.response?.status === 401) {
                      console.log("Používateľ nie je prihlásený");
                    }
+            }
+        },
+
+        async getTotalPages(){
+            try{
+                 const response = await this.$axios.post("http://localhost/GameSpace/endpoints/fetch/getTotalPagesOfUserOrders.php",
+                 {},
+                 {
+                    withCredentials: true
+                 });
+                 this.total_pages = response.data.total_pages;
+            } catch(error){
+
             }
         }
     },
 
     mounted(){
         this.fetchOrders();
+        this.getTotalPages();
     }
 }
 </script>
@@ -113,6 +144,40 @@ export default{
 
     }
 }
+
+.pagination{
+         display: flex;
+         flex-direction: row;
+         gap: 15px;
+         justify-content: center;
+         align-items: center;
+         margin-top: 15px;
+      p{
+        background-color: white;
+        box-shadow: $box_sh_boxes;
+        padding: 10px;
+        border-radius: 50%;
+        width: 25px;
+        height: 25px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &.active{
+          background-color: $blue;
+          color: white;
+          &:hover{
+            background-color: rgb(170, 170, 170);
+            color: $dark_blue;
+          }
+        }
+
+        &:hover{
+           background-color: $dark_blue;
+           color: white;
+        }
+      }
+    }
 
 @media only screen and (max-width: 810px) {
   .order_history {

@@ -4,6 +4,8 @@
              <h1>{{ title }}</h1>
              <p>{{ desc }}</p>
              <Filters @filter-change= "handleFilter"></Filters>
+             <p class = "total">Zobrazených výsledkov: {{ item.length }}</p> 
+              <hr>
          </div>        
          <Item v-for = "(game,index) in item" :key = "index" :item = "game" :parent-route-name="parentRouteName"></Item>
          <Loader v-if = "loading"></Loader>
@@ -73,6 +75,15 @@ export default{
             display: flex;
             flex-direction: column;
             gap: 10px;
+
+            .total{
+                margin-top: 25px;
+            }
+
+              hr{
+                border: 1px solid black;
+                margin-top: 10px;
+              }
          }
     }
 

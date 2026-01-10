@@ -16,6 +16,20 @@
         </div>
 
         <div class = "reviews" v-else>
+
+          <p v-if = "!userStore.user_id">Chcete pridať recenziu ? <RouterLink class = "login" :to = "{name: 'login'}">Prihláste sa</RouterLink></p>
+          <div v-else class = "add_review" v-if = "!hasUserPostedReview">
+                  <h2>Pridať recenziu</h2>
+                  <label for="text">Popis:
+                      <textarea name="" id="text" placeholder = "Zadajte text recenzie..."
+                      v-model = "review_text"></textarea>
+                  </label>
+                  <div class = "rating">
+                       <i v-for="index in 5" :key="index" @click="userAddReviewRating = index"
+                        :class="index <= userAddReviewRating ? 'fas fa-star yellow_star' : 'far fa-star empty_star'"></i>
+                    </div>
+                  <button @click = "addReview()">Pridať recenziu</button>
+          </div>
            <p v-if = "reviews.length == 0">Neboli pridané žiadne užívateľské recenzie.</p>
            <div class = "review_box" v-else v-for = "(value,index) in reviews" :key = "index">
                <h3>{{ value.name }} {{ value.last_name }}</h3>
@@ -64,6 +78,7 @@
 <script>
 import ItemDetail from '../../components/ItemDetail.vue';
 import Item from '../../components/Item.vue';
+import { useUserStore } from '../../stores/user';
 
 export default {
   props: ['item'],
@@ -78,7 +93,12 @@ export default {
       maxScrollLeft: 0,
       review_limit: 10,
       reviews_max: 0,
-      actual_page: 1
+      actual_page: 1,
+      userStore: null,
+
+      userAddReviewRating: -1,
+      hasUserPostedReview: null,
+      review_text: ''
     };
   },
   methods: {
@@ -140,7 +160,40 @@ export default {
         } catch(error){
 
         }
+      },
+
+      async addReview(){
+          try{
+            if(this.review_text === '' || this.userAddReviewRating === -1) return;
+              const response = await this.$axios.post("http://localhost/GameSpace/endpoints/fetch/addReview.php",
+                {text: this.review_text, rating: this.userAddReviewRating, slug: this.$route.params.slug},
+                {withCredentials: true}
+              );
+              this.fetchReviews();
+              this.hasUserPostedReview = -1
+          } catch(error){
+
+          }
+      },
+
+      async postedReview(){
+         try{
+             const slug = this.$route.params.slug;
+             const response = await this.$axios.post("http://localhost/GameSpace/endpoints/fetch/has_user_posted_review.php", {
+              slug: slug
+              }, 
+              {
+              withCredentials: true
+             });
+             this.hasUserPostedReview = response.data.hasPosted;
+         } catch(error){
+             this.hasUserPostedReview = false;
+         }
       }
+  },
+
+  created(){
+      this.userStore = useUserStore();
   },
 
   async mounted() {
@@ -148,6 +201,7 @@ export default {
     await this.recommendedProducts();
     await this.fetchReviews();
     this.reviews_max = await this.getMaxReviews();
+    this.postedReview();
   },
 
   watch:{
@@ -176,6 +230,110 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    .add_review{
+      h2{
+        margin: 0 auto;
+        font-size: 26px;
+      }
+       display: flex;
+       flex-direction: column;
+       gap: 15px;
+       background-color: white;
+       padding: 20px;
+       border-radius: 15px;
+       width: 50%;
+       border-radius: 25px;
+       border: 1px solid black;
+
+       textarea{
+         resize: none;
+         overflow: none;      
+         min-height: 200px;  
+         max-height: 300px;  
+
+       }
+
+      textarea{
+         padding: 10px 14px;
+      border-radius: 8px;
+      border: 1.5px solid #b5d1ff;
+      background-color: #ffffff;
+      color: #1a1a1a;
+      transition: border-color 0.2s ease, background-color 0.2s ease;
+
+      &:hover {
+        border-color: #2979ff;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.08);
+      }
+
+      &:focus {
+        outline: none;
+        border-color: #2979ff;
+        background-color: #e6f0ff;
+      }
+
+      &::placeholder {
+        color: #5f7dbb;
+        opacity: 0.8;
+      }
+       }
+
+       button {
+              padding: 12px;
+        border: none;
+        background-color: $blue;
+        color: white;
+        font-weight: 600;
+        width: 100%;
+        font-size: 16px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.25s ease, box-shadow 0.25s ease;
+        margin: 0 auto;
+
+        &:hover {
+          background-color: $dark_blue;
+          color: #ffffff;
+          box-shadow: 0 4px 12px rgba(41, 121, 255, 0.3);
+        }
+
+        &.active {
+          background-color: $dark_blue;
+          color: #ffffff;
+          box-shadow: 0 4px 12px rgba(41, 121, 255, 0.3);
+        }
+       }
+
+        .rating {
+    i.yellow_star {
+      color: rgb(255, 255, 0); 
+    }
+    i.empty_star {
+      color: #ccc;
+    }
+    i {
+      cursor: pointer;
+      font-size: 18px;
+      transition: color 0.2s;
+      &:hover {
+        color: gold;
+      }
+
+    }
+    }
+
+       label{
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+       }
+
+    }
+
+    .login{
+      color: $blue;
+    }
 
     .pagination{
          display: flex;

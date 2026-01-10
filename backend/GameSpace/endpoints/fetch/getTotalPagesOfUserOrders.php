@@ -19,5 +19,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 }
 require $_SERVER['DOCUMENT_ROOT'] . '/GameSpace/classes/Cart.php';
 $cart = new Cart();
-$cart->getOrders($_GET['limit'], $_GET['offset']);
+$cart->getTotalPagesOfUserOrders();
 ?>

@@ -2,7 +2,7 @@
     <ItemsShow :item = "games" title = "Hry" desc = "Objav široký výber hier pre všetky platformy a vekové kategórie. Či už hľadáš akčné dobrodružstvá, logické výzvy, športové hry alebo zábavu pre celú rodinu, u nás si určite vyberieš. Nájdeš tu obľúbené tituly aj novinky, ktoré ti 
     prinesú hodiny zábavy doma aj s priateľmi. Vyber si hru, ktorá ťa bude baviť najviac." 
     parent-route-name="item-detail" :loading = "this.loading"
-    @filter-change="fetchWithFilter"></ItemsShow>    
+    @filter-change="fetchWithFilter"></ItemsShow>
 </template>
 
 
@@ -17,7 +17,7 @@ export default{
             offset: 0,
             limit: 15,
             allLoaded: false,
-            currentFilter: null 
+            currentFilter: null,
         }
     },
    

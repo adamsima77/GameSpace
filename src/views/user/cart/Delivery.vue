@@ -44,7 +44,8 @@
         </label>
         <div class = "buttons">
             <RouterLink :to = "{name: 'cart'}">Prejsť na košík</RouterLink>
-            <button @click = "checkVariables()">Prejsť na pokladňu</button>
+            <button @click = "checkVariables()"
+            :disabled="!isFormValid" :class="{ disabled_btn: !isFormValid }">Prejsť na pokladňu</button>
         </div>
         </div>
 </template>
@@ -219,6 +220,7 @@ export default{
       },
 
       checkPostalCode(postal_code){
+          if(!postal_code) return false;
           let isDigit = true;
           for(let i = 0; i < postal_code.length; i++){
                if(!(postal_code.charAt(i) >= '0' && postal_code.charAt(i) <= '9')){
@@ -257,6 +259,14 @@ export default{
     },
 
     computed:{
+
+    isFormValid() {
+        return (this.isEmailValid && this.isName && this.isSurnameValid &&
+                this.isCityValid && this.isStreetValid && this.isPostalValid &&
+                this.isTelephoneValid && this.isTransportValid && this.isPaymentValid);
+    },
+
+
          isTelephoneValid(){
             return this.checkTelephoneNumber(this.telephone_number);
          },
@@ -330,6 +340,16 @@ export default{
                  &:hover{
                       background-color: $dark_blue;
                  }
+
+                 &.disabled_btn {
+                   background-color: #ccc;
+                   color: #666;
+                   cursor: not-allowed;
+
+                &:disabled {
+                   opacity: 0.7;
+                }
+                }
             }
         }
 
