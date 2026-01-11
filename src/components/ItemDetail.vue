@@ -4,6 +4,7 @@
       <div class="desc">
         <h1>{{ item.name }}</h1>
         <p>{{ item.description }}</p>  
+        <p class = "platform">Platforma: <p v-for = "(value,index) in platforms" :key = "index">{{ value.name?.toUpperCase() }}</p></p>
         <div class="price_available">  
           <p :class = "{available: item.available === 'Na sklade', not_available: item.available === 'Nie je na sklade'}">{{ item.available }}</p>
           <p class = "price">{{item.price}}€</p>
@@ -22,7 +23,8 @@
       return{
          item: {},
          cartStore: null,
-         reskey: 0
+         reskey: 0,
+         platforms: []
         
       }
     },
@@ -52,10 +54,23 @@
              addToCart(id){
                  this.cartStore.add(id);
                  this.reskey++;
+             },
+
+             async fetchPlatform(){
+                 try{
+                      const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetchPlatforms.php",{
+                        params: {slug: this.$route.params.slug},
+                        withCredentials: false
+                      });
+                      this.platforms = response.data;
+                 } catch(error){
+
+                 }
              }
         },
         mounted(){
           this.fetchDetail();
+          this.fetchPlatform();
         },
 
         
@@ -94,6 +109,17 @@
       flex-direction: column;
       gap: 18px;
       padding: 10px 0;
+
+      .platform{
+        display: flex;
+        flex-direction: row;
+        gap: 5px;
+
+        p{
+          font-weight: 700;
+          color: $dark_blue;
+        }
+      }
 
       h1 {
         font-size: 28px;

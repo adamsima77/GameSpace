@@ -109,13 +109,11 @@ class Login extends Database{
     public function checkIfLogged(){
         if (!isset($_SESSION['user_id']) || !isset($_SESSION['name']) || !isset($_SESSION['last_name']) || 
                    !isset($_SESSION['email']) || !isset($_SESSION['role'])) {
-                      http_response_code(401);
                       echo json_encode([
                          "status" => "error",
                          "message" => "Používateľ nie je prihlásený"
                 ]);
         } else {
-              http_response_code(200);
                echo json_encode([
                          "status" => "success",
                          "message" => "Používateľ je prihlásený"
@@ -376,6 +374,4 @@ public function saveUserData($name,$surname,$email,$city,$street,$postal_code){
     }
 }
 }
-
-
 ?>

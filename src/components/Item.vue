@@ -7,6 +7,7 @@
       <RouterLink :to="{ name: parentRouteName, params: { slug: item.slug } }">
         <h2>{{ item.name }}</h2>
       </RouterLink>
+      <p class = "platform"><p v-for = "(value,index) in platforms" :key = "index">{{ value.name?.toUpperCase() }}</p></p>
       <p>{{ sliceText(item.description) }}</p>
     </div>
     <hr class="item_hr" />
@@ -23,6 +24,13 @@ export default {
     item: { type: Object, required: true },
     parentRouteName: { type: String, required: true }
   },
+
+  data(){
+    return{
+        platforms: []
+    }
+  },
+
   methods: {
     defineAvailability(value) {
       return value === "Na sklade" ? "available" : "not_available";
@@ -30,7 +38,23 @@ export default {
 
     sliceText(description, maxLength = 150){
         return description.length > maxLength ? description.slice(0,maxLength) + "..." : description;
-    }
+    },
+
+       async fetchPlatform(){
+                 try{
+                      const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetchPlatforms.php",{
+                        params: {slug: this.item.slug},
+                        withCredentials: false
+                      });
+                      this.platforms = response.data;
+                 } catch(error){
+
+                 }
+        }
+  },
+
+  mounted(){
+    this.fetchPlatform();
   }
 }
 </script>
@@ -67,10 +91,14 @@ export default {
             display: flex;
             flex-direction: column;
             margin-top: 15px;
-            gap: 10px;
+
+            .platform{
+                font-weight: 700;
+                margin-top: 5px;
+            }
            
             p{
-              margin-bottom: 20px;
+              margin-bottom: 10px;
             }
             h2{
                   text-decoration: none;

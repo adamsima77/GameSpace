@@ -7,7 +7,8 @@ export const useUserStore = defineStore('user', {
       surname: null,
       email: null,
       role: null,
-      user_id: null
+      user_id: null,
+      sessionChecked: false
   }),
 
   getters: {
@@ -47,6 +48,10 @@ export const useUserStore = defineStore('user', {
           this.user_id = null;
       },
 
+       init() {
+           this.sessionChecked = false;
+       }, 
+
       async checkIfAdmin(){
           try{
                const response = await axios.post("http://localhost/GameSpace/endpoints/fetch/check_if_admin.php",
@@ -70,12 +75,33 @@ export const useUserStore = defineStore('user', {
                  {},  
                  { withCredentials: true }
              );        
+             this.sessionChecked = false;
           } catch(error){
 
           } finally{
                this.cleanStore();   
           }
-      }
+      },
+    async checkIfLogged() {
+  try {
+    const response = await axios.post(
+      "http://localhost/GameSpace/endpoints/fetch/check_if_logged.php",
+      {},
+      { withCredentials: true }
+    );
+
+    if (response.data.status === "success") {
+      this.sessionChecked = true; 
+      return true;
+    } else {
+      this.cleanStore(); 
+      return false;
+    }
+  } catch (err) {
+    this.cleanStore(); 
+    return false;
+  }
+}
   },
   persist: true
 });

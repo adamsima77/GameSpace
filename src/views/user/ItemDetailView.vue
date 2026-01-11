@@ -10,44 +10,86 @@
       </div>
 
       <div class="tab_content">
+        
         <div class="tab desc_tab" v-if="showDescription">
           <h1>Popis produktu</h1>
           <p v-html="res.html_description"></p>
         </div>
 
-        <div class = "reviews" v-else>
+       
+        <div class="reviews" v-else>
+         
+          <button 
+            v-if="userStore.user_id && !hasUserPostedReview" :class = "{active: show_form}"
+            @click="show_form = !show_form" 
+            class="show_form"
+          >
+            Pridať recenziu
+          </button>
 
-          <p v-if = "!userStore.user_id">Chcete pridať recenziu ? <RouterLink class = "login" :to = "{name: 'login'}">Prihláste sa</RouterLink></p>
-          <div v-else class = "add_review" v-if = "!hasUserPostedReview">
-                  <h2>Pridať recenziu</h2>
-                  <label for="text">Popis:
-                      <textarea name="" id="text" placeholder = "Zadajte text recenzie..."
-                      v-model = "review_text"></textarea>
-                  </label>
-                  <div class = "rating">
-                       <i v-for="index in 5" :key="index" @click="userAddReviewRating = index"
-                        :class="index <= userAddReviewRating ? 'fas fa-star yellow_star' : 'far fa-star empty_star'"></i>
-                    </div>
-                  <button @click = "addReview()">Pridať recenziu</button>
+  
+          <p v-if="!userStore.user_id">
+            Chcete pridať recenziu ? 
+            <RouterLink class="login" :to="{name: 'login'}">Prihláste sa</RouterLink>
+          </p>
+
+          
+          <div class="add_review" v-if="show_form && userStore.user_id">
+            <h2>Pridať recenziu</h2>
+            <label for="text">Popis:
+              <textarea id="text" placeholder="Zadajte text recenzie..." v-model="review_text"></textarea>
+            </label>
+            <div class="rating">
+              <i 
+                v-for="index in 5" 
+                :key="index" 
+                @click="userAddReviewRating = index"
+                :class="index <= userAddReviewRating ? 'fas fa-star yellow_star' : 'far fa-star empty_star'"
+              ></i>
+            </div>
+            <button @click="addReview()">Pridať recenziu</button>
           </div>
-           <p v-if = "reviews.length == 0">Neboli pridané žiadne užívateľské recenzie.</p>
-           <div class = "review_box" v-else v-for = "(value,index) in reviews" :key = "index">
-               <h3>{{ value.name }} {{ value.last_name }}</h3>
-              <div class="rating">
-                  <i v-for="n in 5" :key="n" 
-                  :class="n <= value.rating ? 'fas fa-star yellow_star' : 'far fa-star empty_star'">
-                  </i>
+
+         
+          <p v-if="reviews.length == 0">Neboli pridané žiadne užívateľské recenzie.</p>
+
+    
+          <div class="review_box" v-else v-for="(value, index) in reviews" :key="index">
+            <div class="name_icons">
+              <h3>{{ value.name }} {{ value.last_name }}</h3>
+              <div class="icons" v-if="userStore.user_id">
+                <i class="fas fa-edit"></i>
+                <i class="fas fa-trash" @click="deleteReview()"></i>
               </div>
-               <p>{{ value.description }}</p>
-           </div>
-           <hr>
-           <div class = "pagination">
-               <p :class = "{active: actual_page === index}" v-for = "index in (Math.ceil(reviews_max / review_limit))" @click = "actual_page = index">{{ index }}</p>
-           </div>
+            </div>
+            <div class="rating">
+              <i 
+                v-for="n in 5" 
+                :key="n" 
+                :class="n <= value.rating ? 'fas fa-star yellow_star' : 'far fa-star empty_star'"
+              ></i>
+            </div>
+            <p>{{ value.description }}</p>
+          </div>
+
+          <hr />
+
+       
+          <div class="pagination">
+            <p 
+              v-for="index in Math.ceil(reviews_max / review_limit)" 
+              :key="index" 
+              :class="{active: actual_page === index}" 
+              @click="actual_page = index"
+            >
+              {{ index }}
+            </p>
+          </div>
         </div>
       </div>
     </div>
 
+  
     <div class="title_arrows">
       <h1>Odporúčané produkty</h1>
       <div class="arrows">
@@ -98,7 +140,8 @@ export default {
 
       userAddReviewRating: -1,
       hasUserPostedReview: null,
-      review_text: ''
+      review_text: '',
+      show_form: false
     };
   },
   methods: {
@@ -171,6 +214,9 @@ export default {
               );
               this.fetchReviews();
               this.hasUserPostedReview = -1
+              this.userAddReviewRating = -1;
+              this.review_text = '';
+              this.show_form = false;
           } catch(error){
 
           }
@@ -189,6 +235,23 @@ export default {
          } catch(error){
              this.hasUserPostedReview = false;
          }
+      },
+
+      async deleteUserReview(){
+        try{
+            const response = await this.$axios.post("http://localhost/GameSpace/endpoints/delete/delete_user_review.php",
+             {slug: this.$route.params.slug},{withCredentials: true});
+            this.fetchReviews(); 
+            this.hasUserPostedReview = false;
+        } catch(error){
+
+        }
+      },
+
+      async deleteReview(){
+          if(confirm("Naozaj chcete vymazať túto recenziu ?")){
+             await this.deleteUserReview();
+          }
       }
   },
 
@@ -230,6 +293,34 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    .show_form{
+       padding: 12px;
+        border: none;
+        background-color: $blue;
+        color: white;
+        font-weight: 600;
+        width: 20%;
+        font-size: 16px;
+        border-radius: 10px;
+        cursor: pointer;
+        transition: background-color 0.25s ease, box-shadow 0.25s ease;
+        &.active{
+          background-color: $dark_blue;
+        }
+
+        &:hover {
+          background-color: $dark_blue;
+          color: #ffffff;
+          box-shadow: 0 4px 12px rgba(41, 121, 255, 0.3);
+        }
+
+        &.active {
+          background-color: $dark_blue;
+          color: #ffffff;
+          box-shadow: 0 4px 12px rgba(41, 121, 255, 0.3);
+        }
+    }
 
     .add_review{
       h2{
@@ -378,12 +469,44 @@ export default {
       box-shadow: $box_sh_boxes;
       gap: 9px;
 
-      h3 {
+      .name_icons{
+         display: flex;
+         flex-direction: row;
+         align-items: center;
+         justify-content: space-between;
+
+         .icons{
+            display: flex;
+            gap: 15px;
+            cursor: pointer;
+
+            i{
+              box-shadow: $box_sh_boxes;
+              opacity: 1;
+              transition: opacity 0.5s ease-in-out;
+              &:hover{
+                 opacity: 0.5;
+              }
+            }
+
+            i:nth-child(1){
+                color: green;
+            } 
+
+            i:nth-child(2){
+                color: red;
+            }
+         }
+
+       h3 {
         font-size: 20px;
         font-weight: 700;
         color: $dark_blue;
       }
 
+      }
+
+     
       .rating {
         display: flex;
         flex-direction: row;
@@ -454,6 +577,8 @@ export default {
     overflow-y: hidden;
     gap: 16px;
     border-radius: 10px;
+    background-color: #f5f8ff;
+    padding: 10px;
 
     & > * {
       flex: 0 0 auto;

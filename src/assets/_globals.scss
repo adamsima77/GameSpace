@@ -161,7 +161,7 @@ $ease_in_out_background: background-color 0.5s ease-in-out;
 $ease_in_out_opacity: opacity 0.5s ease-in-out;
 
 //Global font
-p,a,button,span,label,input,td,th,tr,table, input[type = 'checkbox'], input[type = 'radio']{
+p,a,button,span,label,input,td,th,tr,table, input[type = 'checkbox'], input[type = 'radio'],li,ul{
   font-family: 'Roboto', sans-serif;
 }
 

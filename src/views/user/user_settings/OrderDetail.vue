@@ -43,7 +43,7 @@ export default {
   data() {
     return {
       detail: {},
-      items: []
+      items: [],
     }
   },
   methods: {
@@ -59,7 +59,7 @@ export default {
       } catch (error) {
         console.error(error);
       }
-    }
+    },
   },
   mounted() {
     this.fetchOrderDetail();

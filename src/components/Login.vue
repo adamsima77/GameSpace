@@ -134,10 +134,12 @@ import {useUserStore} from '../stores/user'
                 this.userStore.setEmail(this.res.email);
                 this.userStore.setRole(this.res.role);
                 this.userStore.setID(this.res.user_id);
-
+                this.userStore.sessionChecked = true;
                 this.login_email = '';
                 this.login_password = '';
-                this.$router.push('/admin');
+
+                if(this.userStore.role === 2) this.$router.push('/admin');
+                else if(this.userStore.role == 1) this.$router.push({name: 'home'});
             } catch(error){
                   this.res = {
                       status: 'error',

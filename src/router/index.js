@@ -45,6 +45,7 @@ const routes = [
 
   {
     path: '/admin',
+    name: 'admin',
     component: () => import('../views/admin/AdminView.vue'),
     meta: { requiresAuth: true, requiresAdmin: true },
     children: [],
@@ -62,33 +63,33 @@ const router = createRouter({
 })
 
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async(to, from, next) => {
   const userStore = useUserStore()
   const cartStore = useCartStore()
 
-  if(to.name === 'user-settings' && !userStore.user_id){
-      return next({ name: 'home' });
+    if (!userStore.sessionChecked) {
+    const isLogged = await userStore.checkIfLogged();
+    if (!isLogged) {
+      await userStore.logout();
+    }
+  }
+   
+  if(to.name === 'admin' && (!userStore.user_id || userStore.role !== 2)){
+      return next({name: 'login'});
   }
 
-  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
-  const requiresAdmin = to.matched.some(record => record.meta.requiresAdmin)
-
-  if (requiresAuth && !userStore.user_id) {
-    return next({ name: 'login' })
+  if(to.name === 'delivery' && cartStore.cart.length === 0){
+        return next({name: 'cart'});
   }
 
-  if (requiresAdmin && userStore.role !== 2) {
-    return next({ name: 'home' })
+  if(to.name === 'checkout' && !cartStore.isDeliverySet()){
+       return next({name: 'cart'});
   }
 
-  if (requiresAuth && cartStore.cart.length === 0 && !['user-settings', 'order-detail', 'order-history', 'personal-info', 'account-management'].includes(to.name)) {
-    return next({ name: 'cart' }) 
+  if(to.name === 'login' && userStore.user_id){
+       return next({name: 'home'});
   }
 
-  if (to.name === 'checkout' && !cartStore.isDeliverySet()) {
-    return next({ name: 'delivery' }) 
-  }
-
-  next()
+  return next()
 })
 export default router

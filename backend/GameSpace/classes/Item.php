@@ -471,5 +471,50 @@ class Item extends Database{
             die;
         }
     }
+
+    public function fetchPlatforms($slug){
+             try{
+                  $query = "SELECT p.name as name FROM platform p JOIN platform_has_items pi ON p.platform_id = pi.platform_id JOIN items i ON pi.idItems = i.idItems WHERE i.slug = ?";
+                  $conn = $this->connect();
+                  $stmt = $conn->prepare($query);
+                  $stmt->bindParam(1, $slug);
+                  $stmt->execute();
+                  $rs = $stmt->fetchAll();
+                  echo json_encode($rs);
+                  $conn = null;
+                  exit;
+             } catch(Exception $e){
+                die;
+             }
+    }
+
+    public function deleteUserReview($slug){
+        try{
+            if(!isset($_SESSION['user_id']))  throw new Exception("Užívateľ nie je prihlásený !");
+            $user_id = $_SESSION['user_id'];
+            $query_1 = "SELECT idItems FROM items WHERE slug = ?";
+            $query = "DELETE FROM reviews WHERE item_id = ? AND user_id = ?;";
+            $conn = $this->connect();
+            $stmt = $conn->prepare($query_1);
+            $stmt->bindParam(1, $slug);
+            $stmt->execute();
+            $rs = $stmt->fetch();
+
+            if (!$rs) {
+                throw new Exception("Položka nebola nájdená !");
+            }
+            $item_id = $rs['idItems'];
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(1, $item_id);
+            $stmt->bindParam(2, $user_id);
+            $stmt->execute();
+            $conn = null;
+            return;
+        } catch(Exception $e){
+              http_response_code(500);
+              echo json_encode(['error' => $e->getMessage()]);
+              exit;
+        }
+    }
 }
 ?>
