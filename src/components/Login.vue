@@ -138,7 +138,7 @@ import {useUserStore} from '../stores/user'
                 this.login_email = '';
                 this.login_password = '';
 
-                if(this.userStore.role === 2) this.$router.push('/admin');
+                if(this.userStore.role === 2) this.$router.push({name: 'dashboard'});
                 else if(this.userStore.role == 1) this.$router.push({name: 'home'});
             } catch(error){
                   this.res = {

@@ -221,13 +221,19 @@ export default{
 
       checkPostalCode(postal_code){
           if(!postal_code) return false;
+          if(postal_code.length > 5) return false;
+          let digitCount = 0;
           let isDigit = true;
           for(let i = 0; i < postal_code.length; i++){
-               if(!(postal_code.charAt(i) >= '0' && postal_code.charAt(i) <= '9')){
-                     isDigit = false;
-                     break;
+                if (!((postal_code[i] >= '0' && postal_code[i] <= '9') || postal_code[i] === ' ')) {
+                   isDigit = false;
+                   break;
+               }
+               if (postal_code[i] >= '0' && postal_code[i] <= '9') {
+                       digitCount++;
                }
           }
+          if (digitCount !== 5) return false;
           if(isDigit) return true;
           else return false;
       },

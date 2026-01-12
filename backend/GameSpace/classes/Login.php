@@ -306,7 +306,7 @@ public function userData(){
         $conn = $this->connect();
         $query = "SELECT u.name as name, u.last_name as last_name,
                   u.email as email, u.mobile_number as mobile_number,
-                   a.city as city,a.street as street,a.postal_code as postal_code
+                   a.city as city,a.street as street,a.postal_code as postal_code, u.mobile_number as mobile_number
                    FROM users u LEFT JOIN address a ON u.Address_idAddress = a.idAddress
                    WHERE idUsers = ?;";
         $stmt = $conn->prepare($query);
@@ -323,18 +323,19 @@ public function userData(){
     }
 }
 
-public function saveUserData($name,$surname,$email,$city,$street,$postal_code){
+public function saveUserData($name,$surname,$email,$city,$street,$postal_code, $mobile_number){
     try{
          $user_id = $_SESSION['user_id'];
          if(!isset($_SESSION['user_id'])) return;
-         $userQuery = "UPDATE users SET name = ?, last_name = ?, email = ? WHERE idUsers = ?";
+         $userQuery = "UPDATE users SET name = ?, last_name = ?, email = ?, mobile_number = ? WHERE idUsers = ?";
          $addressQuery = "UPDATE address SET city = ?, street = ?, postal_code = ? WHERE idAddress = ?";
          $conn = $this->connect();
          $stmt = $conn->prepare($userQuery);
          $stmt->bindParam(1, $name);
          $stmt->bindParam(2, $surname);
          $stmt->bindParam(3, $email);
-         $stmt->bindParam(4, $user_id);
+         $stmt->bindParam(4, $mobile_number);
+         $stmt->bindParam(5, $user_id);
          $stmt->execute();
          
          $query = "SELECT Address_idAddress FROM users WHERE idUsers = ?";
@@ -364,9 +365,12 @@ public function saveUserData($name,$surname,$email,$city,$street,$postal_code){
             $stmt->bindParam(4, $address_id);
             $stmt->execute();
          }
+
+         echo json_encode(['message' => 'success']);
       
     } catch(Exception $e){
         $conn = null;
+        echo json_encode(['message' => 'error']);
         die;
     } finally{
            $conn = null;

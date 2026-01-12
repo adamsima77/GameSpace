@@ -41,5 +41,39 @@ class Order extends Database{
               exit;
         }
      }
+
+      public function fetchOrdersAdmin($limit, $offset){
+        try{
+             $conn = $this->connect();
+             $query = "SELECT * FROM orders ORDER BY creation_date DESC LIMIT ? OFFSET ?";
+             $stmt = $conn->prepare($query);
+             $stmt->bindParam(1, $limit);
+             $stmt->bindParam(2, $offset);
+             $stmt->execute();
+             $rs = $stmt->fetchAll();
+             echo json_encode($rs);
+             $conn = null;
+             exit;
+        } catch(Exception $e){
+              $conn = null;
+              echo json_encode([]);
+        }
+    }
+
+    public function getTotalPages(){
+         try{
+             $conn = $this->connect();
+             $query = "SELECT COUNT(*) as total_pages FROM orders";
+             $stmt = $conn->prepare($query);
+             $stmt->execute();
+             $rs = $stmt->fetch();
+             $conn = null;
+             echo json_encode($rs);
+             exit;
+        } catch(Exception $e){
+              $conn = null;
+              echo json_encode([]);
+        }
+    }
 }
 ?>

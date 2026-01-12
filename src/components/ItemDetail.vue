@@ -1,6 +1,6 @@
 <template>
     <div class="img_desc">
-      <img :src="item.image" :alt="item.alt">
+      <img :src="item.image" :alt="item.alt" loading="lazy">
       <div class="desc">
         <h1>{{ item.name }}</h1>
         <p>{{ item.description }}</p>  

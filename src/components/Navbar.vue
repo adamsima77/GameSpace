@@ -21,7 +21,7 @@
       
     <div class = "logged" v-else>
         <i class="fas fa-user-circle" @click = "this.$router.push({name: 'user-settings'})"></i>
-        <i class="fas fa-chart-pie" v-if = "userStore.role === 2" @click = "$router.push('/admin')"></i> 
+        <i class="fas fa-chart-pie" v-if = "userStore.role === 2" @click = "$router.push({name: 'dashboard'})"></i> 
         <i class="fas fa-sign-out-alt" @click = "logout()"></i>  
     </div>
     <i class = "fas fa-bars hamburger" @click = "$emit('activate-sidebar', true)"></i>    

@@ -58,18 +58,28 @@
             <div class="name_icons">
               <h3>{{ value.name }} {{ value.last_name }}</h3>
               <div class="icons" v-if="userStore.user_id">
-                <i class="fas fa-edit"></i>
+                <i class="fas fa-edit" @click = "setEdit(value.rating, value.description)"></i>
                 <i class="fas fa-trash" @click="deleteReview()"></i>
               </div>
             </div>
             <div class="rating">
-              <i 
+              <i v-if = "!editMode"
                 v-for="n in 5" 
                 :key="n" 
                 :class="n <= value.rating ? 'fas fa-star yellow_star' : 'far fa-star empty_star'"
               ></i>
+                
+              <i v-if = "editMode"
+                v-for="index in 5" 
+                :key="index" 
+                @click="editRating = index"
+                :class="index <= editRating ? 'fas fa-star yellow_star' : 'far fa-star empty_star'"
+                ></i>
+               
             </div>
-            <p>{{ value.description }}</p>
+            <p v-if = "!editMode">{{ value.description }}</p>
+            <textarea type="text" v-if = "editMode" value = "" v-model = "editReviewText"></textarea>
+            <button @click = "editReview()" v-if = "editMode">Upraviť recenziu</button>
           </div>
 
           <hr />
@@ -141,7 +151,10 @@ export default {
       userAddReviewRating: -1,
       hasUserPostedReview: null,
       review_text: '',
-      show_form: false
+      show_form: false,
+      editMode: false,
+      editRating: -1,
+      editReviewText: ''
     };
   },
   methods: {
@@ -237,6 +250,21 @@ export default {
          }
       },
 
+      async editReview(){
+          try{
+              if(!this.editReviewText || this.editRating === -1) {alert("Recenzia nesmie byť prázdna !"); return;}
+              const response = await this.$axios.post("http://localhost/GameSpace/endpoints/update/save_review.php",
+              {rating: this.editRating, text: this.editReviewText, slug: this.$route.params.slug},
+              {withCredentials: true});
+              this.editMode = false;
+              this.fetchReviews();
+              if(response.data.message === 'success') alert("Recenzia bola úspešne upravená !");
+              else alert("Nastala chyba pri úprave recenzie !");
+          } catch(error){
+
+          }
+      },
+
       async deleteUserReview(){
         try{
             const response = await this.$axios.post("http://localhost/GameSpace/endpoints/delete/delete_user_review.php",
@@ -252,6 +280,12 @@ export default {
           if(confirm("Naozaj chcete vymazať túto recenziu ?")){
              await this.deleteUserReview();
           }
+      },
+
+      setEdit(rating, description){
+         this.editMode = !this.editMode
+         this.editRating = rating;
+         this.editReviewText = description;
       }
   },
 
@@ -293,6 +327,56 @@ export default {
     display: flex;
     flex-direction: column;
     gap: 20px;
+
+    textarea{
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1.5px solid #b5d1ff;
+    font-size: 15px;
+    transition: all 0.2s ease;
+    background-color: #ffffff;
+    resize: none;
+    overflow: none;      
+    min-height: 200px;  
+    max-height: 300px;  
+
+    &:focus {
+      outline: none;
+      border-color: $blue;
+      background-color: #e6f0ff;
+    }
+  }
+
+  button {
+    margin-top: 10px;
+    align-self: flex-start;
+    padding: 10px 18px;
+    background-color: $blue;
+    color: white;
+    font-weight: 600;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+
+    &:hover {
+      background-color: $dark_blue;
+      box-shadow: 0 4px 12px rgba(41, 121, 255, 0.3);
+    }
+  }
+
+  .rating {
+    i {
+      cursor: pointer;
+      font-size: 20px;
+      transition: transform 0.15s ease, color 0.2s ease;
+
+      &:hover {
+        transform: scale(1.15);
+        color: gold;
+      }
+    }
+  }
 
     .show_form{
        padding: 12px;
@@ -342,7 +426,6 @@ export default {
          overflow: none;      
          min-height: 200px;  
          max-height: 300px;  
-
        }
 
       textarea{
@@ -481,7 +564,6 @@ export default {
             cursor: pointer;
 
             i{
-              box-shadow: $box_sh_boxes;
               opacity: 1;
               transition: opacity 0.5s ease-in-out;
               &:hover{

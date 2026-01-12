@@ -1,7 +1,7 @@
 <template>
     <div class = "wrapper" :class = "{hide: !showResults, show: showResults}">
         <div class = "search_item" v-for = "(value,index) in item" :key = "index">
-            <RouterLink :to = "{name: 'search-detail', params:{slug: value.slug}}" @click = "$emit('hide-results')"><img :src="value.image" :alt="value.alt"></RouterLink>
+            <RouterLink :to = "{name: 'search-detail', params:{slug: value.slug}}" @click = "$emit('hide-results')"><img :src="value.image" :alt="value.alt" loading="lazy"></RouterLink>
               <RouterLink :to = "{name: 'search-detail', params:{slug: value.slug}}" @click = "$emit('hide-results')"><h2>{{ value.name }}</h2></RouterLink>
         </div>
     </div>
@@ -50,9 +50,12 @@
         padding: 20px;
 
         img{
-            width: 100px;
-            height: 100px;
-            border-radius: 10px;
+            display: block;
+            width: 200px;
+            height: 150px;
+            object-fit:cover;
+            border-radius:10px;
+            $cursor:pointer
         }
     }
 }

@@ -6,7 +6,7 @@
 
 <h1>Novinky</h1>
 <div class = "wrapper">
-    <Item v-for = "(item,index) in ItemsNewest" :key = "index" :item = "item" parent-route-name="item-detail"></Item>
+    <Item v-for = "(item,index) in ItemsNewest" :key = "index" :item = "item" parent-route-name="cart-item-detail"></Item>
 </div>
 
 <h1 style = "margin-top: 15px;">Najviac očakávané hry</h1>
@@ -124,8 +124,8 @@
 
   .wrapper {
     display: flex;
-    gap: 15px; 
-    justify-content: flex-start;
+   
+    justify-content: space-between;
     width: 100%;
   }
 }

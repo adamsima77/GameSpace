@@ -3,7 +3,7 @@
 <div class = "slideshow">
     <div class = "images" v-if = "slideshow.length">
          
-         <RouterLink :to = "slideshow[actualImage].link"><img :src="slideshow[actualImage].img" :alt="slideshow[actualImage].alt"></RouterLink>
+         <RouterLink :to = "slideshow[actualImage].link"><img loading="lazy" :src="slideshow[actualImage].img" :alt="slideshow[actualImage].alt"></RouterLink>
      
          <div class = "controls">
              <i class = "fas fa-arrow-left left" @click = "goLeft()"></i>

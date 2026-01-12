@@ -29,6 +29,35 @@ class Item extends Database{
         }
     }
 
+    public function saveReview($rating, $text, $slug){
+        try{
+            if($rating === -1 || empty($text)) return;
+            if(!isset($_SESSION['user_id'])) return;
+            $query = "SELECT idItems FROM items WHERE slug = ?;";
+            $conn = $this->connect();
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(1, $slug);
+            $stmt->execute();
+            $rs = $stmt->fetch();
+
+            $item_id = $rs['idItems'];
+            $user_id = $_SESSION['user_id'];
+            $query_1 = "UPDATE reviews SET rating = ?, description = ? WHERE item_id = ? AND user_id = ?;";
+            $stmt = $conn->prepare($query_1);
+            $stmt->bindParam(1, $rating);
+            $stmt->bindParam(2, $text);
+            $stmt->bindParam(3, $item_id);
+            $stmt->bindParam(4, $user_id);
+            $stmt->execute();
+            echo json_encode(['message' => 'success']);
+            $conn = null;
+            exit;
+        } catch(Exception $e){
+             echo json_encode(['message' => 'error']);
+             die;
+        }
+    }
+
     public function fetchMostAnticipatedGames(){
           try{
             $conn = $this->connect();
@@ -514,6 +543,93 @@ class Item extends Database{
               http_response_code(500);
               echo json_encode(['error' => $e->getMessage()]);
               exit;
+        }
+    }
+
+    public function fetchItemsAdmin($limit, $offset) {
+    try {
+        $conn = $this->connect();
+        $query = "
+            SELECT 
+                idItems, 
+                name, 
+                price, 
+                description, 
+                image AS img, 
+                available, 
+                alt,
+                release_date,
+                slug,
+                stock,
+                html_description
+            FROM items
+            ORDER BY created_at DESC
+            LIMIT ? OFFSET ?
+        ";
+
+        $stmt = $conn->prepare($query);
+        $stmt->bindParam(1, $limit, PDO::PARAM_INT);
+        $stmt->bindParam(2, $offset, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $items = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+       
+        $platformQuery = "
+            SELECT p.name
+            FROM platform p
+            JOIN platform_has_items pi ON p.platform_id = pi.platform_id
+            WHERE pi.idItems = ?
+        ";
+
+        
+       $categoryQuery = "
+    SELECT c.name
+    FROM category c
+    JOIN items_has_category ih ON c.idCategory = ih.Category_idCategory
+    WHERE ih.Items_idItems = ?
+";
+
+      
+        foreach ($items as &$item) {
+
+           
+            $stmt = $conn->prepare($platformQuery);
+            $stmt->bindParam(1, $item['idItems'], PDO::PARAM_INT);
+            $stmt->execute();
+            $item['platforms'] = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
+            
+            $stmt = $conn->prepare($categoryQuery);
+            $stmt->bindParam(1, $item['idItems'], PDO::PARAM_INT);
+            $stmt->execute();
+            $item['category'] = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        }
+
+        echo json_encode($items);
+        $conn = null;
+        exit;
+
+    } catch (Exception $e) {
+        echo $e->getMessage();
+        $conn = null;
+        echo json_encode([]);
+    }
+}
+
+    public function getTotalPagesAdmin(){
+         try{
+             $conn = $this->connect();
+             $query = "SELECT COUNT(*) as total_pages FROM items";
+             $stmt = $conn->prepare($query);
+             $stmt->execute();
+             $rs = $stmt->fetch();
+             $conn = null;
+             echo json_encode($rs);
+             exit;
+        } catch(Exception $e){
+              $conn = null;
+              echo json_encode([]);
         }
     }
 }

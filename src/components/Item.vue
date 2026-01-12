@@ -1,7 +1,7 @@
 <template>
   <div class="box">
     <RouterLink :to="{ name: parentRouteName, params: { slug: item.slug } }">
-      <img :src="item.image" :alt="item.alt" />
+      <img :src="item.image" :alt="item.alt" loading="lazy"/>
     </RouterLink>
     <div class="title_desc">
       <RouterLink :to="{ name: parentRouteName, params: { slug: item.slug } }">

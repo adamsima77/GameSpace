@@ -12,35 +12,35 @@
       
       <ul>
         <li>
-          <RouterLink to="" title="Dashboard">
+          <RouterLink :to="{name: 'dashboard'}" title="Dashboard" :class = "{active: active === 1}">
             <i class="fas fa-tachometer-alt"></i>
             <span class="label">Dashboard</span>
           </RouterLink>
         </li>
 
         <li>
-          <RouterLink to="" title="Produkty">
+          <RouterLink :to="{name: 'items'}" title="Produkty" :class = "{active: active === 2}">
             <i class="fas fa-box-open"></i>
             <span class="label">Produkty</span>
           </RouterLink>
         </li>
 
         <li>
-          <RouterLink to="" title="Objednávky">
+          <RouterLink :to="{name: 'orders'}" title="Objednávky" :class = "{active: active === 3}">
             <i class="fas fa-shopping-cart"></i>
             <span class="label">Objednávky</span>
           </RouterLink>
         </li>
 
         <li>
-          <RouterLink to="" title="Akordeón">
+          <RouterLink :to="{name: 'accordion'}" title="Akordeón" :class = "{active: active === 4}">
             <i class="fas fa-list"></i>
             <span class="label">Akordeón</span>
           </RouterLink>
         </li>
 
         <li>
-          <RouterLink to="" title="Slideshow">
+          <RouterLink :to="{name: 'slideshow'}" title="Slideshow" :class = "{active: active === 5}">
             <i class="fas fa-images"></i>
             <span class="label">Slideshow</span>
           </RouterLink>
@@ -57,7 +57,7 @@
 
 
       <i
-        class="fas fa-caret-left expandable"
+        class="fas fa-chevron-left expandable"
         v-if="isExpanded"
         @click="isExpanded = false"
       ></i>
@@ -77,7 +77,19 @@
 export default{
     data(){
         return{
-            isExpanded: true
+            isExpanded: false
+        }
+    },
+
+    computed:{
+        active(){
+          switch(this.$route.name){
+            case 'dashboard': return 1; 
+            case 'items': return 2; 
+            case 'orders': return 3; 
+            case 'accordion': return 4;
+            case 'slideshow': return 5; 
+          }
         }
     }
 }
@@ -127,6 +139,13 @@ export default{
     flex-direction: column;
     gap: 15px;
     height: 90vh;
+
+    a{
+      &.active{
+        background-color: #f5f5f5;
+        border-radius: 15px;
+      }
+    }
   }
 
   .a_title {

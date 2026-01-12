@@ -5,32 +5,37 @@
 
       <div class="inputs">
         <label for="name">Meno:
-          <input type="text" id="name" v-model="name">
+          <input type="text" @input = "touched.name = true" id="name" v-model="name" :class="{bad_input: !isName && touched.name, good_input: isName && touched.name}">
         </label>
 
         <label for="surname">Priezvisko:
-          <input type="text" id="surname" v-model="surname">
+          <input type="text" id="surname" v-model="surname" @input = "touched.surname = true" :class="{bad_input: !isSurnameValid && touched.surname, good_input: isSurnameValid && touched.surname}">
         </label>
 
+         <label for="telephone">Telefónne číslo:
+          <input type="text" id="telephone" v-model="telephone" @input = "touched.telephone_number = true" :class="{bad_input: !isTelephoneValid && touched.telephone_number, good_input: isTelephoneValid && touched.telephone_number}">
+        </label>
+
+        
         <label for="email">E-mail:
-          <input type="email" id="email" v-model="email">
+          <input type="email" id="email" v-model="email" @input = "touched.email = true" :class="{bad_input: !isEmailValid && touched.email, good_input: isEmailValid && touched.email}">
         </label>
 
         <h1>Adresa</h1>
 
         <label for="city">Mesto:
-          <input type="text" id="city" v-model="city">
+          <input type="text" id="city" v-model="city" @input = "touched.city = true" :class="{bad_input: !isCityValid && touched.city, good_input: isCityValid && touched.city}">
         </label>
 
         <label for="street">Ulica:
-          <input type="text" id="street" v-model="street">
+          <input type="text" id="street" v-model="street" @input = "touched.street = true" :class="{bad_input: !isStreetValid && touched.street, good_input: isStreetValid && touched.street}">
         </label>
 
         <label for="postal_code">Poštové číslo:
-          <input type="text" id="postal_code" v-model="postal_code">
+          <input type="text" id="postal_code" v-model="postal_code" @input = "touched.postal_code = true"  :class="{bad_input: !isPostalValid && touched.postal_code, good_input: isPostalValid && touched.postal_code}">
         </label>
 
-        <input type="submit" value="Upraviť údaje">
+        <input type="submit" value="Upraviť údaje" :disabled = "!isFormValid" :class = "{not_valid: !isFormValid}">
       </div>
     </form>
   </div>
@@ -46,8 +51,19 @@
                 city: '',
                 street: '',
                 postal_code: '',
+                telephone: '',
                 userStore: null,
-                res: {}
+                res: {},
+
+                 touched: {
+                   email: false,
+                   name: false,
+                   surname: false,
+                   city: false,
+                   street: false,
+                   postal_code: false,
+                   telephone_number: false,
+                }
             }
         },
 
@@ -60,9 +76,16 @@
                     email: this.email,
                     city: this.city,
                     street: this.street,
-                    postal_code: this.postal_code
+                    postal_code: this.postal_code,
+                    mobile_number: this.telephone
                 },
                 {withCredentials: true});
+
+                if(response.data.message === 'success'){
+                  alert("Vaše údaje boli úspešne upravené !");
+                } else {
+                  alert("Nastala chyba pri úprave vašich údajov !");
+                }
             },
 
             async fetchUserData(){
@@ -70,14 +93,112 @@
                 {},
                 {withCredentials: true})
                 this.res = response.data;
-                console.log(this.res);
                 this.name = this.res.name;
                 this.surname = this.res.last_name;
                 this.email = this.res.email;
                 this.city = this.res.city;
                 this.street = this.res.street;
                 this.postal_code = this.res.postal_code;
-            }
+                this.telephone = this.res.mobile_number;
+            },
+
+             checkTelephoneNumber(number) {
+    if (!number) return false;
+
+    let plusCount = 0;
+    let digitCount = 0;
+
+    for (let i = 0; i < number.length; i++) {
+        const char = number[i];
+
+        if (char === '+') {
+            plusCount++;
+            if (i !== 0) return false; 
+        } else if ((char >= '0' && char <= '9')) {
+            digitCount++;
+    
+        } else if(char == ' '){
+            continue;
+        } else {
+            return false; 
+        }
+    }
+
+    if (plusCount > 1) return false;
+    if (digitCount < 5 || digitCount > 15) return false;
+
+    return true;
+},
+
+      isFirstLetterUpper(str) {
+          if (!str) return false; 
+          const firstChar = str.charAt(0);
+          return firstChar === firstChar.toUpperCase();
+      },
+
+      checkPostalCode(postal_code){
+          if(!postal_code) return false;
+          let digitCount = 0;
+          let isDigit = true;
+          for(let i = 0; i < postal_code.length; i++){
+               if (!((postal_code[i] >= '0' && postal_code[i] <= '9') || postal_code[i] === ' ')) {
+                   isDigit = false;
+                   break;
+               }
+               if (postal_code[i] >= '0' && postal_code[i] <= '9') {
+                       digitCount++;
+               }
+          }
+          if (digitCount !== 5) return false;
+          if(isDigit) return true;
+          else return false;
+      },
+
+       checkEmail(email){
+             let isEmail = false;
+             for(let i = 0; i < email.length; i++){
+                      if(email.charAt(i) == '@'){
+                           isEmail = true;
+                      }
+             }
+
+             return isEmail;
+        }
+        },
+
+
+        computed:{
+       isFormValid() {
+           return (!this.touched.name || this.isName) &&
+           (!this.touched.surname || this.isSurnameValid) &&
+           (!this.touched.city || this.isCityValid) &&
+           (!this.touched.street || this.isStreetValid) &&
+           (!this.touched.postal_code || this.isPostalValid) &&
+           (!this.touched.telephone_number || this.isTelephoneValid) &&
+           (!this.touched.email || this.isEmailValid);
+       },
+
+         isTelephoneValid(){
+            return this.checkTelephoneNumber(this.telephone);
+         },
+         isEmailValid(){
+            return this.checkEmail(this.email);
+         },
+         isName(){
+            return this.isFirstLetterUpper(this.name);
+         },
+         isSurnameValid() {
+            return this.surname.length >= 2 && this.isFirstLetterUpper(this.surname);
+         },
+         isCityValid() {
+           return this.city.length >= 2 && this.isFirstLetterUpper(this.city);
+         },
+         isStreetValid() {
+              return this.street.length >= 2 && this.isFirstLetterUpper(this.street);
+         },
+         isPostalValid() {
+            return this.checkPostalCode(this.postal_code);
+         },
         },
 
         mounted(){
@@ -121,6 +242,14 @@
       color: #1a1a1a;
       transition: border-color 0.2s ease, background-color 0.2s ease;
 
+      &.bad_input{
+          border: 3px solid red;
+      }
+
+      &.good_input{
+           border: 3px solid rgb(0, 255, 81);
+      }
+
       &:hover {
         border-color: #2979ff;
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.08);
@@ -144,6 +273,15 @@
     width: 100%;
     cursor: pointer;
     border: 1px solid white;
+
+    &.not_valid{
+      cursor: not-allowed;
+      background-color: grey;
+
+      &:hover{
+         background-color: grey;
+      }
+    }
 
     &:hover {
       background-color: blue;

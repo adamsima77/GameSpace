@@ -48,7 +48,14 @@ const routes = [
     name: 'admin',
     component: () => import('../views/admin/AdminView.vue'),
     meta: { requiresAuth: true, requiresAdmin: true },
-    children: [],
+    children: [
+          {path: 'dashboard', name: 'dashboard', component: () => import('../views/admin/Dashboard.vue')},
+          {path: 'items', name: 'items', component: () => import('../views/admin/Items.vue')},
+          {path: 'orders', name: 'orders', component: () => import('../views/admin/Orders.vue')},
+          {path: 'accordion', name: 'accordion', component: () => import('../views/admin/Accordion.vue')},
+          {path: 'slideshow', name: 'slideshow', component: () => import('../views/admin/Slideshow.vue')},
+
+    ],
   },
 
   { path: '/:pathMatch(.*)*', name: 'NotFound', component: () => import('../views/user/NotFound.vue') },

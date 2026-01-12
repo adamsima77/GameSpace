@@ -19,7 +19,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
     http_response_code(204);
     exit;
 }
-require_once $_SERVER['DOCUMENT_ROOT'] . '/GameSpace/classes/Login.php';
-$login = new Login();
+require $_SERVER['DOCUMENT_ROOT'] . '/GameSpace/classes/Item.php';
+$item = new Item();
 $data = json_decode(file_get_contents('php://input'), true);
-$login->saveUserData($data['name'], $data['surname'], $data['email'], $data['city'],$data['street'],$data['postal_code'], $data['mobile_number']);
+$item->saveReview($data['rating'], $data['text'], $data['slug']);
+?>

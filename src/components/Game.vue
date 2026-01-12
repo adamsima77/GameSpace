@@ -1,7 +1,7 @@
 <template>
 <div class = "game_boxes">
     <div class = "img_date">
-        <RouterLink :to="{ name: 'item-detail', params: { slug: game.slug } }" ><img :src="game.image" :alt="game.alt"></RouterLink>
+        <RouterLink :to="{ name: 'item-detail', params: { slug: game.slug } }" ><img :src="game.image" :alt="game.alt" loading="lazy"></RouterLink>
         <p>{{ game.state }}</p>
     </div>
 </div>
