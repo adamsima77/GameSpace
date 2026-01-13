@@ -108,6 +108,7 @@ export default {
     async logout(){
         await this.userStore.logout();
         this.$router.push({ name: 'home' });
+        alert("Boli ste odhlásení !");
     }
   },
   mounted() {

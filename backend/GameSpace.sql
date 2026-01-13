@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: Út 13.Jan 2026, 15:19
+-- Čas generovania: Út 13.Jan 2026, 18:29
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -85,7 +85,8 @@ INSERT INTO `address` (`idAddress`, `city`, `postal_code`, `street`, `created_at
 (18, 'DAS', '85182', 'SSA', '2026-01-10 10:16:44', '2026-01-10 10:16:44'),
 (19, 'Male', '95182', 'Velke', '2026-01-10 12:11:58', '2026-01-10 12:11:58'),
 (20, 'Male', '123456', 'Velke', '2026-01-10 17:29:12', '2026-01-10 17:29:12'),
-(21, 'Male', '123456', 'Velke', '2026-01-11 12:58:33', '2026-01-11 12:58:33');
+(21, 'Male', '123456', 'Velke', '2026-01-11 12:58:33', '2026-01-11 12:58:33'),
+(22, 'Malé Vozokany', '12345', 'Hlavná ulica 81/21', '2026-01-13 14:56:19', '2026-01-13 14:56:19');
 
 -- --------------------------------------------------------
 
@@ -168,7 +169,7 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `created_at`, `last_update`, `available`, `alt`, `release_date`, `slug`, `stock`, `html_description`) VALUES
-(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2026-01-11 12:58:33', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild', 19, ''),
+(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2026-01-13 14:56:19', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild', 18, ''),
 (2, 'Minecraft', 26.95, 'Sandbox game about placing blocks and going on adventures.', 'http://localhost/GameSpace/img/user/minecraft.jpg', '2025-12-09 07:16:09', '2026-01-10 17:24:58', 'Na sklade', 'Minecraft cover', '2011-11-18', 'minecraft', 20, ''),
 (3, 'Cyberpunk 2077', 49.99, 'Futuristic open-world RPG in a dystopian city.', 'http://localhost/GameSpace/img/user/cyberpunk2077.jpg', '2025-12-09 07:16:09', '2026-01-10 17:23:06', 'Na sklade', 'Cyberpunk 2077 cover', '2020-12-10', 'cyberpunk-2077', 20, ''),
 (4, 'God of War', 39.99, 'Action-adventure game following Kratos and his son.', 'http://localhost/GameSpace/img/user/god_of_war.jpg', '2025-12-09 07:16:09', '2026-01-10 17:24:58', 'Na sklade', 'God of War cover', '2018-04-20', 'god-of-war', 20, ''),
@@ -183,9 +184,9 @@ INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `create
 (13, 'EcoBook 14\"', 679.5, 'Eco-friendly notebook with energy-efficient processor.', 'ecobook_14.jpg', '2025-12-11 09:09:12', '2026-01-10 17:23:06', 'Na sklade', 'EcoBook 14\" laptop', '2025-04-05', 'ecobook-14', 20, ''),
 (14, 'ProStation 16\"', 1899.99, 'Professional workstation laptop with 64GB RAM.', 'prostation_16.jpg', '2025-12-11 09:09:12', '2026-01-10 17:23:06', 'Na sklade', 'ProStation 16\" laptop', '2025-01-30', 'prostation-16', 20, ''),
 (15, 'TravelBook 13\"', 799.99, 'Light and portable notebook ideal for travel.', 'travelbook_13.jpg', '2025-12-11 09:09:12', '2026-01-10 17:23:06', 'Na sklade', 'TravelBook 13\" laptop', '2025-02-20', 'travelbook-13', 20, ''),
-(16, 'Gaming Mouse X200', 49.99, 'High-precision gaming mouse with RGB lighting.', 'gaming_mouse_x200.jpg', '2025-12-11 09:33:33', '2026-01-10 17:23:06', 'Na sklade', 'Gaming Mouse X200', '2025-05-10', 'gaming-mouse-x200', 20, ''),
-(17, 'Mechanical Keyboard K75', 89.99, 'Mechanical keyboard with customizable RGB keys.', 'mechanical_keyboard_k75.jpg', '2025-12-11 09:33:33', '2026-01-10 17:23:06', 'Na sklade', 'Mechanical Keyboard K75', '2025-06-01', 'mechanical-keyboard-k75', 20, ''),
-(18, 'Wireless Headset H7', 79.99, 'Wireless headset with surround sound.', 'wireless_headset_h7.jpg', '2025-12-11 09:33:33', '2026-01-10 17:23:06', 'Na sklade', 'Wireless Headset H7', '2025-07-15', 'wireless-headset-h7', 20, ''),
+(16, 'Gaming Mouse X200', 49.99, 'High-precision gaming mouse with RGB lighting.', 'http://localhost/GameSpace/img/user/x200.webp', '2025-12-11 09:33:33', '2026-01-13 14:50:06', 'Na sklade', 'Gaming Mouse X200', '2025-05-10', 'gaming-mouse-x200', 20, ''),
+(17, 'Mechanical Keyboard K75', 89.99, 'Mechanical keyboard with customizable RGB keys.', 'http://localhost/GameSpace/img/user/k75.webp', '2025-12-11 09:33:33', '2026-01-13 14:52:37', 'Na sklade', 'Mechanical Keyboard K75', '2025-06-01', 'mechanical-keyboard-k75', 20, ''),
+(18, 'Wireless Headset H7', 79.99, 'Wireless headset with surround sound.', 'http://localhost/GameSpace/img/user/h7.jpg', '2025-12-11 09:33:33', '2026-01-13 14:51:19', 'Na sklade', 'Wireless Headset H7', '2025-07-15', 'wireless-headset-h7', 20, ''),
 (19, 'PlayStation 5', 499.99, 'Next-gen PlayStation console with ultra-fast SSD and 4K gaming.', 'playstation_5.jpg', '2025-12-11 09:35:48', '2026-01-10 17:23:06', 'Na sklade', 'PlayStation 5 console', '2020-11-12', 'playstation-5', 20, ''),
 (20, 'Xbox Series X', 499.99, 'Powerful next-gen Xbox console with ray tracing and 4K gaming.', 'xbox_series_x.jpg', '2025-12-11 09:35:48', '2026-01-10 17:23:06', 'Na sklade', 'Xbox Series X console', '2020-11-10', 'xbox-series-x', 20, ''),
 (21, 'Nintendo Switch OLED', 349.99, 'Portable Nintendo Switch console with OLED display and enhanced audio.', 'nintendo_switch_oled.jpg', '2025-12-11 09:35:48', '2026-01-10 17:23:06', 'Na sklade', 'Nintendo Switch OLED', '2021-10-08', 'nintendo-switch-oled', 20, ''),
@@ -358,7 +359,8 @@ INSERT INTO `orderdetail` (`idOrderDetail`, `name`, `last_name`, `email`, `mobil
 (17, 'Ada', 'Ada', 'admin@outlook.sk', '+421329027', 18, 6, 1),
 (18, 'Al', 'AD', 'admin@outlook.sk', '+421329027', 19, 5, 4),
 (19, 'Al', 'Af', 'admin@outlook.sk', '+421329027', 20, 2, 1),
-(20, 'User', 'Af', 'adamsima77@gmail.com', '0904329027', 21, 4, 1);
+(20, 'User', 'Af', 'adamsima77@gmail.com', '0904329027', 21, 4, 1),
+(21, 'User', 'Šima', 'admin@outlook.sk', '+421329027', 22, 4, 3);
 
 -- --------------------------------------------------------
 
@@ -381,10 +383,7 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`idOrders`, `creation_date`, `last_update`, `OrderDetail_idOrderDetail`, `Users_idUsers`, `status`, `total_price`) VALUES
-(1, '2025-12-16 13:16:45', '2025-12-19 09:37:44', 1, 4, 'V príprave', 0),
-(2, '2025-12-16 13:21:07', '2025-12-19 09:37:44', 2, 4, 'V príprave', 0),
-(3, '2025-12-16 13:40:25', '2025-12-19 09:37:44', 3, 4, 'V príprave', 0),
-(4, '2025-12-16 13:44:42', '2025-12-19 09:37:44', 4, 4, 'V príprave', 149.97),
+(4, '2025-12-16 13:44:42', '2026-01-13 17:16:12', 4, 4, 'Doručené', 149.97),
 (5, '2025-12-16 13:49:13', '2025-12-19 09:37:44', 5, 4, 'V príprave', 26.95),
 (6, '2025-12-16 13:53:49', '2025-12-19 09:37:44', 6, 4, 'V príprave', 26.95),
 (7, '2025-12-16 13:55:44', '2025-12-19 09:37:44', 7, 4, 'V príprave', 49.99),
@@ -399,7 +398,8 @@ INSERT INTO `orders` (`idOrders`, `creation_date`, `last_update`, `OrderDetail_i
 (17, '2026-01-10 10:16:44', '2026-01-10 10:16:44', 17, NULL, 'V príprave', 49.99),
 (18, '2026-01-10 12:11:58', '2026-01-10 12:11:58', 18, NULL, 'V príprave', 59.99),
 (19, '2026-01-10 17:29:12', '2026-01-10 17:29:12', 19, NULL, 'V príprave', 69.99),
-(20, '2026-01-11 12:58:33', '2026-01-11 12:58:33', 20, 4, 'V príprave', 59.99);
+(20, '2026-01-11 12:58:33', '2026-01-11 12:58:33', 20, 4, 'V príprave', 59.99),
+(21, '2026-01-13 14:56:19', '2026-01-13 14:56:19', 21, 4, 'V príprave', 59.99);
 
 -- --------------------------------------------------------
 
@@ -435,7 +435,8 @@ INSERT INTO `orders_has_items` (`Orders_idOrders`, `Items_idItems`, `quantity`) 
 (17, 75, 1),
 (18, 1, 1),
 (19, 28, 1),
-(20, 1, 1);
+(20, 1, 1),
+(21, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -768,7 +769,7 @@ ALTER TABLE `accordion`
 -- AUTO_INCREMENT pre tabuľku `address`
 --
 ALTER TABLE `address`
-  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
+  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT pre tabuľku `category`
@@ -798,13 +799,13 @@ ALTER TABLE `most_anticipated`
 -- AUTO_INCREMENT pre tabuľku `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `idOrderDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idOrderDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT pre tabuľku `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT pre tabuľku `payment`

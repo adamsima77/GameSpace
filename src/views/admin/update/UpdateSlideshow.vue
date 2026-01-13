@@ -19,7 +19,7 @@
 
  
 
- <input type="submit">
+ <input type="submit" value = "Upraviť záznam">
  </form>
 </div>
 </div>
@@ -89,6 +89,7 @@
         
         mounted(){
             this.fetchSlide();
+            document.title = this.$route.params.id;
         },
     
     }

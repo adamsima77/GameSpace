@@ -5,17 +5,18 @@
  <AdminTable 
   @page="changePage"
   :columns="[
-    { label: 'ID', key: 'idOrders'},
+    { label: 'ID', key: 'id'},
     { label: 'Vytvorenie objednávky', key: 'creation_date'},
     { label: 'Posledná úprava', key: 'last_update'},
     { label: 'Status', key: 'status' },
     { label: 'Celková cena', key: 'total_price' },
-    
   ]"
   :records="res"
   :total_pages="total_pages"
   :limit="limit"
   :actual_page = "actual_page"
+  @delete = "deleteRecord"
+  @update = "updateRecord"
 />
 </div>
 </div>
@@ -53,6 +54,32 @@
                }
            },
 
+           async deleteRecord(id){
+              try{
+                  if(!confirm("Chcete naozaj vymazať objednávku ?")){
+                      return;
+                  } else {
+                  const response = await this.$axios.post("http://localhost/GameSpace/endpoints/delete/delete_order_admin.php",
+                  {id: id},
+                  {withCredentials: false}
+                  );
+
+                  if(response.data.message === 'success'){
+                      alert("Objednávka bola úspešne vymazaná !");
+                      this.fetchOrders();
+                  } else{
+                      alert("Nastala chyba pri vymazávaní objednávky");
+                  } 
+                  }
+              } catch(error){
+
+              }
+           },
+
+           updateRecord(id){
+               this.$router.push({name: 'update-orders', params:{id: id}});
+           },
+
            async changePage(page){
                this.actual_page = page;
                await this.fetchOrders(); 
@@ -77,6 +104,7 @@
        padding: 20px;
        height: auto;
        width: 100%;
+       margin-top: 100px;
 
        .wrapp{
         background-color: white;
@@ -87,10 +115,6 @@
         gap: 15px;
          min-width: 0;     
         width: 100%;
-
-        h1{
-            padding-left: 30px;
-        }
        }
     }
 </style>

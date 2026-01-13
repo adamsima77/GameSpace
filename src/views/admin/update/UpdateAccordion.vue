@@ -13,7 +13,7 @@
      <textarea type="text" id = "description" v-model = "description"></textarea>
  </label>
 
- <input type="submit">
+ <input type="submit" value = "Upraviť záznam">
  </form>
 </div>
 </div>
@@ -67,11 +67,14 @@
                 } catch(error){
 
                 }
-            }
+            },
+
+            
         },
         
         mounted(){
             this.fetchData();
+            document.title = this.$route.params.id;
         },
     
     }

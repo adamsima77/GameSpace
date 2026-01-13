@@ -21,7 +21,7 @@
         </label>
 
         <p>Nie ste zaregistrovaný ? <span @click = "changeLayout = true">Zaregistrujte sa</span></p>
-        <input type="submit">
+        <input type="submit" value = "Prihlásiť">
 
       </form>
     </div>
@@ -45,7 +45,7 @@
           <input type="password" id = "repeat_password" v-model = "register_repeat_password" autocomplete="off">
         </label>
           <p>Ste zaregistrovaný ? <span @click = "changeLayout = false">Prihláste sa</span></p>
-          <input type="submit">
+          <input type="submit" value = "Zaregistrovať">
         
            </div>
           </form>

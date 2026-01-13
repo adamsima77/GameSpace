@@ -45,7 +45,7 @@ class Order extends Database{
       public function fetchOrdersAdmin($limit, $offset){
         try{
              $conn = $this->connect();
-             $query = "SELECT * FROM orders ORDER BY creation_date DESC LIMIT ? OFFSET ?";
+             $query = "SELECT idOrders as id, creation_date, last_update, status,total_price FROM orders ORDER BY creation_date DESC LIMIT ? OFFSET ?";
              $stmt = $conn->prepare($query);
              $stmt->bindParam(1, $limit);
              $stmt->bindParam(2, $offset);
@@ -73,6 +73,57 @@ class Order extends Database{
         } catch(Exception $e){
               $conn = null;
               echo json_encode([]);
+        }
+    }
+
+     public function deleteRecord($id){
+        try{
+            $query = "DELETE FROM orders WHERE idOrders = ?;";
+            $conn = $this->connect();
+            $stmt = $conn->prepare($query);
+            $stmt->bindParam(1, $id);
+            $stmt->execute();
+            echo json_encode(['message' => 'success']);
+            $conn = null;
+            exit;
+        } catch(Exception $e){
+             echo json_encode(['message' => $e->getMessage()]);
+             $conn = null;
+             die;
+        }
+    }
+
+    public function fetchForUpdateAdmin($id){
+            try{
+             $conn = $this->connect();
+             $query = "SELECT idOrders as id, status FROM orders WHERE idOrders = ?;";
+             $stmt = $conn->prepare($query);
+             $stmt->bindParam(1, $id);
+             $stmt->execute();
+             $rs = $stmt->fetch();
+             echo json_encode($rs);
+             $conn = null;
+             exit;
+        } catch(Exception $e){
+              $conn = null;
+              echo json_encode([]);
+        }
+        }
+
+    public function updateOrders($id, $status){
+        try{
+             $conn = $this->connect();
+             $query = "UPDATE orders SET status = ? WHERE idOrders = ?;";
+             $stmt = $conn->prepare($query);
+             $stmt->bindParam(1, $status);
+             $stmt->bindParam(2, $id);
+             $stmt->execute();
+             echo json_encode(['message' => 'success']);
+             $conn = null;
+             exit;
+        } catch(Exception $e){
+              $conn = null;
+              echo json_encode(['message' => 'error']);
         }
     }
 }

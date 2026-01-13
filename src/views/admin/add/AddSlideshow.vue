@@ -17,7 +17,7 @@
 
  
 
- <input type="submit">
+ <input type="submit" value = "Pridať záznam">
  </form>
 </div>
 </div>

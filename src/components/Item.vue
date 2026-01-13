@@ -7,7 +7,7 @@
       <RouterLink :to="{ name: parentRouteName, params: { slug: item.slug } }">
         <h2>{{ item.name }}</h2>
       </RouterLink>
-      <p class = "platform"><p v-for = "(value,index) in platforms" :key = "index">{{ value.name?.toUpperCase() }}</p></p>
+      <p class = "platform" v-if = "platforms.length > 0"><p v-for = "(value,index) in platforms" :key = "index">{{ value.name?.toUpperCase() }}</p></p>
       <p>{{ sliceText(item.description) }}</p>
     </div>
     <hr class="item_hr" />

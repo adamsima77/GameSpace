@@ -4,7 +4,7 @@
       <div class="desc">
         <h1>{{ item.name }}</h1>
         <p>{{ item.description }}</p>  
-        <p class = "platform">Platforma: <p v-for = "(value,index) in platforms" :key = "index">{{ value.name?.toUpperCase() }}</p></p>
+        <p class = "platform" v-if = "platforms.length > 0">Platforma: <p v-for = "(value,index) in platforms" :key = "index">{{ value.name?.toUpperCase() }}</p></p>
         <div class="price_available">  
           <p :class = "{available: item.available === 'Na sklade', not_available: item.available === 'Nie je na sklade'}">{{ item.available }}</p>
           <p class = "price">{{item.price}}€</p>
@@ -66,17 +66,34 @@
                  } catch(error){
 
                  }
-             }
+             },
+
+              titleBetterFormat() {
+                   const slug = this.$route.params.slug
+                   if (!slug) return ''
+                   const arr = slug.split('-')
+                   const better = []
+
+                   for (let i = 0; i < arr.length; i++) {
+                      let word = arr[i]
+                      word = word.charAt(0).toUpperCase() + word.slice(1)
+                      better.push(word)
+                   }
+                   return better.join(' ')
+              },
         },
+
         mounted(){
           this.fetchDetail();
           this.fetchPlatform();
+          document.title = this.titleBetterFormat();
         },
 
         
   watch:{
     '$route.params.slug'(){
         this.fetchDetail();
+        document.title = this.$route.params.slug;
     }
   }
  }

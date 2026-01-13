@@ -2,6 +2,7 @@
 <div class = "wrapper">
     <div class = "wrapp">
  <h1>Produkty</h1>
+ <button @click = "">Pridať záznam</button>
  <AdminTable 
   @page="changePage"
   :columns="[
@@ -84,6 +85,7 @@
        padding: 20px;
        height: auto;
        width: 100%;
+       margin-top: 100px;
 
        .wrapp{
         background-color: white;
@@ -95,8 +97,18 @@
          min-width: 0;     
         width: 100%;
 
-        h1{
-            padding-left: 30px;
+         button{
+            padding-left: 45px;
+            background-color: $blue;
+            border-radius: 15px;
+            padding: 15px;
+            width: 20%;
+            color: white;
+            box-shadow: $box_sh_boxes;
+            transition: background-color 0.5s ease-in-out;
+            &:hover{
+              background-color: $dark_blue;
+            }
         }
        }
     }

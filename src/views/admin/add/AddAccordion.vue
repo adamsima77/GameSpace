@@ -13,7 +13,7 @@
      <textarea type="text" id = "description" v-model = "description"></textarea>
  </label>
 
- <input type="submit">
+ <input type="submit" value = "Pridať záznam">
  </form>
 </div>
 </div>

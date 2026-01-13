@@ -63,6 +63,7 @@ export default {
   },
   mounted() {
     this.fetchOrderDetail();
+    document.title = this.$route.params.id;
   }
 }
 </script>
