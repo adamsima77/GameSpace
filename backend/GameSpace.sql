@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hostiteľ: 127.0.0.1
--- Čas generovania: So 10.Jan 2026, 18:42
+-- Čas generovania: Út 13.Jan 2026, 15:19
 -- Verzia serveru: 10.4.32-MariaDB
 -- Verzia PHP: 8.2.12
 
@@ -40,8 +40,11 @@ CREATE TABLE `accordion` (
 --
 
 INSERT INTO `accordion` (`idAccordion`, `title`, `description`, `created_at`, `last_update`) VALUES
-(1, 'First', 'adssadasdasdasdasds', '2025-12-07 12:23:40', '2025-12-07 12:23:40'),
-(2, 'Second', 'asdasdasdsadasdsadsafasf', '2025-12-07 12:23:40', '2025-12-07 12:23:40');
+(9, 'Môžem vrátiť alebo vymeniť tovar?', 'Áno, máte právo na vrátenie tovaru do 14 dní od jeho doručenia alebo na výmenu produktu za iný kus.', '2026-01-13 12:31:13', '2026-01-13 12:31:13'),
+(10, 'Ako zistím kompatibilitu príslušenstva s mojou konzolou alebo PC?', 'Každý produkt má uvedené kompatibilné platformy v popise produktu. Ak si nie ste istí, kontaktujte našu zákaznícku podporu.', '2026-01-13 12:31:26', '2026-01-13 12:31:26'),
+(11, 'Sú všetky produkty nové a originálne?', 'Áno, všetky hry a príslušenstvo na GameSpace sú originálne, nové a zaručene od oficiálnych distribútorov.', '2026-01-13 12:31:39', '2026-01-13 12:31:39'),
+(12, 'Aké typy hier sú dostupné na GameSpace?', 'a GameSpace nájdete široký výber hier pre PC, konzoly (PlayStation, Xbox, Nintendo) aj mobilné zariadenia, vrátane akčných, RPG, športových a strategických hier.', '2026-01-13 12:32:00', '2026-01-13 12:32:00'),
+(13, 'Ponúkate aj herné príslušenstvo?', 'Áno, máme široký sortiment herného príslušenstva – myši, klávesnice, headsety, ovládače, podložky a ďalšie doplnky pre hráčov.', '2026-01-13 12:32:32', '2026-01-13 12:32:32');
 
 -- --------------------------------------------------------
 
@@ -77,11 +80,12 @@ INSERT INTO `address` (`idAddress`, `city`, `postal_code`, `street`, `created_at
 (13, 'Malé Vozokany', '95182', 'Hlavná ulica 81/21', '2025-12-21 12:40:31', '2025-12-21 12:40:31'),
 (14, 'Adsad', '95182', 'Asds', '2025-12-25 15:20:14', '2025-12-25 15:20:14'),
 (15, 'Male', '95182', 'SD', '2025-12-27 13:14:18', '2025-12-27 13:14:18'),
-(16, 'asd', '12345', 'asf', '2025-12-27 14:27:50', '2025-12-27 14:27:56'),
+(16, 'Malé Vozokany', '12345', 'Hlavná ulica 81/2', '2025-12-27 14:27:50', '2026-01-12 11:25:20'),
 (17, 'Male', '95182', 'Velke', '2025-12-27 14:47:03', '2025-12-27 14:47:03'),
 (18, 'DAS', '85182', 'SSA', '2026-01-10 10:16:44', '2026-01-10 10:16:44'),
 (19, 'Male', '95182', 'Velke', '2026-01-10 12:11:58', '2026-01-10 12:11:58'),
-(20, 'Male', '123456', 'Velke', '2026-01-10 17:29:12', '2026-01-10 17:29:12');
+(20, 'Male', '123456', 'Velke', '2026-01-10 17:29:12', '2026-01-10 17:29:12'),
+(21, 'Male', '123456', 'Velke', '2026-01-11 12:58:33', '2026-01-11 12:58:33');
 
 -- --------------------------------------------------------
 
@@ -164,7 +168,7 @@ CREATE TABLE `items` (
 --
 
 INSERT INTO `items` (`idItems`, `name`, `price`, `description`, `image`, `created_at`, `last_update`, `available`, `alt`, `release_date`, `slug`, `stock`, `html_description`) VALUES
-(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2026-01-10 17:23:06', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild', 20, ''),
+(1, 'The Legend of Zelda: Breath of the Wild', 59.99, 'Open-world action-adventure game set in Hyrule.', 'http://localhost/GameSpace/img/user/zelda.jpg', '2025-12-09 07:16:09', '2026-01-11 12:58:33', 'Na sklade', 'The Legend of Zelda: Breath of the Wild cover', '2017-03-03', 'the-legend-of-zelda-breath-of-the-wild', 19, ''),
 (2, 'Minecraft', 26.95, 'Sandbox game about placing blocks and going on adventures.', 'http://localhost/GameSpace/img/user/minecraft.jpg', '2025-12-09 07:16:09', '2026-01-10 17:24:58', 'Na sklade', 'Minecraft cover', '2011-11-18', 'minecraft', 20, ''),
 (3, 'Cyberpunk 2077', 49.99, 'Futuristic open-world RPG in a dystopian city.', 'http://localhost/GameSpace/img/user/cyberpunk2077.jpg', '2025-12-09 07:16:09', '2026-01-10 17:23:06', 'Na sklade', 'Cyberpunk 2077 cover', '2020-12-10', 'cyberpunk-2077', 20, ''),
 (4, 'God of War', 39.99, 'Action-adventure game following Kratos and his son.', 'http://localhost/GameSpace/img/user/god_of_war.jpg', '2025-12-09 07:16:09', '2026-01-10 17:24:58', 'Na sklade', 'God of War cover', '2018-04-20', 'god-of-war', 20, ''),
@@ -353,7 +357,8 @@ INSERT INTO `orderdetail` (`idOrderDetail`, `name`, `last_name`, `email`, `mobil
 (16, 'AAsf', 'Šima', 'admin@outlook.sk', '123456', 17, 6, 1),
 (17, 'Ada', 'Ada', 'admin@outlook.sk', '+421329027', 18, 6, 1),
 (18, 'Al', 'AD', 'admin@outlook.sk', '+421329027', 19, 5, 4),
-(19, 'Al', 'Af', 'admin@outlook.sk', '+421329027', 20, 2, 1);
+(19, 'Al', 'Af', 'admin@outlook.sk', '+421329027', 20, 2, 1),
+(20, 'User', 'Af', 'adamsima77@gmail.com', '0904329027', 21, 4, 1);
 
 -- --------------------------------------------------------
 
@@ -393,7 +398,8 @@ INSERT INTO `orders` (`idOrders`, `creation_date`, `last_update`, `OrderDetail_i
 (16, '2025-12-27 14:47:03', '2025-12-27 14:47:03', 16, 4, 'V príprave', 109.98),
 (17, '2026-01-10 10:16:44', '2026-01-10 10:16:44', 17, NULL, 'V príprave', 49.99),
 (18, '2026-01-10 12:11:58', '2026-01-10 12:11:58', 18, NULL, 'V príprave', 59.99),
-(19, '2026-01-10 17:29:12', '2026-01-10 17:29:12', 19, NULL, 'V príprave', 69.99);
+(19, '2026-01-10 17:29:12', '2026-01-10 17:29:12', 19, NULL, 'V príprave', 69.99),
+(20, '2026-01-11 12:58:33', '2026-01-11 12:58:33', 20, 4, 'V príprave', 59.99);
 
 -- --------------------------------------------------------
 
@@ -428,7 +434,8 @@ INSERT INTO `orders_has_items` (`Orders_idOrders`, `Items_idItems`, `quantity`) 
 (16, 75, 1),
 (17, 75, 1),
 (18, 1, 1),
-(19, 28, 1);
+(19, 28, 1),
+(20, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -515,12 +522,8 @@ CREATE TABLE `reviews` (
 --
 
 INSERT INTO `reviews` (`reviews_id`, `description`, `rating`, `user_id`, `item_id`) VALUES
-(1, 'Hru Claire Obscur: Expedition 33 som si naozaj užil! Príbeh je veľmi emotívny a svet je nádherne spracovaný — akoby som prechádzal živou maľbou. Bojový systém je zábavný, keď si zvyknete načasovať útoky a úhyby, a postavy sú nezabudnuteľné. Spočiatku môže byť hra trochu pomalá a menu niekedy mätúce, ale celkovo ide o skvelé RPG. Určite odporúčam, ak máte radi príbehovo orientované hry.', 4, 4, 75),
-(2, 'Hru Claire Obscur: Expedition 33 som si naozaj užil! Veľmi pútavý príbeh a nádherná grafika.', 5, 4, 75),
-(3, 'Bojový systém je skvelý, aj keď spočiatku trochu zložitý. Odporúčam.', 4, 4, 75),
-(4, 'Postavy sú veľmi zapamätateľné a príbeh emocionálne silný.', 5, 4, 75),
-(5, 'Grafika a hudba sú úžasné, ale tempo hry je niekedy pomalé.', 4, 4, 75),
-(32, 'sfaasffas', 4, 4, 1);
+(32, 'sfaasffas', 4, 4, 1),
+(38, 'safasfasfasf', 4, 4, 75);
 
 -- --------------------------------------------------------
 
@@ -563,7 +566,8 @@ CREATE TABLE `slideshow` (
 INSERT INTO `slideshow` (`idSlideshow`, `img`, `alt`, `created_at`, `last_update`, `link`) VALUES
 (1, 'http://localhost/GameSpace/img/user/god_of_war.jpg', 'God Of War', '2025-12-07 11:33:50', '2025-12-21 12:07:01', '/hry/god-of-war'),
 (2, 'http://localhost/GameSpace/img/user/expedition_33.jpg', 'Expedition 33', '2025-12-07 11:34:27', '2025-12-21 12:06:19', '/hry/expedition-33'),
-(3, 'http://localhost/GameSpace/img/user/cyberpunk2077_1.jpg', 'Cyberpunk 2077', '2025-12-21 12:15:45', '2025-12-21 12:15:45', '/hry/cyberpunk-2077');
+(3, 'http://localhost/GameSpace/img/user/cyberpunk2077_1.jpg', 'Cyberpunk 2077', '2025-12-21 12:15:45', '2025-12-21 12:15:45', '/hry/cyberpunk-2077'),
+(6, 'http://localhost/GameSpace/img/user/slideshow_6966543312608.jpg', 'starfield', '2026-01-13 13:37:23', '2026-01-13 14:18:27', '/hry/starfield');
 
 -- --------------------------------------------------------
 
@@ -617,8 +621,9 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`idUsers`, `name`, `last_name`, `email`, `password`, `mobile_number`, `role_idrole`, `Address_idAddress`, `created_at`, `last_update`, `is_deleted`) VALUES
 (3, 'Adam', 'Šima', 'adamsima@gmail.com', '$2y$10$/jyrZXJeaBXImPE1YeHd/eVjpxWWvRkel30dFUsGgQWRjTo81Z.vq', NULL, 2, NULL, '2025-12-13 16:30:41', '2025-12-13 16:30:41', 0),
-(4, 'user', 'user', 'user@user.sk', '$2y$10$anDZQb3aYY/3D3tDgbks6uoVlsuE8xzi0uEw2KRoAOjg1uq7IPy/2', NULL, 1, 16, '2025-12-13 16:32:34', '2025-12-27 14:27:50', 0),
-(5, 'Aadasd', 'Asdasd', 'fff@fff.sk', '$2y$10$IWMpHgYsjM.KZUjbda2Hn.WUb5OHYDCaPzoMHlM9tmMWRuHKuEE4q', NULL, 1, NULL, '2025-12-13 20:07:33', '2025-12-13 20:07:33', 0);
+(4, 'User', 'User', 'user@user.sk', '$2y$10$anDZQb3aYY/3D3tDgbks6uoVlsuE8xzi0uEw2KRoAOjg1uq7IPy/2', '+421329020', 2, 16, '2025-12-13 16:32:34', '2026-01-12 11:22:03', 0),
+(5, 'Aadasd', 'Asdasd', 'fff@fff.sk', '$2y$10$IWMpHgYsjM.KZUjbda2Hn.WUb5OHYDCaPzoMHlM9tmMWRuHKuEE4q', NULL, 1, NULL, '2025-12-13 20:07:33', '2025-12-13 20:07:33', 0),
+(6, 'User1@User.sk', 'User', 'user1@user.sk', '$2y$10$KrW5C0uvvo0DvP48S0INiO8FFuigxlDcGjMgN8gHFp0nIwQh2U0P.', NULL, 1, NULL, '2026-01-11 13:05:15', '2026-01-11 13:05:15', 0);
 
 --
 -- Kľúče pre exportované tabuľky
@@ -757,13 +762,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT pre tabuľku `accordion`
 --
 ALTER TABLE `accordion`
-  MODIFY `idAccordion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `idAccordion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT pre tabuľku `address`
 --
 ALTER TABLE `address`
-  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `idAddress` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT pre tabuľku `category`
@@ -793,13 +798,13 @@ ALTER TABLE `most_anticipated`
 -- AUTO_INCREMENT pre tabuľku `orderdetail`
 --
 ALTER TABLE `orderdetail`
-  MODIFY `idOrderDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `idOrderDetail` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pre tabuľku `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `idOrders` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT pre tabuľku `payment`
@@ -817,7 +822,7 @@ ALTER TABLE `platform`
 -- AUTO_INCREMENT pre tabuľku `reviews`
 --
 ALTER TABLE `reviews`
-  MODIFY `reviews_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `reviews_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT pre tabuľku `role`
@@ -829,7 +834,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT pre tabuľku `slideshow`
 --
 ALTER TABLE `slideshow`
-  MODIFY `idSlideshow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idSlideshow` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT pre tabuľku `transport`
@@ -841,7 +846,7 @@ ALTER TABLE `transport`
 -- AUTO_INCREMENT pre tabuľku `users`
 --
 ALTER TABLE `users`
-  MODIFY `idUsers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idUsers` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- Obmedzenie pre exportované tabuľky

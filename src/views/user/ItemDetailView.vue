@@ -429,7 +429,7 @@ export default {
        }
 
       textarea{
-         padding: 10px 14px;
+      padding: 10px 14px;
       border-radius: 8px;
       border: 1.5px solid #b5d1ff;
       background-color: #ffffff;

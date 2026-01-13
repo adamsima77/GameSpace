@@ -2,10 +2,11 @@
 <div class = "wrapper">
     <div class = "wrapp">
  <h1>Slideshow</h1>
+  <button @click = "$router.push({name: 'add-slideshow'})">Pridať záznam</button>
  <AdminTable 
   @page="changePage"
   :columns="[
-    { label: 'ID', key: 'idSlideshow' },
+    { label: 'ID', key: 'id' },
     { label: 'Image', key: 'img' },
     { label: 'Image alt', key: 'alt' },
     { label: 'Link', key: 'link'},
@@ -16,6 +17,8 @@
   :total_pages="total_pages"
   :limit="limit"
   :actual_page = "actual_page"
+  @delete = "deleteRecord"
+  @update = "updateRecord"
 />
 </div>
 </div>
@@ -35,6 +38,34 @@
         }, 
 
         methods:{
+
+          updateRecord(id){
+              this.$router.push({name: 'update-slideshow', params: {id: id}});
+          },
+
+           async deleteRecord(id){
+               try{
+                   if(!confirm("Chcete tento záznam naozaj vymazať !")){
+                      return;
+                   } else{
+                   const response = await this.$axios.post("http://localhost/GameSpace/endpoints/delete/delete_slideshow.php",
+                   {id: id},
+                   {withCredentials: false}
+                );
+
+                console.log(response.data.message);
+                if(response.data.message === 'success'){
+                    alert("Záznam bol úspešne vymazaný !");
+                    await this.fetchSlideshow();
+                } else{
+                    alert("Záznam sa nepodarilo vymazať !");
+                }
+                }
+               } catch(error){
+
+               }
+           },
+
            async fetchSlideshow(){
                const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/getSlideshowAdmin.php",{
                 params: {limit: this.limit, offset: this.limit * (this.actual_page - 1)},
@@ -73,10 +104,11 @@
 <style lang = "scss" scoped>
     .wrapper{
        display: flex;
+       margin-top: 100px;
        flex-direction: column;
        padding: 20px;
        height: auto;
-       width: 100%;
+       width: 100%;;
 
        .wrapp{
         background-color: white;
@@ -88,8 +120,18 @@
          min-width: 0;     
         width: 100%;
 
-        h1{
-            padding-left: 30px;
+        button{
+            padding-left: 45px;
+            background-color: $blue;
+            border-radius: 15px;
+            padding: 15px;
+            width: 20%;
+            color: white;
+            box-shadow: $box_sh_boxes;
+            transition: background-color 0.5s ease-in-out;
+            &:hover{
+              background-color: $dark_blue;
+            }
         }
        }
     }

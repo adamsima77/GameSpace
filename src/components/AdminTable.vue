@@ -16,7 +16,7 @@
       <img v-else-if="col.key === 'img'" :src="row[col.key]" :alt="row.alt" loading="lazy">
       <p v-else>{{ row[col.key] }}</p>
 </td>
-          <td><button>Editovať</button> <button>Vymazať</button></td>
+          <td><button @click = "$emit('update', row.id)">Editovať</button> <button @click = "$emit('delete',row.id)">Vymazať</button></td>
         </tr>
       </tbody>
     </table>
@@ -107,7 +107,7 @@ export default{
 
 table {
   width: 100%;
-  max-width: 1100px;
+ 
   border-collapse: collapse;
   margin: 0 auto;
   border-radius: 10px;
@@ -143,7 +143,7 @@ table {
       padding: 15px;
       color: white;
       box-shadow: $box_sh_boxes;
-      transition: background-color 0.5s ease in out;
+      transition: background-color 0.5s ease-in-out;
       &:hover{
         background-color: green;
       }
@@ -155,7 +155,7 @@ table {
       padding: 15px;
       color: white;
       box-shadow: $box_sh_boxes;
-      transition: background-color 0.5s ease in out;
+      transition: background-color 0.5s ease-in-out;
 
       &:hover{
         background-color: rgb(129, 5, 5);

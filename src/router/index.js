@@ -54,6 +54,10 @@ const routes = [
           {path: 'orders', name: 'orders', component: () => import('../views/admin/Orders.vue')},
           {path: 'accordion', name: 'accordion', component: () => import('../views/admin/Accordion.vue')},
           {path: 'slideshow', name: 'slideshow', component: () => import('../views/admin/Slideshow.vue')},
+          {path: 'add-accordion', name: 'add-accordion', component: () => import('../views/admin/add/AddAccordion.vue')},
+          {path: 'accordion/:id', name: 'update-accordion', component: () => import('../views/admin/update/UpdateAccordion.vue')},
+          {path: 'add-slideshow', name: 'add-slideshow', component: () => import('../views/admin/add/AddSlideshow.vue')},
+          {path: 'slideshow/:id', name: 'update-slideshow', component: () => import('../views/admin/update/UpdateSlideshow.vue')},
 
     ],
   },

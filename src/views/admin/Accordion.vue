@@ -2,10 +2,11 @@
 <div class = "wrapper">
     <div class = "wrapp">
  <h1>Akordeón</h1>
+ <button @click = "$router.push({name: 'add-accordion'})">Pridať záznam</button>
  <AdminTable 
   @page="changePage"
   :columns="[
-    { label: 'ID', key: 'idAccordion' },
+    { label: 'ID', key: 'id' },
     { label: 'Názov', key: 'title' },
     { label: 'Popis', key: 'description' },
     { label: 'Vytvorenie príspevku', key: 'created_at'},
@@ -15,6 +16,8 @@
   :total_pages="total_pages"
   :limit="limit"
   :actual_page = "actual_page"
+  @delete = "deleteRecord"
+  @update = "updateRecord"
 />
 </div>
 </div>
@@ -34,6 +37,32 @@
         }, 
 
         methods:{
+
+            async deleteRecord(id){
+                try{ 
+                   if(!confirm("Chcete naozaj vymazať tento záznam ?")){
+                       return;
+                   } else  {
+                    const response = await this.$axios.post("http://localhost/GameSpace/endpoints/delete/deleteAccordionRecord.php", 
+                    {id: id},
+                    {withCredentials: false});
+
+                    if(response.data.message === 'success'){
+                       alert("Produkt bol úspešne vymazaný");
+                       this.fetchAccordion();
+                    } else {
+                        alert("Produkt sa nepodarilo vymazať !");
+                    }
+                }
+                } catch(error){
+
+                }
+            },
+
+            updateRecord(id){
+                 this.$router.push({name: 'update-accordion', params: {id: id}});
+            },
+
             async fetchAccordion(){
                 try{
                     const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetchFAQAdmin.php",
@@ -75,6 +104,7 @@
 <style lang = "scss" scoped>
     .wrapper{
        display: flex;
+       margin-top: 100px;
        flex-direction: column;
        padding: 20px;
        height: auto;
@@ -90,8 +120,18 @@
          min-width: 0;     
         width: 100%;
 
-        h1{
-            padding-left: 40px;
+        button{
+            padding-left: 45px;
+            background-color: $blue;
+            border-radius: 15px;
+            padding: 15px;
+            width: 20%;
+            color: white;
+            box-shadow: $box_sh_boxes;
+            transition: background-color 0.5s ease-in-out;
+            &:hover{
+              background-color: $dark_blue;
+            }
         }
        }
     }
