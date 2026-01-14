@@ -551,7 +551,7 @@ class Item extends Database{
         $conn = $this->connect();
         $query = "
             SELECT 
-                idItems, 
+                idItems as id, 
                 name, 
                 price, 
                 description, 
@@ -632,5 +632,49 @@ class Item extends Database{
               echo json_encode([]);
         }
     }
+
+    public function deleteRecord($id){
+         try {
+        $conn = $this->connect();
+        $stmt = $conn->prepare(
+            "SELECT image FROM items WHERE idItems = ?"
+        );
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $rs = $stmt->fetch();
+
+        if ($rs && !empty($rs['image'])) {
+            $url = $rs['image'];   
+            $relativePath = parse_url($url, PHP_URL_PATH);
+
+           
+            $filePath = $_SERVER['DOCUMENT_ROOT'] . $relativePath;
+            $realFile = realpath($filePath);
+
+           
+            $baseDir = realpath($_SERVER['DOCUMENT_ROOT'] . '/GameSpace/img/user');
+
+          
+            if ($realFile !== false && $baseDir !== false &&
+                str_starts_with($realFile, $baseDir) && file_exists($realFile)) {
+                unlink($realFile);
+            }
+        }
+        $stmt = $conn->prepare(
+            "DELETE FROM items WHERE idItems = ?"
+        );
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+
+        echo json_encode(['message' => 'success']);
+        $conn = null;
+        exit;
+
+    } catch (Exception $e) {
+        echo json_encode(['message' => $e->getMessage()]);
+        $conn = null;
+        die;
+    }
+}
 }
 ?>

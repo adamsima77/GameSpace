@@ -52,22 +52,49 @@ class Slideshow extends Database{
         }
     }
 
-    public function deleteRecord($id){
-        try{
-            $query = "DELETE FROM slideshow WHERE idSlideshow = ?;";
-            $conn = $this->connect();
-            $stmt = $conn->prepare($query);
-            $stmt->bindParam(1, $id);
-            $stmt->execute();
-            echo json_encode(['message' => 'success']);
-            $conn = null;
-            exit;
-        } catch(Exception $e){
-             echo json_encode(['message' => $e->getMessage()]);
-             $conn = null;
-             die;
+    public function deleteRecord($id) {
+    try {
+        $conn = $this->connect();
+        $stmt = $conn->prepare(
+            "SELECT img FROM slideshow WHERE idSlideshow = ?"
+        );
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+        $rs = $stmt->fetch();
+
+        if ($rs && !empty($rs['img'])) {
+            $url = $rs['img'];   
+            $relativePath = parse_url($url, PHP_URL_PATH);
+
+           
+            $filePath = $_SERVER['DOCUMENT_ROOT'] . $relativePath;
+            $realFile = realpath($filePath);
+
+           
+            $baseDir = realpath($_SERVER['DOCUMENT_ROOT'] . '/GameSpace/img/user');
+
+          
+            if ($realFile !== false && $baseDir !== false &&
+                str_starts_with($realFile, $baseDir) && file_exists($realFile)) {
+                unlink($realFile);
+            }
         }
+        $stmt = $conn->prepare(
+            "DELETE FROM slideshow WHERE idSlideshow = ?"
+        );
+        $stmt->bindParam(1, $id);
+        $stmt->execute();
+
+        echo json_encode(['message' => 'success']);
+        $conn = null;
+        exit;
+
+    } catch (Exception $e) {
+        echo json_encode(['message' => $e->getMessage()]);
+        $conn = null;
+        die;
     }
+}
 
    public function checkAdd() {
     if (!isset($_FILES['img']) || !isset($_POST['alt']) || !isset($_POST['link'])) {

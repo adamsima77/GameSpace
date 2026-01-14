@@ -6,7 +6,7 @@
  <AdminTable 
   @page="changePage"
   :columns="[
-  { label: 'ID', key: 'idItems' },
+  { label: 'ID', key: 'id' },
   { label: 'Názov produktu', key: 'name' },
   { label: 'Image', key: 'img' },
   { label: 'Image alt', key: 'alt' },
@@ -24,6 +24,8 @@
   :total_pages="total_pages"
   :limit="limit"
   :actual_page = "actual_page"
+  @delete = "deleteRecord"
+  @update = "updateRecord"
 />
 </div>
 </div>
@@ -43,6 +45,32 @@
         }, 
 
         methods:{
+           async deleteRecord(id){
+              try{
+                  if(!confirm("Chcete naozaj vymazať produkt ?")){
+                      return;
+                  } else {
+                  const response = await this.$axios.post("http://localhost/GameSpace/endpoints/delete/delete_item_admin.php",
+                  {id: id},
+                  {withCredentials: false}
+                  );
+
+                  if(response.data.message === 'success'){
+                      alert("Produkt bol úspešne vymazaný !");
+                      this.fetchItems();
+                  } else{
+                      alert("Nastala chyba pri vymazávaní produktu");
+                  } 
+                  }
+              } catch(error){
+
+              }
+           },
+
+           updateRecord(id){
+                this.$router.push({name: 'update-items', params:{id: id}});
+           },
+
            async fetchItems(){
                const response = await this.$axios.get("http://localhost/GameSpace/endpoints/fetch/fetchItemsAdmin.php",{
                 params: {limit: this.limit, offset: this.limit * (this.actual_page - 1)},
@@ -94,8 +122,9 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
-         min-width: 0;     
+        min-width: 0;     
         width: 100%;
+        box-shadow: $box_sh_boxes;
 
          button{
             padding-left: 45px;

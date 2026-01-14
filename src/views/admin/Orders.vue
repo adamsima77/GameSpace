@@ -112,6 +112,7 @@
         border-radius: 15px;
         display: flex;
         flex-direction: column;
+        box-shadow: $box_sh_boxes;
         gap: 15px;
          min-width: 0;     
         width: 100%;

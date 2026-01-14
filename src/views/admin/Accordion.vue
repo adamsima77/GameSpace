@@ -117,6 +117,7 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
+        box-shadow: $box_sh_boxes;
          min-width: 0;     
         width: 100%;
 

@@ -1,23 +1,15 @@
 <template>
 <div class = "wrapper">
     <div class = "wrapp">
- <h1>Upraviť stav objednávky</h1>
+ <h1>Upraviť produkt</h1>
 
  <form method = "post" @submit.prevent = "update">
 
- <label for="title">Status objednávky:
-     <select id="status" name="status" v-model = "status">
-           <option value="V príprave">V príprave</option>
-           <option value="Spracováva sa">Spracováva sa</option>
-           <option value="Odoslané">Odoslané</option>
-           <option value="Doručené">Doručené</option>
-           <option value="Zrušené">Zrušené</option>
-           <option value="Zlyhalo">Zlyhalo</option>
-           <option value="Vrátené">Vrátené</option>
-      </select>
+ <label for="title">......
+     
  </label>
 
- <input type="submit" value = "Upraviť objednávku">
+ <input type="submit" value = "Upraviť produkt">
  </form>
 </div>
 </div>
@@ -28,67 +20,19 @@
 export default {
   data() {
     return {
-      status: '' 
+      
     }
   },
 
   methods: {
 
-    checkStatus() {
-      const allowedStatuses = [
-        'V príprave',
-        'Spracováva sa',
-        'Odoslané',
-        'Doručené',
-        'Zrušené',
-        'Zlyhalo',
-        'Vrátené'
-      ];
-
-      if (!allowedStatuses.includes(this.status)) {
-        alert("Vybraný status je nesprávny");
-        return false;
-      }
-
-      return true;
-    },
-
+    
     async fetchActual() {
-      try {
-        const response = await this.$axios.get(
-          "http://localhost/GameSpace/endpoints/fetch/fetch_id_update_orders.php",
-          {
-            params: { id: this.$route.params.id },
-            withCredentials: false
-          }
-        );
-        this.status = response.data.status;
-      } catch (error) {
-        console.error(error);
-      }
+     
     },
 
     async update() {
-      try {
-        if (!this.checkStatus()) {
-          alert("Zlý status!");
-          return;
-        }
-
-        const response = await this.$axios.post("http://localhost/GameSpace/endpoints/update/update_orders.php", 
-         { id: this.$route.params.id, status: this.status}, 
-         {withCredentials: false}
-        );
-
-        if (response.data.message === 'success') {
-          alert("Objednávka bola úspešne upravená!");
-        } else {
-          alert("Nastala chyba pri úprave objednávky!");
-        }
-
-      } catch (error) {
-        console.error(error);
-      }
+    
     }
 
   },
