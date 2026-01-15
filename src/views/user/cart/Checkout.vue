@@ -46,8 +46,8 @@ export default{
 
     methods:{
         async placeOrder(){
-            await this.cartStore.placeOrder();
-            this.$router.push({name: 'successful-order'});
+           await this.cartStore.placeOrder();
+           this.$router.push({name: 'successful-order'});
         }
     }
 }

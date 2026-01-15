@@ -59,7 +59,7 @@ const routes = [
           {path: 'slideshow/:id', name: 'update-slideshow', component: () => import('../views/admin/update/UpdateSlideshow.vue')},
           {path: 'orders/:id', name: 'update-orders', component: () => import('../views/admin/update/UpdateOrders.vue')},
           {path: 'items/:id', name: 'update-items', component: () => import('../views/admin/update/UpdateItems.vue')},
-
+          {path: 'add-items', name: 'add-items',  meta: {title: 'Pridať záznam'}, component: () => import('../views/admin/add/AddItems.vue')},
     ],
   },
 

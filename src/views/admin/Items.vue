@@ -2,7 +2,7 @@
 <div class = "wrapper">
     <div class = "wrapp">
  <h1>Produkty</h1>
- <button @click = "">Pridať záznam</button>
+ <button @click = "this.$router.push({name: 'add-items'})">Pridať záznam</button>
  <AdminTable 
   @page="changePage"
   :columns="[
@@ -12,13 +12,10 @@
   { label: 'Image alt', key: 'alt' },
   { label: 'Dátum vydania', key: 'release_date' },
   { label: 'Slug', key: 'slug' },
-  { label: 'Počet kusov', key: 'stock' },
   { label: 'Cena', key: 'price' },
   { label: 'Popis', key: 'description' },
   { label: 'HTML popis', key: 'html_description' },
-  { label: 'Dostupnosť', key: 'available' },
-  { label: 'Kategória', key: 'category' },
-  { label: 'Platformy', key: 'platforms' }
+
 ]"
   :records="res"
   :total_pages="total_pages"

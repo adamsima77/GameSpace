@@ -6,14 +6,15 @@
          <div class = "box" v-for = "(item,index) in cart_content" :key = "index">
                <img :src="item.image" :alt="item.alt">
                <RouterLink :to = "{name: 'cart-item-detail', params:{slug: item.slug}}"><h2>{{ item.name }}</h2></RouterLink>
+                <p>Platforma: {{ item.platform_name }}</p>
                <div class = "quantity">
-               <button v-if = "item.quantity > 0" @click = "decrementQuantity(item.id)">-</button>
+               <button v-if = "item.quantity > 0" @click = "decrementQuantity(item.id, item.platform)">-</button>
                <p>{{ item.quantity }}</p>
-               <button @click = "addQuantity(item.id)">+</button>
+               <button @click = "addQuantity(item.id, item.platform)">+</button>
                </div>
                <div class = "price_trash">
                <p>{{ item.price }}€</p>
-               <i class="fas fa-trash" @click = "removeFromCart(item.id)"></i>
+               <i class="fas fa-trash" @click = "removeFromCart(item.id,item.platform)"></i>
                </div>
          </div>
        
@@ -68,20 +69,21 @@ export default{
 
      computed: {
        cart_content() {
+        console.log(this.cartStore.cart);
         return this.cartStore.cart;
      }
    },
 
    methods:{
-      removeFromCart(id){
-            this.cartStore.removeFromCart(id);
+      removeFromCart(id,platform){
+            this.cartStore.removeFromCart(id,platform);
       },
-      decrementQuantity(id){
-           this.cartStore.decrementQuantity(id);
+      decrementQuantity(id,platform){
+           this.cartStore.decrementQuantity(id,platform);
       },
 
-      addQuantity(id){
-         this.cartStore.addQuantity(id);
+      addQuantity(id,platform){
+         this.cartStore.addQuantity(id,platform);
       }
    },
      

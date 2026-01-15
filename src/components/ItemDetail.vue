@@ -4,12 +4,27 @@
       <div class="desc">
         <h1>{{ item.name }}</h1>
         <p>{{ item.description }}</p>  
-        <p class = "platform" v-if = "platforms.length > 0">Platforma: <p v-for = "(value,index) in platforms" :key = "index">{{ value.name?.toUpperCase() }}</p></p>
         <div class="price_available">  
-          <p :class = "{available: item.available === 'Na sklade', not_available: item.available === 'Nie je na sklade'}">{{ item.available }}</p>
+        <p 
+  :class="{ available: isAvailable, not_available: !isAvailable }"> 
+  {{ isAvailable ? 'Na sklade' : 'Nie je na sklade' }}
+</p>
           <p class = "price">{{item.price}}€</p>
         </div>
-        <button v-if = "item.available === 'Na sklade'" @click = "addToCart(item.id)"><i class="fas fa-shopping-cart"></i>Do Košíka</button>
+
+<div class="platforms">
+  <button 
+    v-for="platform in platforms"
+    :key="platform.platform_id"
+    :class="{ active: selectedPlatform === platform.platform_id }"
+    @click="selectedPlatform = platform.platform_id" class = "platform"
+  >
+    {{ platform.name }}
+  </button>
+</div>
+
+      <button :disabled="!isAvailable" @click="addToCart"><i class="fas fa-shopping-cart"></i>
+       Do Košíka</button>
       </div>
     </div>
 </template>
@@ -21,11 +36,10 @@
  export default{
     data(){
       return{
-         item: {},
-         cartStore: null,
-         reskey: 0,
-         platforms: []
-        
+          item: {},
+          cartStore: null,
+          platforms: [],     
+          selectedPlatform: null
       }
     },
 
@@ -51,9 +65,9 @@
                   }
              },
 
-             addToCart(id){
-                 this.cartStore.add(id);
-                 this.reskey++;
+             addToCart(){
+                  console.log('Adding to cart:', this.item.idItems, this.selectedPlatform);
+                 this.cartStore.add(this.item.id,this.selectedPlatform);
              },
 
              async fetchPlatform(){
@@ -62,7 +76,12 @@
                         params: {slug: this.$route.params.slug},
                         withCredentials: false
                       });
-                      this.platforms = response.data;
+                      this.platforms = Array.isArray(response.data) ? response.data : [];
+
+                      if(this.platforms.length > 0){
+                          this.selectedPlatform = this.platforms[0].platform_id;
+                      }
+                   
                  } catch(error){
 
                  }
@@ -89,11 +108,29 @@
           document.title = this.titleBetterFormat();
         },
 
-        
+  computed: {
+selectedPlatformData() {
+  return this.platforms.find(
+    p => Number(p.platform_id) === Number(this.selectedPlatform)
+  );
+},
+
+selectedPlatformStock() {
+  return this.selectedPlatformData
+    ? Number(this.selectedPlatformData.stock)
+    : 0;
+},
+
+isAvailable() {
+  return this.selectedPlatformStock > 0;
+}
+},
+      
   watch:{
     '$route.params.slug'(){
         this.fetchDetail();
-        document.title = this.$route.params.slug;
+        this.fetchPlatform();
+        document.title = this.titleBetterFormat();
     }
   }
  }
@@ -127,6 +164,43 @@
       gap: 18px;
       padding: 10px 0;
 
+    .platforms {
+  display: flex;
+  flex-wrap: wrap;         
+  gap: 15px;                
+
+  button {
+    background-color: #f0f0f0;  
+    color: #333;
+    padding: 10px 16px;
+    border: 1.5px solid #d9d9d9;
+    border-radius: 8px;          
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    flex: 1 1 auto;              
+    text-align: center;
+    min-width: 80px;           
+
+    &:hover {
+      background-color: #e0f0ff; 
+      border-color: #2979ff;
+    }
+
+    &.active {
+      background-color: #2979ff;
+      color: #fff;
+      border-color: #2979ff;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+      label{
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
       .platform{
         display: flex;
         flex-direction: row;

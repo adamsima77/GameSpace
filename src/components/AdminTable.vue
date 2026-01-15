@@ -22,7 +22,7 @@
     </table>
     <div class = "pagination">
         <p @click = "$emit('page', index)" :class = "{active: index === actual_page}"
-        v-for = "index in (Math.ceil(total_pages / limit))" :key = "index">{{ index }}</p>
+        v-for = "index in pageNumber" :key = "index">{{ index }}</p>
     </div>
   </div>
 </template>
@@ -37,7 +37,32 @@ export default{
         total_pages: {type: Number, required: true},
         limit: {type: Number, required: true},
         actual_page: {type: Number, required: true}
+    },
+
+
+    computed: {
+    pageNumber() {
+    const total = Math.ceil(this.total_pages / this.limit);
+    const visible = 5;
+    let pages = [];
+
+    if (this.actual_page < visible) {
+      for (let i = 1; i <= Math.min(visible, total); i++) {
+        pages.push(i);
+      }
+    } else if (this.actual_page + visible - 1 < total) {
+      for (let i = this.actual_page; i < this.actual_page + visible; i++) {
+        pages.push(i);
+      }
+    } else {
+      for (let i = total - visible + 1; i <= total; i++) {
+        if (i > 0) pages.push(i); 
+      }
     }
+
+    return pages;
+  }
+}
 }
 </script>
 

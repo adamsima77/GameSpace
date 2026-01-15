@@ -7,12 +7,19 @@
       <RouterLink :to="{ name: parentRouteName, params: { slug: item.slug } }">
         <h2>{{ item.name }}</h2>
       </RouterLink>
-      <p class = "platform" v-if = "platforms.length > 0"><p v-for = "(value,index) in platforms" :key = "index">{{ value.name?.toUpperCase() }}</p></p>
+     <div class="platform" v-if="platforms.length">
+  <span
+    v-for="(value, index) in platforms"
+    :key="index"
+    class="platform-item"
+  >
+    {{ value.name?.toUpperCase() }}
+  </span>
+</div>
       <p>{{ sliceText(item.description) }}</p>
     </div>
     <hr class="item_hr" />
     <div class="price_available">
-      <p :class="defineAvailability(item.available)">{{ item.available }}</p>
       <p class="price">{{ item.price }}€</p>
     </div>
   </div>
@@ -32,10 +39,6 @@ export default {
   },
 
   methods: {
-    defineAvailability(value) {
-      return value === "Na sklade" ? "available" : "not_available";
-    },
-
     sliceText(description, maxLength = 150){
         return description.length > maxLength ? description.slice(0,maxLength) + "..." : description;
     },
@@ -91,11 +94,22 @@ export default {
             display: flex;
             flex-direction: column;
             margin-top: 15px;
+.platform {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  font-weight: 400;
+  margin-bottom: 15px;
+}
 
-            .platform{
-                font-weight: 700;
-                margin-top: 5px;
-            }
+.platform-item {
+  position: relative;
+}
+
+.platform-item:not(:last-child)::after {
+  content: " •";
+  margin-left: 4px;
+}
            
             p{
               margin-bottom: 10px;

@@ -48,7 +48,7 @@ export default{
 <style scoped lang = "scss">
     .wrapp{
          display: flex;
-         min-width: 85%;
+         min-width: 95%;
          gap: 30px;
          padding: 25px;
          border-radius: 15px;
@@ -60,7 +60,7 @@ export default{
     }
     .wrapper{
          display: flex;
-         min-width: 85%;
+         min-width: 100%;
          gap: 30px;
          padding: 25px;
          border-radius: 15px;

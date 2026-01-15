@@ -14,57 +14,65 @@ class Cart extends Database{
        setcookie('cart', json_encode($this->cart), time() + 60 * 60 * 24 * 30, '/', '', false, true);
     }
     
-    public function addToCart($id){
-          try{
-              $query = "SELECT idItems as id, stock FROM items WHERE idItems = ?";
-              $conn = $this->connect();
-              $stmt = $conn->prepare($query);
-              $stmt->bindParam(1, $id);
-              $stmt->execute();
-              $rs = $stmt->fetch();
-              $conn = null; 
-              
-              if (!$rs) {
-                  http_response_code(404);
-                  echo json_encode(["status"=>"error","message"=>"Produkt neexistuje"]);
-                  return;
-              }
-              
-              $found = false;
-              foreach($this->cart as &$value){
-                      if($value['id'] == $rs['id']){
-                           
-                            if($value['quantity'] < $rs['stock']){
-                               $value['quantity'] += 1;
-                            }
-                            $found = true;
-                            break; 
-                      }
-              }
+   public function addToCart($id, $platform){
+    try{
+        $id = (int)$id;
+        $platform = (int)$platform;
 
-              if(!$found){
-                 $this->cart[] = ['id' => $rs['id'], 'quantity' => 1];
-              }
+       $query = "SELECT i.idItems as id, pi.stock as stock 
+          FROM items i
+          JOIN platform_has_items pi ON i.idItems = pi.idItems
+          WHERE i.idItems = ? AND pi.platform_id = ?";
+        $conn = $this->connect();
+        $stmt = $conn->prepare($query);
+        $stmt->bindValue(1, $id);
+        $stmt->bindValue(2, $platform);
+        $stmt->execute();
+        $rs = $stmt->fetch();
+        $conn = null; 
+        
+        if (!$rs) {
+            http_response_code(404);
+            echo json_encode([
+                "status"=>"error",
+                "message"=>"Produkt neexistuje alebo platforma je neplatná"
+            ]);
+            return;
+        }
+        
+        $found = false;
+        foreach($this->cart as &$value){
+            if($value['id'] == $rs['id'] && $value['platform'] == $platform){
+                if($value['quantity'] < $rs['stock']){
+                    $value['quantity'] += 1;
+                }
+                $found = true;
+                break; 
+            }
+        }
 
-              $this->updateCartCookie();
+        if(!$found){
+            $this->cart[] = ['id' => $rs['id'], 'platform' => $platform, 'quantity' => 1];
+        }
 
-              http_response_code(200);
-              echo json_encode([
-                    "status" => "success",
-                    "message" => "Produkt bol úspešne pridaný do košíka",
-                       
-              ]);
-          } catch(Exception $e){
-               $conn = null;
-               http_response_code(500);
-               echo json_encode([
-                 "status" => "error",
-                 "message" => "Nastala chyba pri pridávaní produktu do košíka"
-               ]);
-          }      
-    }
+        $this->updateCartCookie();
 
-   public function getCart(){
+        http_response_code(200);
+        echo json_encode([
+              "status" => "success",
+              "message" => "Produkt bol úspešne pridaný do košíka",
+        ]);
+    } catch(Exception $e){
+        $conn = null;
+        http_response_code(500);
+        echo json_encode([
+            "status" => "error",
+            "message" => "Nastala chyba pri pridávaní produktu do košíka: " . $e->getMessage()
+        ]);
+    }      
+}
+
+  public function getCart(){
     if (empty($this->cart)) {
         http_response_code(200);
         echo json_encode([
@@ -74,34 +82,39 @@ class Cart extends Database{
         return;
     }
 
-    $ids = array_column($this->cart, 'id');
-    $placeholders = implode(',', array_fill(0, count($ids), '?'));
+    $cartItems = [];
+    $conn = $this->connect();
 
     try {
-        $query = "SELECT idItems AS id, name, price, description, image, alt, available, slug
-                  FROM items
-                  WHERE idItems IN ($placeholders)";
-        $conn = $this->connect();
-        $stmt = $conn->prepare($query);
-        $stmt->execute($ids);
-        $products = $stmt->fetchAll();
+        foreach ($this->cart as $item) {
+  
+            $query = "SELECT idItems AS id, name, price, description, image, alt, slug 
+                      FROM items 
+                      WHERE idItems = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->execute([$item['id']]);
+            $product = $stmt->fetch();
 
-       
-        foreach ($products as &$product) {
-            foreach ($this->cart as $item) {
-                if ($item['id'] == $product['id']) {
-                    $product['quantity'] = $item['quantity'];
-                    break;
-                }
+            if ($product) {
+                $product['quantity'] = $item['quantity'];
+                $product['platform'] = $item['platform'];
+
+                $queryPlatform = "SELECT name FROM platform WHERE platform_id = ?";
+                $stmtPlatform = $conn->prepare($queryPlatform);
+                $stmtPlatform->execute([$item['platform']]);
+                $platformData = $stmtPlatform->fetch();
+                $product['platform_name'] = $platformData['name'] ?? 'Unknown';
+
+                $cartItems[] = $product;
             }
         }
 
-        $total = array_reduce($products, function($sum, $item){
+        $total = array_reduce($cartItems, function($sum, $item){
             return $sum + ($item['price'] * $item['quantity']);
         }, 0);
 
         echo json_encode([
-            'cart' => $products,
+            'cart' => $cartItems,
             'total' => $total
         ]);
 
@@ -109,15 +122,17 @@ class Cart extends Database{
         http_response_code(500);
         echo json_encode([
             "status" => "error",
-            "message" => "Nastala chyba pri načítaní košíka"
+            "message" => "Nastala chyba pri načítaní košíka: " . $e->getMessage()
         ]);
+    } finally {
+        $conn = null;
     }
 }
 
-    public function removeFromCart($id){    
+    public function removeFromCart($id, $platform){    
           $found = false;
           foreach($this->cart as $index => $value){
-              if($value['id'] === $id){
+              if($value['id'] == $id && $value['platform'] == $platform){
                     unset($this->cart[$index]);
                     $found = true;
                     break;
@@ -140,13 +155,18 @@ class Cart extends Database{
           }
     }
 
-   public function decrementQuantity($id){
+   public function decrementQuantity($id, $platform){
     $found = false;
 
     foreach($this->cart as $index => $value){
-        if($value['id'] === $id){
+    
+        if($value['id'] == $id && $value['platform'] == $platform){
             $found = true;
+
+     
             $this->cart[$index]['quantity'] -= 1;
+
+    
             if($this->cart[$index]['quantity'] <= 0){
                 unset($this->cart[$index]);
                 $this->cart = array_values($this->cart);
@@ -171,26 +191,29 @@ class Cart extends Database{
         ]);
     }
 }
-public function addQuantity($id){
+public function addQuantity($id, $platform){
     $found = false;
 
     foreach($this->cart as $index => $value){
-        if($value['id'] === $id){
+     
+        if($value['id'] == $id && $value['platform'] == $platform){
             $found = true;
 
             try{
-                $query = "SELECT stock FROM items WHERE idItems = ?";
+                
+                $query = "SELECT stock FROM platform_has_items WHERE idItems = ? AND platform_id = ?";
                 $conn = $this->connect();
                 $stmt = $conn->prepare($query);
                 $stmt->bindParam(1, $id);
+                $stmt->bindParam(2, $platform);
                 $stmt->execute();
-                $rs = $stmt->fetch();
+                $rs = $stmt->fetch(PDO::FETCH_ASSOC);
                 $conn = null;
             } catch(Exception $e){
                 http_response_code(500);
                 echo json_encode([
                     "status" => "error",
-                    "message" => "Nastala chyba pri získaní skladu"
+                    "message" => "Nastala chyba pri získaní skladu: " . $e->getMessage()
                 ]);
                 return;
             }
@@ -280,93 +303,74 @@ public function addQuantity($id){
         } 
     }
 
-    public function placeOrder($name,$surname,$email,$telephone_number,$city,$street,$postal_code,$transport,$payment){
-        $conn = $this->connect();
-        try{ 
-             $conn->beginTransaction();
-             $query = "INSERT INTO address(city,postal_code,street) VALUES(?,?,?);";
-             $stmt = $conn->prepare($query);
-             $stmt->bindParam(1, $city);
-             $stmt->bindParam(2, $postal_code);
-             $stmt->bindParam(3, $street);
-             $stmt->execute();
-             $address_id = $conn->lastInsertId();
+    public function placeOrder($name, $surname, $email, $telephone_number, $city, $street, $postal_code, $transport, $payment) {
+    $conn = $this->connect();
 
-             $query = "INSERT INTO orderdetail(name,last_name,email,mobile_number,Address_idAddress, Payment_idPayment, Transport_idTransport) VALUES(?,?,?,?,?,?,?);";
-             $stmt = $conn->prepare($query);
-             $stmt->bindParam(1, $name);
-             $stmt->bindParam(2, $surname);
-             $stmt->bindParam(3, $email);
-             $stmt->bindParam(4, $telephone_number);
-             $stmt->bindParam(5, $address_id);
-             $stmt->bindParam(6, $payment);
-             $stmt->bindParam(7, $transport);
-             $stmt->execute();
-              $order_detail_id = $conn->lastInsertId();
-             $total = 0;
-             foreach($this->cart as $value){
-                 $query = "SELECT price FROM items WHERE idItems = ?";
-                 $stmt = $conn->prepare($query);
-                 $id = $value['id'];
-                 $stmt->bindParam(1, $id);
-                 $stmt->execute();
-                 $rs = $stmt->fetch();
-                 $total += $rs['price'] * $value['quantity'];
-             }
-            
+    try {
+        $conn->beginTransaction();
 
-             $status = "V príprave";
-             $logged_user = isset($_SESSION['user_id']) ? $_SESSION['user_id'] : null;
-             $query = "INSERT INTO `orders` (OrderDetail_idOrderDetail, status, total_price, Users_idUsers) VALUES (?,?,?,?)";
-             $stmt = $conn->prepare($query);
-             $stmt->bindParam(1, $order_detail_id);
-             $stmt->bindParam(2, $status);
-             $stmt->bindParam(3, $total);
-             $stmt->bindParam(4, $logged_user);
-             $stmt->execute();
+        $stmt = $conn->prepare("INSERT INTO address(city, postal_code, street) VALUES(?, ?, ?)");
+        $stmt->execute([$city, $postal_code, $street]);
+        $address_id = $conn->lastInsertId();
 
-             $order_id = $conn->lastInsertId();
-             foreach($this->cart as $value){
-                   $quantity = $value['quantity'];
-                   $item_id = $value['id'];
-                   $query = "INSERT INTO orders_has_items(Orders_idOrders, Items_idItems, quantity) VALUES(?,?,?);";
-                   $stmt = $conn->prepare($query);
-                   $stmt->bindParam(1, $order_id);
-                   $stmt->bindParam(2, $item_id);
-                   $stmt->bindParam(3, $quantity);
-                   $stmt->execute();
-             }
+        $stmt = $conn->prepare("INSERT INTO orderdetail(name, last_name, email, mobile_number, Address_idAddress, Payment_idPayment, Transport_idTransport) VALUES(?,?,?,?,?,?,?)");
+        $stmt->execute([$name, $surname, $email, $telephone_number, $address_id, $payment, $transport]);
+        $order_detail_id = $conn->lastInsertId();
 
-             foreach($this->cart as $value){
-                    $quantity = $value['quantity'];
-                    $item_id = $value['id'];
-                    $query = "SELECT stock FROM items WHERE idItems = ?;";
-                    $stmt = $conn->prepare($query);
-                    $stmt->bindParam(1, $item_id);
-                    $stmt->execute();
-                    $rs = $stmt->fetch();
-                
-                    $stock_change = $rs['stock'] - $value['quantity'];
-                    $available_text = $stock_change <= 0 ? "Nie je na sklade" : "Na sklade";
-                    $query_1 = "UPDATE items SET stock = ?, available = ? WHERE idItems = ?";
-                    $stmt = $conn->prepare($query_1);
-                    $stmt->bindParam(1, $stock_change);
-                    $stmt->bindParam(2, $available_text);
-                    $stmt->bindParam(3, $item_id);
-                    $stmt->execute();
-             }
-
-             $conn->commit();
-             $this->cart = [];
-             setcookie('cart', '', time() - 3600, '/');
-        } catch(Exception $e){
-               die($e->getMessage());
-               $conn->rollback();
-               die;
-        } finally{
-            $conn = null;
+        $total = 0;
+        foreach ($this->cart as $value) {
+            $stmt = $conn->prepare("SELECT price FROM items WHERE idItems = ?");
+            $stmt->execute([$value['id']]);
+            $item = $stmt->fetch();
+            $total += ($item['price'] * $value['quantity']);
         }
+
+        $status = "V príprave";
+        $logged_user = $_SESSION['user_id'] ?? null;
+        $stmt = $conn->prepare("INSERT INTO orders(OrderDetail_idOrderDetail, status, total_price, Users_idUsers) VALUES(?,?,?,?)");
+        $stmt->execute([$order_detail_id, $status, $total, $logged_user]);
+        $order_id = $conn->lastInsertId();
+
+        foreach ($this->cart as $value) {
+            $quantity = $value['quantity'];
+            $item_id = $value['id'];
+            $platform_id = $value['platform'];
+
+            $stmt = $conn->prepare("INSERT INTO orders_has_items(Orders_idOrders, Items_idItems, quantity, platform_id) VALUES(?,?,?,?)");
+            $stmt->execute([$order_id, $item_id, $quantity, $platform_id]);
+
+            $stmt = $conn->prepare("SELECT stock FROM platform_has_items WHERE idItems = ? AND platform_id = ?");
+            $stmt->execute([$item_id, $platform_id]);
+            $stock = $stmt->fetchColumn();
+
+            $new_stock = max(0, $stock - $quantity);
+
+            $stmt = $conn->prepare("UPDATE platform_has_items SET stock = ? WHERE idItems = ? AND platform_id = ?");
+            $stmt->execute([$new_stock, $item_id, $platform_id]);
+        }
+
+        $conn->commit();
+
+        $this->cart = [];
+        setcookie('cart', '', time() - 3600, '/');
+
+        http_response_code(200);
+        echo json_encode([
+            "status" => "success",
+            "message" => "Objednávka bola úspešne vytvorená"
+        ]);
+
+    } catch (Exception $e) {
+        $conn->rollBack();
+        http_response_code(500);
+        echo json_encode([
+            "status" => "error",
+            "message" => "Nastala chyba pri spracovaní objednávky: " . $e->getMessage()
+        ]);
+    } finally {
+        $conn = null;
     }
+}
 
     public function getOrders($limit, $offset){
         

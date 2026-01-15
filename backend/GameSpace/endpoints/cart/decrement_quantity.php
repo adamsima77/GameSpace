@@ -20,4 +20,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
 require $_SERVER['DOCUMENT_ROOT'] . '/GameSpace/classes/Cart.php';
 $cart = new Cart();
 $data = json_decode(file_get_contents('php://input'), true);
-$cart->decrementQuantity($data['id']);
+$cart->decrementQuantity($data['id'], $data['platform']);

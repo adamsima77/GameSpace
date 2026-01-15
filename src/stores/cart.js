@@ -20,12 +20,13 @@ export const useCartStore = defineStore('cart', {
   }),
 
   actions: {
-    async add(id){
+    async add(id, platforma){
       try{
         const response = await axios.post("http://localhost/GameSpace/endpoints/add/addToCart.php",
-          { itemId: id },
+          { itemId: id, platform: platforma },
           { withCredentials: true }
         );
+        console.log(response.data.message);
         this.message = response.data;
         await this.fetchCart();
       } catch(error){}
@@ -41,10 +42,10 @@ export const useCartStore = defineStore('cart', {
       } catch(error){}
     },
 
-    async removeFromCart(id){
+    async removeFromCart(id,platform){
       try{
         const response = await axios.post("http://localhost/GameSpace/endpoints/delete/remove_from_cart.php",
-          {id: id},
+          {id: id, platform: platform},
           {withCredentials: true}
         );
         this.message = response.data;
@@ -52,10 +53,10 @@ export const useCartStore = defineStore('cart', {
       } catch(error){}
     },
 
-    async decrementQuantity(id){
+    async decrementQuantity(id,platform){
       try{
         const response = await axios.post("http://localhost/GameSpace/endpoints/cart/decrement_quantity.php",
-          {id: id},
+          {id: id, platform: platform},
           {withCredentials: true}
         );
         this.message = response.data;
@@ -63,13 +64,14 @@ export const useCartStore = defineStore('cart', {
       } catch(error){}
     },
 
-    async addQuantity(id){
+    async addQuantity(id, platform){
       try{
         const response = await axios.post("http://localhost/GameSpace/endpoints/cart/add_quantity.php",
-          {id: id},
+          {id: id, platform: platform},
           {withCredentials: true}
         );
         this.message = response.data;
+        
         this.fetchCart();
       } catch(error){}
     },
@@ -130,7 +132,9 @@ export const useCartStore = defineStore('cart', {
           { withCredentials: true }
         );
         this.cleanStore();
-      } catch(error){}
+      } catch(error){ 
+
+      }
     },
 
     async fetchSingleTransport(id){
