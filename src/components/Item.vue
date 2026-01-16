@@ -7,7 +7,7 @@
       <RouterLink :to="{ name: parentRouteName, params: { slug: item.slug } }">
         <h2>{{ item.name }}</h2>
       </RouterLink>
-     <div class="platform" v-if="platforms.length">
+     <div class="platform" v-if="platforms.length && !isPlatformIndependent">
   <span
     v-for="(value, index) in platforms"
     :key="index"
@@ -56,6 +56,12 @@ export default {
         }
   },
 
+  computed:{
+      isPlatformIndependent(){
+        return this.platforms.some(p => p.name === 'Platform Independent');
+      }
+  }, 
+
   mounted(){
     this.fetchPlatform();
   }
@@ -94,6 +100,9 @@ export default {
             display: flex;
             flex-direction: column;
             margin-top: 15px;
+            a{
+              word-wrap: break-word;
+            }
 .platform {
   display: flex;
   flex-wrap: wrap;

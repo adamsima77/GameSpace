@@ -60,6 +60,8 @@ export default {
   justify-content: space-between;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border: 1px solid black;
+
   
     hr{
         border: none;

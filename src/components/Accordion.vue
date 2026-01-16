@@ -63,7 +63,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      transition: background 0.25s ease;
+      transition: background-color 0.25s ease;
 
       i {
         font-size: 1.2rem;

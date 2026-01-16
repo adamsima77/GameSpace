@@ -99,12 +99,14 @@
 
 <style lang = "scss" scoped>
     .wrapper{
-       display: flex;
+        display: flex;
        flex-direction: column;
        padding: 20px;
        height: auto;
        width: 100%;
        margin-top: 100px;
+       place-self: center;
+       max-width: 1200px;
 
        .wrapp{
         background-color: white;
@@ -112,10 +114,11 @@
         border-radius: 15px;
         display: flex;
         flex-direction: column;
-        box-shadow: $box_sh_boxes;
         gap: 15px;
-         min-width: 0;     
+        min-width: 0;     
         width: 100%;
+        box-shadow: $box_sh_boxes;
+         place-self: center;
        }
     }
 </style>

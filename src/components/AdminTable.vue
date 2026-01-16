@@ -40,23 +40,29 @@ export default{
     },
 
 
-    computed: {
-    pageNumber() {
-    const total = Math.ceil(this.total_pages / this.limit);
+  computed: {
+  pageNumber() {
+    const total = Math.ceil(this.total_pages / this.limit) - 1; 
+    
     const visible = 5;
     let pages = [];
 
     if (this.actual_page < visible) {
       for (let i = 1; i <= Math.min(visible, total); i++) {
         pages.push(i);
+        
       }
-    } else if (this.actual_page + visible - 1 < total) {
-      for (let i = this.actual_page; i < this.actual_page + visible; i++) {
+    } else if (this.actual_page + Math.floor(visible / 2) < total) {
+     
+      const start = this.actual_page - Math.floor(visible / 2);
+      for (let i = start; i < start + visible; i++) {
         pages.push(i);
+        
       }
     } else {
       for (let i = total - visible + 1; i <= total; i++) {
         if (i > 0) pages.push(i); 
+        
       }
     }
 

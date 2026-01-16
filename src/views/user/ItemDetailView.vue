@@ -720,7 +720,7 @@ export default {
       border: 1px solid #c7dbff;
       box-shadow: 0 2px 8px rgba(41, 121, 255, 0.05);
 
-      .tab {
+      .tab {      
         h3 {
           font-size: 20px;
           font-weight: 700;
@@ -740,8 +740,17 @@ export default {
 
 @media only screen and (max-width: 800px) {
   .item-detail-page {
+    .reviews {
+      .add_review{
+        width: 85%;
+      } 
+      .show_form {
+        width: 100%;
+      }
+    }
+
     .recommended_products {
-      padding: 0;
+      padding: 15px;
     }
 
     .title_arrows {
@@ -751,13 +760,15 @@ export default {
       gap: 20px;
 
       .arrows {
-        place-self: right;
+        align-self: flex-end;
       }
     }
 
-    .wrapper {
-      button {
-        flex: 1;
+    .hr_wrapp {
+      .wrapper {
+        button {
+          flex: 1;
+        }
       }
     }
   }

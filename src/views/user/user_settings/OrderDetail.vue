@@ -29,7 +29,7 @@
           <div class="item_info">
             <p class="item_name">{{ item.name }}</p>
             <p class="item_quantity">Množstvo: {{ item.quantity }}</p>
-            <p>Platforma: {{ item.platform }}</p>
+            <p v-if = "item.platform != 'Platform Independent'">Platforma: {{ item.platform }}</p>
             <p class="item_price">Cena: {{ item.price * item.quantity }}€</p>
           </div>
         </li>
@@ -58,7 +58,7 @@ export default {
         this.detail = response.data.order;
         this.items = response.data.items;
       } catch (error) {
-        console.error(error);
+       
       }
     },
   },

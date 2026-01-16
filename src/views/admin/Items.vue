@@ -73,6 +73,7 @@
                 params: {limit: this.limit, offset: this.limit * (this.actual_page - 1)},
                 withCredentials: false});
                this.res = response.data;
+              
            },
 
            async getTotalPages(){
@@ -111,6 +112,8 @@
        height: auto;
        width: 100%;
        margin-top: 100px;
+       place-self: center;
+       max-width: 1200px;
 
        .wrapp{
         background-color: white;
@@ -122,7 +125,7 @@
         min-width: 0;     
         width: 100%;
         box-shadow: $box_sh_boxes;
-
+         place-self: center;
          button{
             padding-left: 45px;
             background-color: $blue;
@@ -137,5 +140,19 @@
             }
         }
        }
+    }
+
+    @media only screen and (max-width: 800px) {
+        .wrapper{
+                 max-width: 400px;
+                 overflow-x: hidden;
+                 
+            .wrapp{
+                 margin-left: 50px;
+                button{
+                    width: 50%;
+                }
+            }
+        }
     }
 </style>

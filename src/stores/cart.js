@@ -26,7 +26,7 @@ export const useCartStore = defineStore('cart', {
           { itemId: id, platform: platforma },
           { withCredentials: true }
         );
-        console.log(response.data.message);
+        
         this.message = response.data;
         await this.fetchCart();
       } catch(error){}

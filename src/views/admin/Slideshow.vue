@@ -53,7 +53,7 @@
                    {withCredentials: false}
                 );
 
-                console.log(response.data.message);
+              
                 if(response.data.message === 'success'){
                     alert("Záznam bol úspešne vymazaný !");
                     await this.fetchSlideshow();
@@ -103,12 +103,14 @@
 
 <style lang = "scss" scoped>
     .wrapper{
-       display: flex;
-       margin-top: 100px;
+        display: flex;
        flex-direction: column;
        padding: 20px;
        height: auto;
-       width: 100%;;
+       width: 100%;
+       margin-top: 100px;
+       place-self: center;
+       max-width: 1200px;
 
        .wrapp{
         background-color: white;
@@ -117,9 +119,10 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
-        box-shadow: $box_sh_boxes;
         min-width: 0;     
         width: 100%;
+        box-shadow: $box_sh_boxes;
+         place-self: center;
 
         button{
             padding-left: 45px;
@@ -135,5 +138,15 @@
             }
         }
        }
+    }
+
+      @media only screen and (max-width: 600px) {
+        .wrapper{
+            .wrapp{
+                button{
+                    width: 50%;
+                }
+            }
+        }
     }
 </style>

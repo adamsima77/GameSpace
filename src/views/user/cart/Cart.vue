@@ -6,7 +6,7 @@
          <div class = "box" v-for = "(item,index) in cart_content" :key = "index">
                <img :src="item.image" :alt="item.alt">
                <RouterLink :to = "{name: 'cart-item-detail', params:{slug: item.slug}}"><h2>{{ item.name }}</h2></RouterLink>
-                <p>Platforma: {{ item.platform_name }}</p>
+                <p v-if = "item.platform_name != 'Platform Independent'">Platforma: {{ item.platform_name }}</p>
                <div class = "quantity">
                <button v-if = "item.quantity > 0" @click = "decrementQuantity(item.id, item.platform)">-</button>
                <p>{{ item.quantity }}</p>
@@ -69,9 +69,9 @@ export default{
 
      computed: {
        cart_content() {
-        console.log(this.cartStore.cart);
+   
         return this.cartStore.cart;
-     }
+     },
    },
 
    methods:{

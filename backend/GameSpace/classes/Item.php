@@ -304,7 +304,7 @@ class Item extends Database{
    public function fetchConsoles($limit, $offset, $filter){
     try{
         $consoles_category = 4;
-        $orderBy = "i.idItems DESC";
+        $orderBy = "i.idItems";
 
         if($filter !== NULL){
             switch($filter){
@@ -388,7 +388,7 @@ class Item extends Database{
     public function fetchNewestAccessories(){
           try{
             $category = 3;
-            $query = "SELECT name,price,description,image,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? AND is_deleted = 0 ORDER BY last_update";
+            $query = "SELECT name,price,description,image,alt,slug FROM items i JOIN items_has_category ih ON i.idItems = ih.Items_idItems WHERE ih.Category_idCategory = ? AND is_deleted = 0 ORDER BY last_update LIMIT 4;";
             $conn = $this->connect();
             $stmt = $conn->prepare($query);
             $stmt->bindParam(1,$category);
@@ -618,37 +618,7 @@ class Item extends Database{
 
         $items = $stmt->fetchAll();
 
-       
-        $platformQuery = "
-            SELECT p.name
-            FROM platform p
-            JOIN platform_has_items pi ON p.platform_id = pi.platform_id
-            WHERE pi.idItems = ?
-        ";
 
-        
-       $categoryQuery = "
-    SELECT c.name
-    FROM category c
-    JOIN items_has_category ih ON c.idCategory = ih.Category_idCategory
-    WHERE ih.Items_idItems = ?
-";
-
-      
-        foreach ($items as &$item) {
-
-           
-            $stmt = $conn->prepare($platformQuery);
-            $stmt->bindParam(1, $item['idItems'], PDO::PARAM_INT);
-            $stmt->execute();
-            $item['platforms'] = $stmt->fetchAll(PDO::FETCH_COLUMN);
-
-            
-            $stmt = $conn->prepare($categoryQuery);
-            $stmt->bindParam(1, $item['idItems'], PDO::PARAM_INT);
-            $stmt->execute();
-            $item['category'] = $stmt->fetchAll(PDO::FETCH_COLUMN);
-        }
 
         echo json_encode($items);
         $conn = null;
@@ -1104,7 +1074,7 @@ class Item extends Database{
              exit;
         } catch(Exception $e){
             $conn->rollBack();
-            echo json_encode(['message' => 'Nastala chyba !']);
+            echo json_encode(['message' => $e->getMessage()]);
             die;
         }
     }

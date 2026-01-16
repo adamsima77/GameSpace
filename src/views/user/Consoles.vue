@@ -16,7 +16,7 @@ export default{
             currentPosition: null,
             loading: false,
             offset: 0,
-            limit: 5,
+            limit: 15,
             allLoaded: false,
             currentFilter: null 
         }
@@ -52,7 +52,7 @@ export default{
              this.currentPosition = window.scrollY;
              const bottomOffset = 50;
              if(this.currentPosition >= document.body.offsetHeight - bottomOffset){
-                 this.fetchGames(this.currentFilter);
+                 this.fetchConsoles(this.currentFilter);
                  
              }
          },

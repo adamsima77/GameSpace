@@ -36,7 +36,7 @@ export const useSearchStore = defineStore('search', {
         this.searchResult = response.data;
 
       } catch (error) {
-        console.error("Fetch search failed:", error);
+        
       }
     }
   },

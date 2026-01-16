@@ -1,14 +1,17 @@
 <template>
-    <div class = "wrapper">
-      <div class = "wrapp">
-            <h1>Prehľad KPI</h1>
-            <div class = "kpis">
-             <KPICard v-for = "(value,index) in res" :key = index :item = "value">
-             </KPICard>
-             
-             </div>
+  <div class="dashboard-page">
+    <div class="dashboard-box">
+      <h1>Prehľad KPI</h1>
+
+      <div class="kpis">
+        <KPICard
+          v-for="(value, index) in res"
+          :key="index"
+          :item="value"
+        />
       </div>
     </div>
+  </div>
 </template>
 
 
@@ -45,17 +48,20 @@ export default{
 }
 </script>
 
-
-<style lang = "scss" scoped>
-    .wrapper{
+<style scoped lang="scss">
+.dashboard-page {
        display: flex;
        flex-direction: column;
        padding: 20px;
        height: auto;
        width: 100%;
+       margin-top: 100px;
+       place-self: center;
+       max-width: 1200px;
+}
 
-       .wrapp{
-        background-color: white;
+.dashboard-box {
+   background-color: white;
         padding: 25px;
         border-radius: 15px;
         display: flex;
@@ -64,15 +70,27 @@ export default{
         min-width: 0;     
         width: 100%;
         box-shadow: $box_sh_boxes;
+         place-self: center;
+}
 
-        .kpis{
-            display: flex;
-            flex-direction: row;
-            gap: 35px;
-            justify-content: space-between;
-            width: 100%;
-            align-items: center;
-        }
-       }
+.kpis {
+ display: flex;
+  gap: 35px;
+  flex-wrap: wrap;
+  justify-content: center;
+  > * {
+    flex: 1 1 250px;
     }
+}
+
+@media (max-width: 810px) {
+  .kpis {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .kpis > * {
+    width: 330px;
+  }
+}
 </style>

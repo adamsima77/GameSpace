@@ -53,13 +53,13 @@
                     );
 
                     if(response.data.message === 'success'){
-                            alert("Produkt bol úspešne pridaný !");
+                            alert("Slide bol úspešne pridaný !");
                              this.alt = '';
                              this.link = '';
                              this.imgFile = null;
                              this.$refs.imgInput.value = null;
                     } else{
-                        alert("Produkt sa nepodarilo pridať ! Dôvod: " + response.data.reason);
+                        alert("Slide sa nepodarilo pridať ! Dôvod: " + response.data.reason);
                     }
                 } catch(error){
 
@@ -75,12 +75,15 @@
 </script>
 
 <style lang = "scss" scoped>
-    .wrapper{
+   .wrapper{
        display: flex;
        flex-direction: column;
        padding: 20px;
        height: auto;
-       width: 100%;;
+       width: 100%;
+       margin-top: 100px;
+       place-self: center;
+       max-width: 1200px;
 
        .wrapp{
         background-color: white;
@@ -89,8 +92,10 @@
         display: flex;
         flex-direction: column;
         gap: 15px;
-         min-width: 0;     
+        min-width: 0;     
         width: 100%;
+        box-shadow: $box_sh_boxes;
+         place-self: center;
 
         form{
             display: flex;

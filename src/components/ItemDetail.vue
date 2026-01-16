@@ -12,7 +12,7 @@
           <p class = "price">{{item.price}}€</p>
         </div>
 
-<div class="platforms">
+<div class="platforms" v-if = "!isPlatformIndependent">
   <button 
     v-for="platform in platforms"
     :key="platform.platform_id"
@@ -23,7 +23,7 @@
   </button>
 </div>
 
-      <button :disabled="!isAvailable" @click="addToCart"><i class="fas fa-shopping-cart"></i>
+      <button :disabled="!isAvailable" @click="addToCart" :class = "{notAvailable: !isAvailable}"><i class="fas fa-shopping-cart"></i>
        Do Košíka</button>
       </div>
     </div>
@@ -66,7 +66,6 @@
              },
 
              addToCart(){
-                  console.log('Adding to cart:', this.item.idItems, this.selectedPlatform);
                  this.cartStore.add(this.item.id,this.selectedPlatform);
              },
 
@@ -115,6 +114,10 @@ selectedPlatformData() {
   );
 },
 
+ isPlatformIndependent(){
+        return this.platforms.some(p => p.name === 'Platform Independent');
+ }, 
+
 selectedPlatformStock() {
   return this.selectedPlatformData
     ? Number(this.selectedPlatformData.stock)
@@ -136,161 +139,184 @@ isAvailable() {
  }
 </script>
 
-<style scoped lang = "scss">
-
-   
-   .message{
-      display: flex;
-      flex-direction: column;
-      width: 100%;
-      justify-content: center;
-      align-items: center;
-
-   }
-
-    .img_desc {
-    display: flex;
-    justify-content: space-between;
-    gap: 30px;
-
-    img {
-      @include image($height:500px, $width:500px);
-    }
-
-    .desc {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      padding: 10px 0;
-
-    .platforms {
+<style scoped lang="scss">
+.message{
   display: flex;
-  flex-wrap: wrap;         
-  gap: 15px;                
+  flex-direction: column;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
 
-  button {
-    background-color: #f0f0f0;  
-    color: #333;
-    padding: 10px 16px;
-    border: 1.5px solid #d9d9d9;
-    border-radius: 8px;          
-    cursor: pointer;
-    font-weight: 600;
-    transition: all 0.25s ease;
-    flex: 1 1 auto;              
-    text-align: center;
-    min-width: 80px;           
+.img_desc{
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
 
-    &:hover {
-      background-color: #e0f0ff; 
-      border-color: #2979ff;
+  img{
+    @include image($height:500px, $width:500px);
+  }
+
+  .desc{
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    padding: 10px 0;
+
+    h1{
+      font-size: 28px;
+      font-weight: 700;
+      color: #0c2a55;
+      margin-bottom: 5px;
     }
 
-    &.active {
-      background-color: #2979ff;
-      color: #fff;
-      border-color: #2979ff;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    p{
+      font-size: 16px;
+      color: #2a3a55;
+      line-height: 1.5;
+    }
+
+    .price_available{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #f0f6ff;
+      padding: 15px;
+      border-radius: 12px;
+      border: 1px solid #c7dbff;
+      font-weight: 700;
+
+      .price{
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #0053d6;
+      }
+
+      .available{
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: #0c7a12;
+      }
+
+      .not_available{
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: red;
+      }
+    }
+
+    .platforms{
+      display: flex;
+      flex-direction: row;
+      gap: 15px;
+
+      button{
+        background-color: #f0f0f0;
+        color: #333;
+        padding: 10px 16px;
+        border: 1.5px solid #d9d9d9;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.25s ease;
+        flex: 1 1 auto;
+        text-align: center;
+        min-width: 80px;
+
+        &:hover{
+          background-color: #e0f0ff;
+          border-color: #2979ff;
+        }
+
+        &.active{
+          background-color: #2979ff;
+          color: #fff;
+          border-color: #2979ff;
+          box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        &.notAvailable{
+          background-color: grey !important;
+          cursor: not-allowed;
+          box-shadow: none;
+          color: #fff;
+
+          &:hover{
+            background-color: grey;
+            box-shadow: none;
+          }
+        }
+      }
+    }
+
+    .platform{
+      display: flex;
+      flex-direction: row;
+      gap: 5px;
+
+      p{
+        font-weight: 700;
+        color: #0c2a55;
+      }
+    }
+
+    button{
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 10px;
+      background-color: #0053d6;
+      color: white;
+      font-weight: 600;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.25s ease, box-shadow 0.25s ease;
+
+      i{
+        margin-right: 10px;
+      }
+
+      &:hover{
+        background-color: #1a63e5;
+        box-shadow: 0 4px 12px rgba(41,121,255,0.4);
+      }
+
+      &.notAvailable{
+        background-color: grey !important;
+        cursor: not-allowed;
+        box-shadow: none;
+        color: #fff;
+
+        &:hover{
+          background-color: grey;
+          box-shadow: none;
+        }
+      }
     }
   }
 }
 
-      label{
-        display: flex;
+@media only screen and (max-width: 800px) {
+  .img_desc {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+
+    img {
+      width: 100%;
+      height: 300px;
+    }
+
+    .desc {
+      width: 100%;
+
+      .platforms {
         flex-direction: column;
         gap: 10px;
       }
-      .platform{
-        display: flex;
-        flex-direction: row;
-        gap: 5px;
-
-        p{
-          font-weight: 700;
-          color: $dark_blue;
-        }
-      }
-
-      h1 {
-        font-size: 28px;
-        font-weight: 700;
-        color: $dark_blue;
-        margin-bottom: 5px;
-      }
-
-      p {
-        font-size: 16px;
-        color: #2a3a55;
-        line-height: 1.5;
-      }
-
-      .price_available {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: #f0f6ff;
-        padding: 15px;
-        border-radius: 12px;
-        border: 1px solid #c7dbff;
-        font-weight: 700;
-
-        .price {
-          font-size: 1.1rem;
-          font-weight: 700;
-          color: #0053d6;
-        }
-
-        .available {
-          font-size: 1.1rem;
-          font-weight: 600;
-          color: #0c7a12;
-        }
-
-        .not_available{
-          color: red;
-          font-weight: 600;
-        }
-      }
-
-      button {
-        width: 100%;
-        padding: 12px;
-        border: none;
-        border-radius: 10px;
-        background-color: $blue;
-        color: white;
-        font-weight: 600;
-        font-size: 16px;
-        cursor: pointer;
-        transition: background-color 0.25s ease, box-shadow 0.25s ease;
-
-        i {
-          margin-right: 10px;
-        }
-
-        &:hover {
-          background-color: #1a63e5;
-          box-shadow: 0 4px 12px rgba(41, 121, 255, 0.4);
-        }
-      }
     }
   }
-
-  @media only screen and (max-width: 800px) {
-     .img_desc{
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        gap: 5px;
-        img{
-          width: 100%;
-          height: 300px;
-        }
-     }
-
-     .desc{
-      width: 100%;
-     }
-  }
+}
 </style>

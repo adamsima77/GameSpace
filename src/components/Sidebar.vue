@@ -9,6 +9,7 @@
                 <i class="fas fa-user log" @click = "logUser" v-if = "!userStore.user_id"></i>
                   <div class = "logged" v-else>
                      <i class="fas fa-user-circle" @click = "userSettings"></i>
+                      <i class="fas fa-chart-pie" v-if = "userStore.role === 2" @click = "$router.push({name: 'dashboard'})"></i> 
                      <i class="fas fa-sign-out-alt" @click = "logout"></i>  
                   </div>
             </div>

@@ -99,19 +99,20 @@ export default{
 <style lang="scss" scoped>
 .sidebar {
   position: fixed;
-  inset: 0 auto 0 0;
-  z-index: 1000000;
-  width: 15%;
+  top: 0;
+  
+  left: 0;
   height: 100vh;
+  width: 220px;
   background-color: white;
-  box-shadow: $box_sh_boxes;
   padding: 20px;
   display: flex;
   flex-direction: column;
-  transition: width 0.4s ease;
+  transition: width 0.3s ease;
+  z-index: 1000;
 
   &.forward {
-    width: 15%;
+    width: 220px;
   }
 
   &.back {
@@ -140,27 +141,25 @@ export default{
     gap: 15px;
     height: 90vh;
 
-    a{
-      &.active{
-        background-color: #f5f5f5;
-        border-radius: 15px;
-      }
+    a.active {
+      background-color: #f5f5f5;
+      border-radius: 15px;
     }
   }
 
   .a_title {
     padding: 10px;
     text-decoration: none;
-  }
 
-  .title {
-    font-size: 1.5rem;
-    font-weight: 300;
-    color: black;
+    .title {
+      font-size: 1.5rem;
+      font-weight: 300;
+      color: black;
 
-    span {
-      color: $blue;
-      font-weight: 700;
+      span {
+        color: $blue; 
+        font-weight: 700;
+      }
     }
   }
 
@@ -223,6 +222,64 @@ export default{
       background-color: #007bff;
       color: white;
       transform: scale(1.1);
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    flex-direction: column;
+
+    .main-content {
+      padding: 10px;
+    }
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    height: auto;
+    flex-direction: row;
+
+    &.back,
+    &.forward {
+      width: 100%;
+    }
+
+    .wrapp {
+      flex-direction: row;
+      align-items: center;
+      height: auto;
+      width: 100%;
+    }
+
+    ul {
+      flex-direction: row;
+      gap: 5px;
+      justify-content: space-around;
+      flex: 1;
+
+      li a {
+        flex-direction: column;
+        font-size: 12px;
+      }
+    }
+
+    .expandable {
+      display: none;
+    }
+  }
+
+  .dashboard-box {
+    max-width: 100%;
+
+    .kpis {
+      flex-direction: column;
+      gap: 20px;
+
+      > * {
+        width: 100%;
+      }
     }
   }
 }

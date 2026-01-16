@@ -19,8 +19,6 @@
 
         <label for="img">Image:
           <input type="file" @change="handleFileUpload">
-          <p class="prev">Aktuálna fotka:</p>
-          <img :src="current_image" v-if="current_image" class="preview">
         </label>
 
         <label for="alt">Image alt:
@@ -108,7 +106,7 @@ export default {
              withCredentials: false
            });
            const data = response.data;
-           console.log(data);
+           
            this.res.all_main_categories = data.all_main_categories || [];
            this.res.all_platforms = data.all_platforms || [];
            
@@ -146,7 +144,7 @@ export default {
             );
 
             if(response.data.message === 'success'){
-                  alert("Záznam bol úspešne upravený !");
+                  alert("Záznam bol úspešne pridaný !");
                   this.clean();
             } else{
                 alert(response.data.message);
@@ -157,15 +155,20 @@ export default {
     },
 
     clean(){
-           this.name = null;
-           this.price = null;
-           this.main_desc = null;
-           this.alt = null;
-           this.release_date = null;
-           this.html_desc = null;
-           this.main_category = null;  
-           this.subcategory = null;
-           this.platform = null;
+   this.name = '';
+   this.price = '';
+   this.main_desc = '';
+   this.alt = '';
+   this.release_date = '';
+   this.html_desc = '';
+   this.main_category = null;  
+   this.subcategory = [];
+   this.platform = [];
+   this.picture = null;
+   this.current_image = '';
+           if (tinymce.get('html_desc')) {
+             tinymce.get('html_desc').setContent('');
+           }
     },
 
     async fetchSubcategories(category){
@@ -225,20 +228,27 @@ export default {
 </script>
 
 <style lang = "scss" scoped>
-    .wrapper {
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-  width: 100%;
+ .wrapper{
+       display: flex;
+       flex-direction: column;
+       padding: 20px;
+       height: auto;
+       width: 100%;
+       margin-top: 100px;
+       place-self: center;
+       max-width: 1200px;
 
-  .wrapp {
-    background-color: white;
-    padding: 25px;
-    border-radius: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    width: 100%;
+       .wrapp{
+        background-color: white;
+        padding: 25px;
+        border-radius: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        min-width: 0;     
+        width: 100%;
+        box-shadow: $box_sh_boxes;
+         place-self: center;
 
     form {
       display: flex;
