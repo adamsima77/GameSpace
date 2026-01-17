@@ -42,169 +42,181 @@
 </template>
 
 <script>
-    export default{
-        data(){
-            return{
-                name: '',
-                surname: '',
-                email: '',
-                city: '',
-                street: '',
-                postal_code: '',
-                telephone: '',
-                userStore: null,
-                res: {},
+export default {
+  data() {
+    return {
+      name: '',
+      surname: '',
+      email: '',
+      city: '',
+      street: '',
+      postal_code: '',
+      telephone: '',
+      userStore: null,
+      res: {},
 
-                 touched: {
-                   email: false,
-                   name: false,
-                   surname: false,
-                   city: false,
-                   street: false,
-                   postal_code: false,
-                   telephone_number: false,
-                }
-            }
-        },
+      touched: {
+        email: false,
+        name: false,
+        surname: false,
+        city: false,
+        street: false,
+        postal_code: false,
+        telephone_number: false,
+      },
+    };
+  },
 
-        methods:{
-            async save(){
-                const response = await this.$axios.post("http://localhost/GameSpace/endpoints/update/save_user.php",
-                {
-                    name: this.name,
-                    surname: this.surname,
-                    email: this.email,
-                    city: this.city,
-                    street: this.street,
-                    postal_code: this.postal_code,
-                    mobile_number: this.telephone
-                },
-                {withCredentials: true});
+  methods: {
+    async save() {
+      try {
+        const response = await this.$axios.post(
+          "http://localhost/GameSpace/endpoints/update/save_user.php",
+          {
+            name: this.name,
+            surname: this.surname,
+            email: this.email,
+            city: this.city,
+            street: this.street,
+            postal_code: this.postal_code,
+            mobile_number: this.telephone,
+          },
+          { withCredentials: true }
+        );
 
-                if(response.data.message === 'success'){
-                  alert("Vaše údaje boli úspešne upravené !");
-                } else {
-                  alert("Nastala chyba pri úprave vašich údajov !");
-                }
-            },
+        if (response.data.message === 'success') {
+          alert("Vaše údaje boli úspešne upravené!");
+        } else {
+          alert("Nastala chyba pri úprave vašich údajov!");
+        }
+      } catch (error) {
+        alert("Nastala chyba pri úprave vašich údajov!");
+      }
+    },
 
-            async fetchUserData(){
-                const response = await this.$axios.post("http://localhost/GameSpace/endpoints/fetch/fetch_user_data.php",
-                {},
-                {withCredentials: true})
-                this.res = response.data;
-                this.name = this.res.name;
-                this.surname = this.res.last_name;
-                this.email = this.res.email;
-                this.city = this.res.city;
-                this.street = this.res.street;
-                this.postal_code = this.res.postal_code;
-                this.telephone = this.res.mobile_number;
-            },
+    async fetchUserData() {
+      try {
+        const response = await this.$axios.post(
+          "http://localhost/GameSpace/endpoints/fetch/fetch_user_data.php",
+          {},
+          { withCredentials: true }
+        );
 
-             checkTelephoneNumber(number) {
-    if (!number) return false;
+        this.res = response.data;
+        this.name = this.res.name || '';
+        this.surname = this.res.last_name || '';
+        this.email = this.res.email || '';
+        this.city = this.res.city || '';
+        this.street = this.res.street || '';
+        this.postal_code = this.res.postal_code || '';
+        this.telephone = this.res.mobile_number || '';
+      } catch (error) {
 
-    let plusCount = 0;
-    let digitCount = 0;
+      }
+    },
 
-    for (let i = 0; i < number.length; i++) {
+    checkTelephoneNumber(number) {
+      if (!number) return false;
+
+      let plusCount = 0;
+      let digitCount = 0;
+
+      for (let i = 0; i < number.length; i++) {
         const char = number[i];
 
         if (char === '+') {
-            plusCount++;
-            if (i !== 0) return false; 
-        } else if ((char >= '0' && char <= '9')) {
-            digitCount++;
-    
-        } else if(char == ' '){
-            continue;
+          plusCount++;
+          if (i !== 0) return false;
+        } else if (char >= '0' && char <= '9') {
+          digitCount++;
+        } else if (char === ' ') {
+          continue;
         } else {
-            return false; 
+          return false;
         }
-    }
+      }
 
-    if (plusCount > 1) return false;
-    if (digitCount < 5 || digitCount > 15) return false;
+      if (plusCount > 1) return false;
+      if (digitCount < 5 || digitCount > 15) return false;
 
-    return true;
-},
+      return true;
+    },
 
-      isFirstLetterUpper(str) {
-          if (!str) return false; 
-          const firstChar = str.charAt(0);
-          return firstChar === firstChar.toUpperCase();
-      },
+    isFirstLetterUpper(str) {
+      if (!str) return false;
+      const firstChar = str.charAt(0);
+      return firstChar === firstChar.toUpperCase();
+    },
 
-      checkPostalCode(postal_code){
-          if(!postal_code) return false;
-          let digitCount = 0;
-          let isDigit = true;
-          for(let i = 0; i < postal_code.length; i++){
-               if (!((postal_code[i] >= '0' && postal_code[i] <= '9') || postal_code[i] === ' ')) {
-                   isDigit = false;
-                   break;
-               }
-               if (postal_code[i] >= '0' && postal_code[i] <= '9') {
-                       digitCount++;
-               }
-          }
-          if (digitCount !== 5) return false;
-          if(isDigit) return true;
-          else return false;
-      },
+    checkPostalCode(postal_code) {
+      if (!postal_code) return false;
+      let digitCount = 0;
+      let isDigit = true;
 
-       checkEmail(email){
-             let isEmail = false;
-             for(let i = 0; i < email.length; i++){
-                      if(email.charAt(i) == '@'){
-                           isEmail = true;
-                      }
-             }
-
-             return isEmail;
+      for (let i = 0; i < postal_code.length; i++) {
+        const char = postal_code[i];
+        if (!(char >= '0' && char <= '9') && char !== ' ') {
+          isDigit = false;
+          break;
         }
-        },
+        if (char >= '0' && char <= '9') digitCount++;
+      }
 
+      return isDigit && digitCount === 5;
+    },
 
-        computed:{
-       isFormValid() {
-           return (!this.touched.name || this.isName) &&
-           (!this.touched.surname || this.isSurnameValid) &&
-           (!this.touched.city || this.isCityValid) &&
-           (!this.touched.street || this.isStreetValid) &&
-           (!this.touched.postal_code || this.isPostalValid) &&
-           (!this.touched.telephone_number || this.isTelephoneValid) &&
-           (!this.touched.email || this.isEmailValid);
-       },
+    checkEmail(email) {
+      if (!email) return false;
+      return email.includes('@');
+    },
+  },
 
-         isTelephoneValid(){
-            return this.checkTelephoneNumber(this.telephone);
-         },
-         isEmailValid(){
-            return this.checkEmail(this.email);
-         },
-         isName(){
-            return this.isFirstLetterUpper(this.name);
-         },
-         isSurnameValid() {
-            return this.surname.length >= 2 && this.isFirstLetterUpper(this.surname);
-         },
-         isCityValid() {
-           return this.city.length >= 2 && this.isFirstLetterUpper(this.city);
-         },
-         isStreetValid() {
-              return this.street.length >= 2 && this.isFirstLetterUpper(this.street);
-         },
-         isPostalValid() {
-            return this.checkPostalCode(this.postal_code);
-         },
-        },
+  computed: {
+    isFormValid() {
+      return (
+        (!this.touched.name || this.isName) &&
+        (!this.touched.surname || this.isSurnameValid) &&
+        (!this.touched.city || this.isCityValid) &&
+        (!this.touched.street || this.isStreetValid) &&
+        (!this.touched.postal_code || this.isPostalValid) &&
+        (!this.touched.telephone_number || this.isTelephoneValid) &&
+        (!this.touched.email || this.isEmailValid)
+      );
+    },
 
-        mounted(){
-            this.fetchUserData();
-        }
-    }
+    isTelephoneValid() {
+      return this.checkTelephoneNumber(this.telephone);
+    },
+
+    isEmailValid() {
+      return this.checkEmail(this.email);
+    },
+
+    isName() {
+      return this.name && this.isFirstLetterUpper(this.name);
+    },
+
+    isSurnameValid() {
+      return this.surname && this.surname.length >= 2 && this.isFirstLetterUpper(this.surname);
+    },
+
+    isCityValid() {
+      return this.city && this.city.length >= 2 && this.isFirstLetterUpper(this.city);
+    },
+
+    isStreetValid() {
+      return this.street && this.street.length >= 2 && this.isFirstLetterUpper(this.street);
+    },
+
+    isPostalValid() {
+      return this.checkPostalCode(this.postal_code);
+    },
+  },
+
+  mounted() {
+    this.fetchUserData();
+  },
+};
 </script>
 <style scoped lang="scss">
 .profile_wrapper {
