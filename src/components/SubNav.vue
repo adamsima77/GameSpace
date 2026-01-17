@@ -1,12 +1,12 @@
 <template>
   <div class="subnav" :class="{ scrolled: isScrolled, notScrolled: !isScrolled}">
     <ul class="links">
-       <RouterLink :to = "{name: 'games'}"><li class = "category">Hry</li></RouterLink>
-       <RouterLink :to = "{name: 'laptops-and-PCs'}"><li class = "category">Notebooky a PC</li></RouterLink>
-       <RouterLink :to = "{name: 'accessories'}"><li class = "category">Príslušenstvo</li></RouterLink>
-       <RouterLink :to = "{name: 'consoles'}"><li class = "category">Konzoly</li></RouterLink>
-       <RouterLink :to = "{name: 'extras'}"><li class = "category">Doplnky</li></RouterLink>
-       <RouterLink :to="{name: 'cart'}" class = "cart">
+       <RouterLink :to = "{name: 'games'}" :class = "{active: activeElement == 1}"><li class = "category">Hry</li></RouterLink>
+       <RouterLink :to = "{name: 'laptops-and-PCs'}" :class = "{active: activeElement == 2}"><li class = "category">Notebooky a PC</li></RouterLink>
+       <RouterLink :to = "{name: 'accessories'}" :class = "{active: activeElement == 3}"><li class = "category">Príslušenstvo</li></RouterLink>
+       <RouterLink :to = "{name: 'consoles'}" :class = "{active: activeElement == 4}"><li class = "category">Konzoly</li></RouterLink>
+       <RouterLink :to = "{name: 'extras'}" :class = "{active: activeElement == 5}"><li class = "category">Doplnky</li></RouterLink>
+       <RouterLink :to="{name: 'cart'}" class = "cart" :class = "{active: activeElement == 6}">
         <li><i class="fas fa-shopping-cart"></i>Košík<p class = "cart_count" v-if = "cartStore.cart.length > 0">{{ cartStore.cart.length }}</p></li>
       </RouterLink>
     </ul>
@@ -67,7 +67,22 @@ export default {
   },
   beforeUnmount() {
     window.removeEventListener("scroll", this.handleScroll);
+  },
+
+  computed:{
+       activeElement(){
+        switch(this.$route.name){
+           case 'games': return 1;
+           case 'laptops-and-PCs': return 2;
+           case 'accessories': return 3;
+           case 'consoles': return 4;
+           case 'extras': return 5;
+           case 'cart': return 6;
+        }
+      }
   }
+
+  
 };
 </script>
 
@@ -103,6 +118,12 @@ export default {
       transition: all 0.2s ease;
    
       &:hover {
+        background-color: lighten($blue, 42%);
+        color: $blue;
+        box-shadow: inset 0 -3px 0 $blue;
+      }
+
+      &.active{
         background-color: lighten($blue, 42%);
         color: $blue;
         box-shadow: inset 0 -3px 0 $blue;

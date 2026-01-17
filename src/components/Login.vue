@@ -190,6 +190,7 @@ import {useUserStore} from '../stores/user'
   border-radius: 15px;
   box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.1); 
   border: 2px solid #ccc; 
+  height: 50%;
 }
 
 

@@ -10,23 +10,23 @@
         </label>
 
         <label for="price">Cena:
-          <input type="text" v-model="price">
+          <input type="text" id = "price" v-model="price">
         </label>
 
         <label for="main_desc">Hlavný popis:
-          <textarea v-model="main_desc"></textarea>
+          <textarea v-model="main_desc" id = "main_desc"></textarea>
         </label>
 
         <label for="img">Image:
-          <input type="file" @change="handleFileUpload">
+          <input type="file" id = "img" @change="handleFileUpload">
         </label>
 
         <label for="alt">Image alt:
-          <input type="text" v-model="alt">
+          <input type="text" id = "alt" v-model="alt">
         </label>
 
         <label for="release_date">Dátum vydania:
-          <input type="date" v-model="release_date">
+          <input type="date" id = "release_date" v-model="release_date">
         </label>
 
         <label for="html_desc">HTML popis:

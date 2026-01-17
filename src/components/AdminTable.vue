@@ -42,7 +42,7 @@ export default{
 
   computed: {
   pageNumber() {
-    const total = Math.ceil(this.total_pages / this.limit) - 1; 
+    const total = Math.ceil(this.total_pages / this.limit); 
     
     const visible = 5;
     let pages = [];

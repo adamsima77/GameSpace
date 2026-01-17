@@ -280,8 +280,9 @@ nav {
   padding: 10px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.15);
   z-index: 100001;
-  overflow: visible;   
-  max-height: none;   
+  max-height: 350px; 
+  overflow-y: auto;
+  overflow-x: hidden;
   
   p{
     text-align: center;

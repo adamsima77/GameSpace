@@ -117,6 +117,9 @@ export default{
 
   &.back {
     width: 60px;
+    .a_title{
+      display: none;
+    }
 
     .title {
       display: none;

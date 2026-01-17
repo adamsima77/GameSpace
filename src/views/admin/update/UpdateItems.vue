@@ -10,27 +10,27 @@
  </label>
 
  <label for="price">Cena:
-  <input type="text" name = "price" v-model = "price">
+  <input type="text" name = "price" id = "price" v-model = "price">
  </label>
 
  
  <label for="main_desc">Hlavný popis:
-  <textarea name = "main_desc" v-model = "main_desc"></textarea>
+  <textarea name = "main_desc" id = "main_desc" v-model = "main_desc"></textarea>
  </label>
 
   <label for="img">Image:
-  <input type="file" name = "img" @change = "handleFileUpload">
+  <input type="file" name = "img" id = "img" @change = "handleFileUpload">
   <p class = "prev">Aktuálna fotka:</p>
   <img :src="current_image" v-if = "current_image" class = "preview">
  </label>
 
   <label for="alt">Image alt:
-  <input type="text" name = "alt" v-model = "alt">
+  <input type="text" name = "alt" id = "alt" v-model = "alt">
  </label>
  
 
  <label for="release_date">Dátum vydania:
-  <input type="date" name = "release_date" v-model = "release_date">
+  <input type="date" name = "release_date" id = "release_date" v-model = "release_date">
  </label>
 
  <label for="html_desc">HTML popis:
@@ -38,7 +38,7 @@
  </label>
 
  <label for="main_category">Hlavná kategória:
-  <select name="" id="main_category" v-model = "main_category">
+  <select id="main_category" v-model = "main_category">
     <option :value="value.idCategory" v-for = "(value,index) in res.all_main_categories" :key = "index">
          {{ value.name }}
     </option>

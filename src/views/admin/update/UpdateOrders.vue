@@ -5,7 +5,7 @@
 
  <form method = "post" @submit.prevent = "update">
 
- <label for="title">Status objednávky:
+ <label for="status">Status objednávky:
      <select id="status" name="status" v-model = "status">
            <option value="V príprave">V príprave</option>
            <option value="Spracováva sa">Spracováva sa</option>

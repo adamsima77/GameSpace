@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-page">
     <div class="dashboard-box">
-      <h1>Prehľad KPI</h1>
+      <h1>Prehľad</h1>
 
       <div class="kpis">
         <KPICard
@@ -58,6 +58,10 @@ export default{
        margin-top: 100px;
        place-self: center;
        max-width: 1200px;
+
+       h1{
+        text-align: center;
+       }
 }
 
 .dashboard-box {
@@ -78,9 +82,7 @@ export default{
   gap: 35px;
   flex-wrap: wrap;
   justify-content: center;
-  > * {
-    flex: 1 1 250px;
-    }
+  align-items: center;
 }
 
 @media (max-width: 810px) {
