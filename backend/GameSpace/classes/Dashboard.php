@@ -35,8 +35,24 @@ class Dashboard extends Database{
             $rs = $stmt->fetch();
             $avg_order_value = $rs['avg_order_value'];
 
-             $trendRevenueMonth = $total_revenue > 0 ? round(($revenue_this_month / $total_revenue) * 100, 2) : 0;
+            $trendRevenueMonth = $total_revenue > 0 ? round(($revenue_this_month / $total_revenue) * 100, 2) : 0;
 
+
+            $new_customers_this_month = "SELECT COUNT(DISTINCT Users_idUsers) as new_customers FROM orders WHERE status = 'Doručené' AND MONTH(creation_date) = MONTH(CURRENT_DATE()) AND YEAR(creation_date) = YEAR(CURRENT_DATE());";
+
+            $stmt = $conn->prepare($new_customers_this_month);
+            $stmt->execute();
+            $rs = $stmt->fetch();
+            $new_customers = $rs['new_customers'];
+
+            $pending_orders = "SELECT COUNT(*) as pending_orders FROM orders 
+                               WHERE status = 'V príprave' OR status = 'Spracováva sa';";
+            $stmt = $conn->prepare($pending_orders);
+            $stmt->execute();
+            $rs = $stmt->fetch();
+            $pending = $rs['pending_orders'];
+
+              
               $kpis = [
             [
                 'title' => 'Celkový príjem',
@@ -58,6 +74,16 @@ class Dashboard extends Database{
                 'value' => $avg_order_value . '€',
                 'trend' => null
             ],
+            [
+                'title' => 'Počet nových zákazníkov tento mesiac',
+                'value' => $new_customers,
+                'trend' => null
+            ],
+             [
+                'title' => 'Počet nespracovaných objednávok',
+                'value' => $pending,
+                'trend' => null
+            ]
         ];
 
         echo json_encode($kpis);

@@ -16,7 +16,7 @@ class Item extends Database{
             $conn = $this->connect();
             $query = "SELECT name,price,description,image,alt,slug FROM items
             WHERE is_deleted = 0
-            ORDER BY last_update DESC
+            ORDER BY created_at DESC
             LIMIT 4;";
             $stmt = $conn->prepare($query);
             $stmt->execute();
@@ -634,7 +634,7 @@ class Item extends Database{
     public function getTotalPagesAdmin(){
          try{
              $conn = $this->connect();
-             $query = "SELECT COUNT(*) as total_pages FROM items";
+             $query = "SELECT COUNT(*) as total_pages FROM items WHERE is_deleted = 0;";
              $stmt = $conn->prepare($query);
              $stmt->execute();
              $rs = $stmt->fetch();
