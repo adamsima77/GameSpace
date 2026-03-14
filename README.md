@@ -70,7 +70,7 @@ The application also includes an admin interface for managing products and monit
 
 <hr>
 
-<h2>📸 Screenshots</h2>
+<h2>Screenshots</h2>
 
 <p align="center">
 <img src="/screenshots/homepage.png" width="800">
