@@ -5,9 +5,11 @@
              <p>{{ desc }}</p>
              <Filters @filter-change= "handleFilter"></Filters>
              <hr>
-         </div>        
+          </div>  
+          <div class = "items">
          <Item v-for = "(game,index) in item" :key = "index" :item = "game" :parent-route-name="parentRouteName"></Item>
          <Loader v-if = "loading"></Loader>
+      </div>
     </div>
 </template> 
 
@@ -57,6 +59,15 @@ export default{
          justify-content: flex-start;
          box-shadow: $box_sh_boxes;
          height: auto;
+
+         .items{
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+            justify-content: flex-start;
+           
+        }
+         
     }
     .wrapper{
          display: flex;
@@ -74,6 +85,7 @@ export default{
             display: flex;
             flex-direction: column;
             gap: 10px;
+            width: 100%;
 
               hr{
                 border: 1px solid black;
@@ -82,7 +94,7 @@ export default{
          }
     }
 
-      @media only screen and (max-width: 1200px) {
+      @media only screen and (max-width: 900px) {
           .wrapp{
              width: 100%;
               justify-content: space-between;
@@ -90,6 +102,14 @@ export default{
                 p{
                     text-align: justify;
                 }
+              }
+
+              .items{
+                flex-direction: column;
+                gap: 30px;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
               }
           }
           .wrapper{
@@ -99,6 +119,13 @@ export default{
                 p{
                     text-align: justify;
                 }
+              }
+
+               .items{
+                flex-direction: column;
+                gap: 30px;
+                justify-content: center;
+                align-items: center;
               }
           }
       } 
