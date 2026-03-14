@@ -170,5 +170,3 @@ npm run dev
 <li>Import the MySQL database</li>
 <li>Run the PHP backend</li>
 </ol>
-
-<hr>
