@@ -1,4 +1,4 @@
-<h1 align="center">🛒 GameSpace</h1>
+<h1 align="center">GameSpace</h1>
 
 <p align="center">
 Full-stack e-commerce web application built with <b>Vue 3</b> and <b>PHP 8.2</b>
