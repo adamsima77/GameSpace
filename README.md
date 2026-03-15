@@ -23,7 +23,6 @@ The application also includes an admin interface for managing products and monit
 <li>Product listing</li>
 <li>Live product search</li>
 <li>Product filtering</li>
-<li>Product pagination</li>
 <li>Product detail pages</li>
 </ul>
 
@@ -31,7 +30,6 @@ The application also includes an admin interface for managing products and monit
 <ul>
 <li>Shopping cart</li>
 <li>Checkout simulation</li>
-<li>Order creation stored in the database</li>
 </ul>
 
 <h3>User System</h3>
@@ -46,7 +44,6 @@ The application also includes an admin interface for managing products and monit
 <h3>Admin Panel</h3>
 <ul>
 <li>Product management (create / edit / update)</li>
-<li>Orders slideshow</li>
 <li>Simple dashboard with KPI metrics</li>
 </ul>
 
@@ -59,7 +56,7 @@ The application also includes an admin interface for managing products and monit
 <li>Vue 3</li>
 <li>Vite</li>
 <li>JavaScript</li>
-<li>CSS</li>
+<li>SCSS</li>
 </ul>
 
 <h3>Backend</h3>
