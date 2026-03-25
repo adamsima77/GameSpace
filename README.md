@@ -74,10 +74,6 @@ The application also includes an admin interface for managing products and monit
 </p>
 
 <p align="center">
-<img src="/screenshots/games.png" width="800">
-</p>
-
-<p align="center">
 <img src="/screenshots/notebooks_pc.png" width="800">
 </p>
 
@@ -142,11 +138,6 @@ The application also includes an admin interface for managing products and monit
 <p align="center">
 <img src="/screenshots/register.png" width="800">
 </p>
-
-<p align="center">
-<img src="/screenshots/admin.png" width="800">
-</p>
-
 
 <h2>Installation</h2>
 
